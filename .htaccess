@@ -1,0 +1,58 @@
+Options -MultiViews
+
+AddHandler x-mapp-php6 .php
+
+#
+# Dream Forgery Settings:
+#
+
+# Set some options.
+Options -Indexes
+Options +FollowSymLinks
+
+# Customized error messages.
+ErrorDocument 404 /404-error
+
+# Set the default handler.
+DirectoryIndex index.php
+
+# 
+#ExpiresActive On
+#ExpiresByType image/jpg "access plus 1 hour"
+#ExpiresByType image/jpeg "access plus 1 hour"
+#ExpiresByType image/gif "access plus 1 hour"
+#ExpiresByType image/png "access plus 1 hour"
+#ExpiresDefault "access plus 1 hour"
+
+# Override PHP settings. More exist in sites/default/settings.php, but
+# the following cannot be changed at runtime. The first IfModule is
+# for Apache 1.3, the second for Apache 2.
+<IfModule mod_php4.c>
+  php_value magic_quotes_gpc                0
+  php_value register_globals                0
+  php_value session.auto_start              0
+</IfModule>
+
+<IfModule sapi_apache2.c>
+  php_value magic_quotes_gpc                0
+  php_value register_globals                0
+  php_value session.auto_start              0
+</IfModule>
+
+# Various rewrite rules.
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteBase /
+
+  # Rewrite current-style URLs of the form 'index.php?q=x'.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^files/(.*)$ /webapp/files/$1 [L,QSA]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ /index.php?q=$1 [L,QSA]
+  
+  RewriteCond %{SERVER_PORT} ^80$
+  RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
+</IfModule>
