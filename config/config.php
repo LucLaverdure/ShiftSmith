@@ -15,10 +15,10 @@
 	define('FILE_FILTER_CONTROLLERS', 'php,php5,php4,php3,php2');
 
 	// cron job password
-	define('CRON_JOB_PASSWORD', 'eedad41f42660e5cb7a4');
+	define('CRON_JOB_PASSWORD', 'cronadmin123');
 	
 	// password hash, salt used for encryptions
-	define('HASHCODE', 'LOOCHLAND!$89712-*+loochland...');
+	define('HASHCODE', 'dreamforgeryadminsalt');
 	
 	/* protected server side session namespaces (string delimited by comas without spaces)
 					 accessible via controller->setcache and controller->getcache
