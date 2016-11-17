@@ -1,6 +1,6 @@
 <?php
-	define('CMS_DB_HOST', '');
-	define('CMS_DB_USER', '');
-	define('CMS_DB_PASS', '');
-	define('CMS_DB_NAME', '');
+	define('CMS_DB_HOST', 'localhost');
+	define('CMS_DB_USER', 'admin');
+	define('CMS_DB_PASS', 'admin');
+	define('CMS_DB_NAME', 'dreamforgery');
 ?>

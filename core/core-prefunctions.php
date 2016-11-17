@@ -2,12 +2,15 @@
 	if (!IN_DREAMFORGERY) die();
 
 	function q($arg_number='all') {
-		if ($arg_number=='all')
+		if ($arg_number=='all') {
 			return (isset($_GET['q'])) ? $_GET['q'] : '/';
-		elseif (is_numeric($arg_number)) {
+		} elseif (is_numeric($arg_number)) {
 			$array = explode('/', q());
-			if (isset($array[$arg_number]))
-				return $array[$arg_number];
+			if (isset($array[$arg_number])) {
+				return $array[$arg_number+''];
+			}
+		} elseif (!is_numeric($arg_number)) {
+			return inpath($arg_number);
 		}
 		return '';
 	}
@@ -27,26 +30,34 @@
 		@fclose($fh);
 	}
 
-	function form_cache($form_name, $default_values = array()) {
+	function form_cache($form_name, $default_values = array(),$options='N') {
+		// prevent admin access (configurable)
+		if (in_array($form_name, explode(',', PROTECTED_SESSION_NAMESPACES))) {
+			throw new Exception ('Invalid form name: '.$form_name.' reserved for server-side access');
+			die();
+		}
+		
 		// set form array if not created
 		if (!isset($_SESSION[$form_name])) $_SESSION[$form_name] = array();
 
 		// set default values
 		foreach ($default_values as $key => $var) {
-			if (!isset($_SESSION[$form_name][$key])) {
+			if ((!isset($_SESSION[$form_name][$key])) || $options='FORCE.CASH') {
 				$_SESSION[$form_name][$key] = $var;
 			}
 		}
 
 		// override previous values when form is posted
-		foreach ($_REQUEST as $key => $var) {
-			$_SESSION[$form_name][$key] = $var;
+		if ($options != 'FETCH.ONLY') {
+			foreach ($_REQUEST as $key => $var) {
+				$_SESSION[$form_name][$key] = $var;
+			}
 		}
-
+		
 		// return form cache
 		return $_SESSION[$form_name];
 	}
-
+	
 	function validate_email($email) {
 		$isValid = true;
 		$atIndex = strrpos($email, "@");
@@ -98,4 +109,36 @@
 	function t($text) {
 		return $text;
 	}
+	
+	function email($to, $subject, $message) {
+		$message='<table width="100%" colspan="0" cellpadding="0" border="0">
+	<tr>
+		<td width="350"><img src="http://loochland.com/files/img/emailHeader.jpg" width="300" height="200" /></td>
+		<td colspan="2"><span style="font-size:20px;color:orange;font-family:\'Arial\';">'.$subject.'</span></td>
+	</tr>
+	<tr>
+		<td colspan="3" style="font-size:20px;color:#924c0e;font-family:\'Arial\';">
+			'.$message.'
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2"><a href="http://www.LoochLand.com">http://www.LoochLand.com</a></td>
+		<td width="350" align="right"><img src="http://loochland.com/files/img/emailFooter.jpg" width="300" height="200" /></td>
+	</tr>
+</table>';
+
+    // normal headers
+	$num = md5(time()); 
+    $headers  = "From: LoochLand <noreply@loochland.com>\r\n";
+
+    // This two steps to help avoid spam   
+    $headers .= "Message-ID: <".time()." TheSystem@".$_SERVER['SERVER_NAME'].">\r\n";
+    $headers .= "X-Mailer: PHP v".phpversion()."\r\n";         
+
+	// With message
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+	   
+	   mail($to, $subject, $message, $headers);
+	}
+
 ?>

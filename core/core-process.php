@@ -1,28 +1,38 @@
 <?php
 	if (!IN_DREAMFORGERY) die();
-
-	// TODO: Must preprocess models to be shared accross all controllers with scope priority of local controller override
+	
+	global $global_models;
+	$global_models = array();
 	
 	class Core {
 
 		private $obj_controllers; // Controllers Found
-
+		
 		public function __construct() {
-
 			// Get php's core declared classes count
 			$system_classes_count = count(get_declared_classes());
 			$system_classes = get_declared_classes();
 			
+			$paths_to_load = array();
 			// search for all files within the webapp directory
-			$it = new RecursiveDirectoryIterator("webapp");	//start at webapp level
-			$webapp_files = Array('php');	//search for all php files
-			foreach(new RecursiveIteratorIterator($it) as $file) {
-				// when filename ends with webapp_files extension, include the file
-				if (in_array(substr($file, strpos($file, '.' ) + 1 ), $webapp_files) == true) {
-					include $file;
+			$initial_directories = explode(',', SEARCH_DIRECTORY_CONTROLLERS);
+			foreach ($initial_directories as $initial_dir) {
+				$it = new RecursiveDirectoryIterator($initial_dir);		//start at webapp level
+				$webapp_files = explode(',', FILE_FILTER_CONTROLLERS);	//search for all php files
+				foreach(new RecursiveIteratorIterator($it) as $file) {
+					// when filename ends with webapp_files extension, include the file
+					if (in_array(substr($file, strpos($file, '.' ) + 1 ), $webapp_files) == true) {
+						$paths_to_load[] = $file;
+					}
 				}
 			}
-
+			
+			sort($paths_to_load, SORT_STRING);
+			
+			foreach ($paths_to_load as $path) {
+				include $path;
+			}
+			
 			// Remove all classes of php's core to identify webapp classes
 			$custom_classes = array_slice(get_declared_classes(), $system_classes_count);
 
@@ -37,50 +47,112 @@
 
 		// Views and subviews process
 		public function process_view(&$controller, $view, $recursion_level = 0) {
+			// global models, shared across all controllers
+			global $global_models;
+			
 			// prevent infinite recursions
 			if ($recursion_level > 999999)
 				die("Template ".$filename." surpasses maximum recursion level. (Prevented infinite loop from crashing server)");
-
-			// start template engine
-			$this->template = new Template_Engine();
-			$this->template->set_template();
-
+			
 			// start output buffer
 			ob_start();
 			
-			/* Assign Primary model values */
-			// assign model values to template
-			$vars = array();
-			foreach ($controller->models as $key => $model) {
-				if (is_array($model)) {
-					foreach ($model as $subkey => $data) {
-						if (is_array($data)) {
-							$this->template->assign_block_vars($key, $data);
+
+			// view is string or file
+			$view_output = ""; 
+			if (!file_exists("webapp/views/".$view)) {
+				// when view isn't a file, view is a string
+				$view_output = $view;
+			} else {
+				// when view is a file, fetch content
+				$view_output = @file_get_contents("webapp/views/".$view);
+			}
+			
+			/* process subview arrays, syntax: 
+			[for:blocks]
+				[blocks.x]
+				[blocks.y]
+				[blocks.z]
+				[blocks.t]
+			[end:blocks]
+			*/
+
+			// process shared models (variables)
+			foreach ($global_models as $var => $data) {
+				// when model data is an array
+				if (is_array($data)) {
+					// fetch for blocks and render loops
+					$forblocks = array();
+					preg_match_all('/(?<block>\[for:'.$var.'\](?<content>[\s\S]+)\[end:'.$var.'\])/ix', $view_output, $forblocks, PREG_SET_ORDER);
+					if (count($forblocks)) {
+						foreach ($forblocks as $foundForBlock) {
+							$foreach_data = '';
+							foreach ($data as $row) {
+								// set model values within the loop, ex: blocks.x value
+								$block_content = $foundForBlock['content'];
+								foreach ($row as $subvar => $value) {
+									$block_content = str_replace('['.$var.'.'.$subvar.']', $value, $block_content);
+								}
+								// append the parsed new block (of for loop) as processed view to render (ifs and setters for example)
+								$foreach_data .=  $this->process_view($controller, $block_content, $recursion_level + 1);
+							}
+							$view_output = str_replace($foundForBlock['block'], $foreach_data, $view_output);
 						}
 					}
 				} else {
-					$vars[$key] = $model;
+					// simple model, replace model with value ex: "[stats.x]" by "18"
+					$view_output = str_replace('['.$var.']', $data, $view_output);
 				}
 			}
 
-			$this->template->assign_vars($vars);
-
-			$this->template->set_filenames(array('main' => $view));
-			$this->template->display('main');
-			$view_output = ob_get_clean();
-
-
-			// process subview variables, syntax: [variable_name]
-			foreach (Controller::$subviews as $var => $data) {
-				if ($data['view'] == $view || $data['view'] == '=all') {
-					if (strpos($view_output, $data['view']) !== false) {
-						$view_output = str_replace('['.$var.']', process_view($controller, $data['view'], $recursion_level+1), $view_output);
+			/* process model setters, ex: [set:stats.x]18[endset] */
+			$setvars = array();
+			preg_match_all('~(?<block>\[set:(?<set_body>[^\[]+)\](?<set_content>[^\[.]+)\[endset\])~i', $view_output, $setvars, PREG_SET_ORDER);
+			if (count($setvars) > 0) {
+				foreach ($setvars as $key => $found) {
+					if (isset($found['set_body']) && trim($found['set_body'])!='') {
+						if (trim($found['set_content'])=='++') {
+							// when setter is ++ increment value of model
+							$controller->addModel(trim($found['set_body']), ((int)trim($controller->getModel(trim($found['set_body']))))+1);
+							$global_models[trim($found['set_body'])] = ((int)trim($controller->getModel(trim($found['set_body']))))+1;
+						} else {
+							// otherwise, set value of model to content body
+							$controller->addModel(trim($found['set_body']), $found['set_content']);
+							$global_models[trim($found['set_body'])] = $found['set_content'];
+						}
+						// remove found block from output as model has been processed
+						$view_output = str_replace($found['block'], '', $view_output);
+						// re-render models as new models were added.
+						$view_output = $this->process_view($controller, $view_output, $recursion_level + 1);
+					} elseif(isset($found['set_body'])) {
+						$controller->addModel(trim($found['set_body']), '');
+						$global_models[trim($found['set_body'])] = '';
+						// re-render models as new models were added.
+						$view_output = $this->process_view($controller, $view_output, $recursion_level + 1);
 					}
-
 				}
 			}
-
+			
+			// process if statements
+			$ifsfound = array();
+		    preg_match_all('~(?<block>\[if:(?<if_body>[^\].]+)\](?<body>.+)\[endif\])~siU', $view_output, $ifsfound, PREG_SET_ORDER);
+			if (count($ifsfound) > 0) {
+				foreach ($ifsfound as $found) {
+					$eval_code = 'return ('.$found['if_body'].');';
+					if (eval($eval_code)) {
+						//valid if statement
+						$view_output = str_replace($found['block'], $found['body'], $view_output);
+						// re-render everything within valid if statement
+						$view_output = $this->process_view($controller, $view_output, $recursion_level + 1);
+					} else {
+						// invalid if statement, erase it from view output
+						$view_output = str_replace($found['block'], '', $view_output);
+					}
+				}
+			}
+			
 			// process translations, syntax: t[text]
+			$matches = array();
 			preg_match_all('/t\[[^\[]*[^\\\]\]/i', $view_output, $matches);
 			foreach ($matches as $found_a) {
 				foreach ($found_a as $found) {
@@ -89,16 +161,8 @@
 				}
 			}
 
-			// process subview paths, syntax: include[filename] or [filename]
-			preg_match_all('/include\[[^\[]*[^\\\]\]/i', $view_output, $matches);
-			foreach ($matches as $found_a) {
-				foreach ($found_a as $found) {
-					$filename = trim(substr($found, 8, -1));
-					if (file_exists(PATH.'webapp/views/'.$filename)) {
-						$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
-					}
-				}
-			}
+			// process subview paths, syntax: [filename]
+			$matches = array();
 			preg_match_all('/\[[^\[]*[^\\\]\]/i', $view_output, $matches);
 			foreach ($matches as $found_a) {
 				foreach ($found_a as $found) {
@@ -115,7 +179,7 @@
 
 		/* Main process thread */
 		public function process() {
-		
+			global $global_models;
 			// validate and assign priorities to controllers
 			$priority_controllers = array();
 			foreach ($this->obj_controllers as $cname => $controller) {
@@ -125,37 +189,51 @@
 					if ($validator_priority !== false) {
 						// when controller validates
 						if (!is_numeric($validator_priority)) $validator_priority = 0; // when priority isn't numeric assign zero value
-						$priority_controllers[] = array($validator_priority, $cname);	// assign priority to unique class name
+						$priority_controllers[$cname] = $validator_priority;	// assign priority to unique class name
 					}
 				}
 			}
 
+			function prioritySorter($a, $b) {
+				if ($a == $b) return 0;
+				return ($a > $b) ? -1 : 1;
+			}
+
 			// sort controllers by highest priority to lowest
-			usort($priority_controllers, array('Core', 'prioritySort'));
-			
-			foreach ($priority_controllers as $this_priority_controller) {
-				$priority = $this_priority_controller[0];
-				$cname = $this_priority_controller[1];
+			uasort($priority_controllers, 'prioritySorter');
+
+			// index of controllers
+			$controller_index=0;
+
+			foreach ($priority_controllers as $cname => $priority) {
+				
 				// find controller of class name
 				$controller = $this->obj_controllers[$cname];
-				
+				$controller->index = $controller_index;
+				$controller_index++;
+
 				// execute if executable is found
 				if (method_exists($controller, 'execute')) $controller->execute();
+
+				// add models to shared models
+				foreach ($controller->models as $key => $model) {
+					$global_models[$key] = $model;
+				}
 				
 				// render each view of controller
 				foreach($controller->views as $view) {
 					echo $this->process_view($controller, $view); 
 				}
+
+				// re-add models to shared models
+				foreach ($controller->models as $key => $model) {
+					$global_models[$key] = $model;
+				}
+				
 			}
 			
 		}
 		
-		private static function prioritySort($a, $b) {
-			if ($a[0] == $b[0]) {
-				return 0;
-			}
-			return ($a[0] < $b[0]) ? -1 : 1;
-		}
 	}
 
 	// Run Core

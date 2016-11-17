@@ -29,8 +29,9 @@
 			return $ret;
 		}
 
-		static public function param($param) {
+		static public function param($param, $strip_tags = true) {
 			if (self::$dbtype == 'mysql') {
+				if ($strip_tags) $param = strip_tags($param);
 				return self::$dblink->real_escape_string($param);
 			}
 		}
@@ -39,11 +40,22 @@
 			return CMS_DB_PREFIX.$table_name;
 		}
 
-		static public function queryResults($query_string) {
+		static public function queryResults($query_string, $add_styles=false) {
 			$ret = self::query($query_string);
-			if ($ret->num_rows>0) {
+			if (!is_object($ret)) {
+				return false;
+			}
+			if ($ret->num_rows > 0) {
 				$results = array();
+				$rowIncrementer=0;
 				while ($data = $ret->fetch_assoc()) {
+					if ($add_styles) {
+						$data['rowEven'] = ($rowIncrementer % 2 == 0) ? 'even' : 'odd';
+						$data['rowFirst'] = ($rowIncrementer == 1) ? 'first' : '';
+						$data['rowLast'] = ($rowIncrementer == $ret->num_rows) ? 'last' : '';
+						$data['index'] = $rowIncrementer;
+						$rowIncrementer++;
+					}
 					$results[] = $data;
 				}
 				return $results;
@@ -51,7 +63,10 @@
 				return false;
 			}
 		}
-
+		
+		static public function lastId() {
+			return mysqli_insert_id(self::$dblink);
+		}
 	}
 	class SearchInterface {
 		
