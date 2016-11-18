@@ -5,6 +5,7 @@
 	class Controller {
 		public $models = array();
 		public $views = array();
+		public $injected_views = array();
 		public static $subviews = array();
 		public $index;
 		
@@ -109,6 +110,14 @@
 				$this->views[$view_filename] = $view_filename;
 			}
 		}
+
+		// Load view template from filename
+		function injectView($selector, $mode, $view_filename) {
+			if (in_array($mode, array('prepend', 'append', 'replace', 'outer-replace'))) {
+				$this->injected_views[] = array($selector, $mode, $view_filename);
+			}
+		}
+
 		
 		function loadViewAsJSON($omitted_namespaces, $ommited_models) {
 			$JSON = array();

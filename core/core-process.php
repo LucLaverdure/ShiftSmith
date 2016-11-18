@@ -46,7 +46,7 @@
 		}
 
 		// Views and subviews process
-		public function process_view(&$controller, $view, $recursion_level = 0) {
+		public function process_view(&$controller, $view, $recursion_level = 0, $mode = 'append') {
 			// global models, shared across all controllers
 			global $global_models;
 			
@@ -221,10 +221,34 @@
 				}
 				
 				// render each view of controller
+				$view_complete_output = '';
 				foreach($controller->views as $view) {
-					echo $this->process_view($controller, $view); 
+					 $view_complete_output .= $this->process_view($controller, $view); 
 				}
 
+				// render each injected view of controller
+				foreach($controller->injected_views as  $view) {
+					phpQuery::newDocumentHTML($view_complete_output);
+					$selector = $view[0];
+					$mode = $view[1];
+					$view_filename = $view[2];
+					switch ($mode) {
+						case 'append':
+							pq($selector)->append($this->process_view($controller, $view_filename));
+							break;
+						case 'prepend':
+							pq($selector)->prepend($this->process_view($controller, $view_filename));
+							break;
+						case 'replace':
+							pq($selector)->html($this->process_view($controller, $view_filename));
+							break;
+						case 'outer-replace':
+							pq($selector)->replaceWith($this->process_view($controller, $view_filename));
+							break;
+					}
+				}
+
+				
 				// re-add models to shared models
 				foreach ($controller->models as $key => $model) {
 					$global_models[$key] = $model;
@@ -232,6 +256,8 @@
 				
 			}
 			
+			echo pq(':first')->html();
+
 		}
 		
 	}
