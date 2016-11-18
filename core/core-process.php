@@ -226,6 +226,7 @@
 					 $view_complete_output .= $this->process_view($controller, $view); 
 				}
 
+
 				// render each injected view of controller
 				foreach($controller->injected_views as  $view) {
 					phpQuery::newDocumentHTML($view_complete_output);
@@ -246,6 +247,7 @@
 							pq($selector)->replaceWith($this->process_view($controller, $view_filename));
 							break;
 					}
+					$view_complete_output = pq(':first')->html();
 				}
 
 				
@@ -253,10 +255,11 @@
 				foreach ($controller->models as $key => $model) {
 					$global_models[$key] = $model;
 				}
-				
+
+				echo $view_complete_output;
+			
 			}
 			
-			echo pq(':first')->html();
 
 		}
 		
