@@ -113,23 +113,22 @@
 	function email($to, $subject, $message) {
 		$message='<table width="100%" colspan="0" cellpadding="0" border="0">
 	<tr>
-		<td width="350"><img src="http://loochland.com/files/img/emailHeader.jpg" width="300" height="200" /></td>
+		<td width="350"><img src="http://dreamforgery.com/files/img/logo-black.gif" width="114" height="121" /></td>
 		<td colspan="2"><span style="font-size:20px;color:orange;font-family:\'Arial\';">'.$subject.'</span></td>
 	</tr>
 	<tr>
 		<td colspan="3" style="font-size:20px;color:#924c0e;font-family:\'Arial\';">
-			'.$message.'
+			<br><br>'.$message.'<br><br>
 		</td>
 	</tr>
 	<tr>
-		<td colspan="2"><a href="http://www.LoochLand.com">http://www.LoochLand.com</a></td>
-		<td width="350" align="right"><img src="http://loochland.com/files/img/emailFooter.jpg" width="300" height="200" /></td>
+		<td colspan="3"><a href="http://www.dreamforgery.com">http://www.dreamforgery.com</a></td>
 	</tr>
 </table>';
 
     // normal headers
 	$num = md5(time()); 
-    $headers  = "From: LoochLand <noreply@loochland.com>\r\n";
+    $headers  = "From: DreamForgery <noreply@dreamforgery.com>\r\n";
 
     // This two steps to help avoid spam   
     $headers .= "Message-ID: <".time()." TheSystem@".$_SERVER['SERVER_NAME'].">\r\n";

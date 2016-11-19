@@ -1,0 +1,358 @@
+/* CSS Reset
+http://meyerweb.com/eric/tools/css/reset/ 
+v2.0 | 20110126
+License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
+/* Main */
+/* #e0e0ed url(http://beta.luclaverdure.com/wp-content/themes/luclaverdure/images/bg/bgpattern.jpg); */
+body {
+	background: #fff;
+	font-family: 'PT Sans', sans-serif;
+	font-size:17px;
+	color: #181920;
+}
+#wrapper .highlight {
+	background: #4286f4;
+	position:fixed;
+	width:100%;
+	top:0;
+	left:0;
+	z-index:999;
+}
+
+.header {
+	margin-top:10px;
+	float:left;
+}
+.pad {
+	padding:10px;
+}
+.logo {
+	background: transparent url(/files/img/logo.png) no-repeat top left;
+	background-size: 100%;
+	height: 116px;
+	float:left;
+	width:100px;
+	margin-top:20px;
+}
+h1 {
+	font-family: 'Source Code Pro', monospace;
+	font-size:36px;
+	margin: 30px 0 10px 0;
+	text-shadow:none;
+	color:#fff;
+}
+h2 {
+	font-family: 'Source Code Pro', monospace;
+	margin: 10px 0 10px 0;
+	color:#fff;
+	font-size:30px;
+	text-shadow:none;
+}
+h3 {
+	box-sizing:border-box;
+	padding:20px;
+	max-width:450px;
+	width:100%;
+	background: #fff;
+	border-top:3px solid #000;
+	border-left:3px solid #000;
+	border-right:3px solid #000;
+	border-radius:5px;
+	border-radius-bottom-left:none;
+	border-radius-bottom-right:none;
+}
+h3, h3 a {
+	margin-top:22px;
+	color: #4286f4;
+	font-size:22px;
+	font-weight:bold;
+}
+h3 .key {
+	color: #f49b42;
+}
+h4 {
+	margin-top:0;
+}
+h4, h4 a {
+	color: #4286f4;
+	font-size:18px;
+	font-weight:bold;
+	margin-bottom:20px;
+}
+#wrapper .inner-wrapper.main-wrap {
+	margin-top:150px;
+}
+.download-box {
+	border-radius:10px;
+	border:3px solid #000;
+	max-width:450px;
+	width:100%;
+	padding:20px 0px 0 0px;
+	background:#fff;
+	margin-bottom:30px;
+	text-shadow:none;
+}
+.title-heads {
+	margin-left:30px;
+}
+.download-title {
+	font-size:20px;
+	margin:0 auto 0 20px;
+	line-height:40px;
+}
+.download-button {
+	font-size:30px;
+	cursor:pointer;
+	text-decoration:none;
+	color:#fff;
+	margin:20px auto 0 auto;
+	display:block;
+	background:#4286f4;
+	border-radius:5px;
+	max-width:200px;
+	width:100%;
+	padding: 10px 20px;
+	text-align:center;
+	border:1px solid #000;
+	font-weight:bold;
+}
+.download-button:hover {
+	background: #00aa00;
+	transition: all .5s ease;
+}
+.inner-wrapper {
+	margin:0 auto;
+	max-width:1024px;
+}
+#wrapper {
+	width:100%;
+	z-index:0;
+}
+p {
+	font-size:18px;
+	line-height:35px;
+	margin-top:20px;
+	margin-bottom:10px;
+}
+.handy {
+	position:absolute;
+	right:0;
+	top:500px;
+	background: transparent url(/files/img/hand.jpg) no-repeat top left;
+	float:left;
+	max-width:500px;
+	width:50%;
+	height:500px;
+	z-index:-1;
+	position:relative;
+}
+.handy-spacer {
+	float:left;
+	max-width:500px;
+	width:50%;
+	height:500px;
+	visibility:hidden;
+}
+
+.code-sample {
+	width:100%;
+	max-width:500px;
+	float:left;
+}
+.archive-header {
+	margin-bottom:10px;
+}
+a.gh, .archive a {
+	font-size: 14px;
+	text-decoration:none;
+	border-bottom:none;
+	line-height:25px;
+}
+.footer {
+	max-width:450px;
+	width:100%;
+	text-shadow:2px 2px #000;
+	margin:0 auto;
+}
+.footer a {
+	color:#fff;
+	text-decoration:none;
+	float:right;
+	padding:20px;
+	border-bottom:none;
+}
+
+.footer a:hover, a.gh:hover, .archive a:hover {
+	text-decoration:underline;
+}
+
+a {
+	text-decoration:none;
+	color: #000;
+	border-bottom:2px dotted #000;
+}
+pre code[class*="language"] {
+	height:auto;
+}
+pre code[class*="language"]:hover {
+	width:1024px;
+	background:#fff;
+}
+.mvc-help, .cms-help {
+	background:#fff;
+	padding:0 20px 0 40px !important;
+	border-left: 3px solid #000;
+	border-right: 3px solid #000;
+	border-bottom: 3px solid #000;
+	border-top: none !important;
+	border-radius-top-left:none;
+	border-radius-top-right:none;
+}
+.login-box {
+	margin: 20px auto;
+	max-width:500px;
+	width:100%;
+	background-color: #4286f4;
+	color:#fff;
+	padding:30px;
+	transition: 2s all ease;
+}
+.login-box.redbg {
+	background-color: #aa0000;
+	transition: 2s all ease;
+}
+.login-box.greenbg {
+	background-color: #00aa00;
+	transition: 2s all ease;
+}
+.login {
+	float:left;
+}
+
+.login label{
+	width:100%;
+}
+.login input[type=text], .login input[type=password] {
+	width:100%;
+	font-size:20px;
+	padding:5px;
+}
+.login input[type=submit] {
+	float:right;
+	font-size:16px;
+	background:#fff;
+	color:#4286f4;
+	display:block;
+	padding:10px;
+}
+.login-list {
+	margin:0 auto;
+	width:100%;
+}
+.checkfeature {
+	max-width: 30px;
+	width:100%;
+	height:auto;
+	display:block;
+	margin-right:20px;
+	float:left;
+	clear:left;
+}
+.bgw {
+	box-sizing:border-box;
+	padding:20px;
+	max-width:450px;
+	width:100%;
+	background: #fff;
+	border-radius:5px;
+	box-shadow: 2px 2px #000;
+	border: 3px solid #000;
+}
+.parallax-window {
+	min-height: 400px;
+	height:auto !important;
+}
+
+.footlight {
+	background: #4286f4;
+}
+
+.top-admin {
+	position:fixed;
+	background: #0000ff;
+	min-height:30px;
+}

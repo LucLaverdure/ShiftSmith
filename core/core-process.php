@@ -60,7 +60,10 @@
 
 			// view is string or file
 			$view_output = ""; 
-			if (!file_exists("webapp/views/".$view)) {
+			if (substr($view, 0, 4 )=='http') {
+				$view_output = @file_get_contents($view);
+			}				
+			else if (!file_exists("webapp/views/".$view)) {
 				// when view isn't a file, view is a string
 				$view_output = $view;
 			} else {
@@ -226,37 +229,38 @@
 					 $view_complete_output .= $this->process_view($controller, $view); 
 				}
 
-
 				// render each injected view of controller
-				foreach($controller->injected_views as  $view) {
-					phpQuery::newDocumentHTML($view_complete_output);
-					$selector = $view[0];
+				$doc = phpQuery::newDocument($view_complete_output);
+				foreach($controller->injected_views as $view) {
+					$selector = $view[0].'';
 					$mode = $view[1];
 					$view_filename = $view[2];
-					switch ($mode) {
+					$processed_view = $this->process_view($controller, $view_filename);
+					switch (trim($mode)) {
 						case 'append':
-							pq($selector)->append($this->process_view($controller, $view_filename));
+							//pq('html')->find($selector)->append($processed_view);
+							$view_out = pq($selector)->append($processed_view);
 							break;
 						case 'prepend':
-							pq($selector)->prepend($this->process_view($controller, $view_filename));
+							//pq('html')->find($selector)->prepend($processed_view);
+							$view_out = pq($selector)->prepend($processed_view);
 							break;
 						case 'replace':
-							pq($selector)->html($this->process_view($controller, $view_filename));
+							//pq('html')->find($selector)->html($processed_view);
+							$view_out = pq($selector)->html($processed_view);
 							break;
 						case 'outer-replace':
-							pq($selector)->replaceWith($this->process_view($controller, $view_filename));
+							//pq('html')->find($selector)->replaceWith($processed_view);
+							$view_out = pq($selector)->replaceWith($processed_view);
 							break;
 					}
-					$view_complete_output = pq(':first')->html();
 				}
-
+				print $doc;
 				
 				// re-add models to shared models
 				foreach ($controller->models as $key => $model) {
 					$global_models[$key] = $model;
 				}
-
-				echo $view_complete_output;
 			
 			}
 			
