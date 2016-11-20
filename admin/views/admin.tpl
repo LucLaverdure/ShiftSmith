@@ -1,4 +1,4 @@
-[admin/header.tpl]
+[webapp/admin/views/header.tpl]
 <form action="" method="post">
 	<div class="login-box cf">
 		<div class="login cf">
@@ -42,4 +42,4 @@
 		
 	</script>
 </form>
-[admin/footer.tpl]
+[webapp/admin/views/footer.tpl]

@@ -268,9 +268,11 @@ a {
 pre code[class*="language"] {
 	height:auto;
 }
+pre[class*="language-"]:hover {
+	width:1024px;
+}
 pre code[class*="language"]:hover {
 	width:1024px;
-	background:#fff;
 }
 .mvc-help, .cms-help {
 	background:#fff;
@@ -355,4 +357,10 @@ pre code[class*="language"]:hover {
 	position:fixed;
 	background: #0000ff;
 	min-height:30px;
+}
+.e404 h1 {
+	font-size:72px;
+}
+.parallax-window {
+	min-height:800px;
 }

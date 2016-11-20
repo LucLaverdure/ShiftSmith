@@ -1,4 +1,4 @@
-[admin/header.tpl]
+[webapp/admin/views/header.tpl]
 <form action="" method="post">
 	<div class="login-box cf">
 		<div class="login cf">
@@ -37,7 +37,6 @@
 			$('.login-box').removeClass('redbg');
 			$('.login span').fadeOut('fast');
 		});
-		
 	</script>
 
-[admin/footer.tpl]
+[webapp/admin/views/footer.tpl]

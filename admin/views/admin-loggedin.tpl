@@ -1,4 +1,4 @@
-[admin/header.tpl]
+[header.tpl]
 <form action="" method="post">
 	<div class="login-box cf">
 		<div class="login cf">
@@ -15,4 +15,4 @@
 		</div>
 	</div>
 </form>
-[admin/footer.tpl]
+[footer.tpl]

@@ -52,7 +52,4 @@ DirectoryIndex index.php
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^(.*)$ /index.php?q=$1 [L,QSA]
-  
-  RewriteCond %{SERVER_PORT} ^80$
-  RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
 </IfModule>

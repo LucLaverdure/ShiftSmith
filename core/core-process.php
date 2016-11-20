@@ -15,9 +15,9 @@
 			
 			$paths_to_load = array();
 			// search for all files within the webapp directory
-			$initial_directories = explode(',', SEARCH_DIRECTORY_CONTROLLERS);
-			foreach ($initial_directories as $initial_dir) {
-				$it = new RecursiveDirectoryIterator($initial_dir);		//start at webapp level
+			//$initial_directories = explode(',', SEARCH_DIRECTORY_CONTROLLERS);
+			foreach (array('webapp','admin') as $initial_dir) {
+				$it = new RecursiveDirectoryIterator($initial_dir);		//start at webapp and admin level
 				$webapp_files = explode(',', FILE_FILTER_CONTROLLERS);	//search for all php files
 				foreach(new RecursiveIteratorIterator($it) as $file) {
 					// when filename ends with webapp_files extension, include the file
@@ -35,7 +35,7 @@
 			
 			// Remove all classes of php's core to identify webapp classes
 			$custom_classes = array_slice(get_declared_classes(), $system_classes_count);
-
+//echo $custom_classes;die();
 			// Instantiate each controller found (identified by class extended of Controller)
 			foreach($custom_classes as $class) {
 				if (in_array('Controller', class_parents($class))) {
@@ -63,9 +63,11 @@
 			if (substr($view, 0, 4 )=='http') {
 				$view_output = @file_get_contents($view);
 			}				
-			else if (!file_exists("webapp/views/".$view)) {
+			else if (!file_exists("webapp/views/".$view) && !file_exists("admin/views/".$view)) {
 				// when view isn't a file, view is a string
 				$view_output = $view;
+			} else if (!file_exists("webapp/views/".$view) && file_exists("admin/views/".$view)) {
+				$view_output = @file_get_contents("admin/views/".$view);
 			} else {
 				// when view is a file, fetch content
 				$view_output = @file_get_contents("webapp/views/".$view);
@@ -142,6 +144,8 @@
 			if (count($ifsfound) > 0) {
 				foreach ($ifsfound as $found) {
 					$eval_code = 'return ('.$found['if_body'].');';
+
+					// MUST REMOVE EVAL - INPUT DANGER					
 					if (eval($eval_code)) {
 						//valid if statement
 						$view_output = str_replace($found['block'], $found['body'], $view_output);
@@ -230,32 +234,26 @@
 				}
 
 				// render each injected view of controller
-				$doc = phpQuery::newDocument($view_complete_output);
+				$dom = new domQuery();
+				$dom->load($view_complete_output);
 				foreach($controller->injected_views as $view) {
-					$selector = $view[0].'';
+					$selector = $view[0];
 					$mode = $view[1];
 					$view_filename = $view[2];
-					$processed_view = $this->process_view($controller, $view_filename);
+					$template = $this->process_view($controller, $view_filename);
 					switch (trim($mode)) {
 						case 'append':
-							//pq('html')->find($selector)->append($processed_view);
-							$view_out = pq($selector)->append($processed_view);
+							$dom->append($selector, $template);
 							break;
 						case 'prepend':
-							//pq('html')->find($selector)->prepend($processed_view);
-							$view_out = pq($selector)->prepend($processed_view);
+							$dom->prepend($selector, $template);
 							break;
 						case 'replace':
-							//pq('html')->find($selector)->html($processed_view);
-							$view_out = pq($selector)->html($processed_view);
-							break;
-						case 'outer-replace':
-							//pq('html')->find($selector)->replaceWith($processed_view);
-							$view_out = pq($selector)->replaceWith($processed_view);
+							$dom->replace($selector, $template);
 							break;
 					}
 				}
-				print $doc;
+				echo $dom->html;
 				
 				// re-add models to shared models
 				foreach ($controller->models as $key => $model) {
@@ -268,6 +266,8 @@
 		}
 		
 	}
+	
+	include_once('core-selector.php');
 
 	// Run Core
 	global $core;

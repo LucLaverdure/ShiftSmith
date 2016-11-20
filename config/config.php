@@ -9,16 +9,16 @@
 
 	// recursively search directory(ies) for Controllers  and functions used in application 
 	// (string delimited by comas without spaces)
-	define('SEARCH_DIRECTORY_CONTROLLERS', 'webapp');
+	//define('SEARCH_DIRECTORY_CONTROLLERS', 'webapp,admin');
 	
 	// filter file extensions for controllers and functions used in application
 	define('FILE_FILTER_CONTROLLERS', 'php,php5,php4,php3,php2');
 
 	// cron job password
-	define('CRON_JOB_PASSWORD', 'cronadmin123');
+	define('CRON_JOB_PASSWORD', 'eedad41f42660e5cb7a4');
 	
 	// password hash, salt used for encryptions
-	define('HASHCODE', 'dreamforgeryadminsalt');
+	define('HASHCODE', 'LOOCHLAND!$89712-*+loochland...');
 	
 	/* protected server side session namespaces (string delimited by comas without spaces)
 					 accessible via controller->setcache and controller->getcache

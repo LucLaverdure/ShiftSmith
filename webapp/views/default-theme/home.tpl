@@ -358,7 +358,7 @@ class formControl extends Controller {
 	<div class="cms-help bgw">
 		<h4 class="expand"><a href="#">Administration URL</a></h4>
 		<div class="box" style="display:none;">
-			<p>Visit <a href="/admin">/admin</a> to manage your website.</p>
+			<p>Visit <a href="/user">/user</a> to manage your website.</p>
 			<p>You can input the credentials for administration.</p>
 		</div>
 	</div>
