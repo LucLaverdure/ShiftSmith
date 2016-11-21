@@ -1,12 +1,12 @@
 <?php
 	if (!IN_DREAMFORGERY) die();
-	include_once('phpQuery/selector.inc');
+	include_once('phpQuery/selector.php');
 	
 	class domQuery {
 		public $html = '';
 		
-		public function load($html) {
-			$this->html = $html;
+		public function setHtml($loadhtml) {
+			$this->html = $loadhtml;
 		}
 		public function prepend($selector, $template) {
 			return str_replace($this->select($selector), $template.$this->html, $template);
@@ -19,8 +19,13 @@
 		}
 		public function select($selector) {
 			$dom = new SelectorDom($this->html);
-			$divs = $dom->select($selector);
-			//injectView($selector, $mode, $view_filename) {
+			$divs = $dom->select('div a');
+
+ 			return $divs;
+		}
+		
+		public function getHtml() {
+			return $this->html;
 		}
 	}
 

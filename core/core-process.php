@@ -1,5 +1,7 @@
 <?php
 	if (!IN_DREAMFORGERY) die();
+
+	include_once('phpquery/phpQuery-onefile.php');
 	
 	global $global_models;
 	$global_models = array();
@@ -8,34 +10,66 @@
 
 		private $obj_controllers; // Controllers Found
 		
+		private function endsWith($haystack, $needle) {
+			$length = strlen($needle);
+			if ($length == 0) {
+				return true;
+			}
+
+			return (substr($haystack, -$length) === $needle);
+		}
+		
+		private function getDirContents($dir, &$results = array()){
+			$files = scandir($dir);
+
+			foreach($files as $key => $value){
+				$path = realpath($dir.DIRECTORY_SEPARATOR.$value);
+				if(!is_dir($path)) {
+					// on file check for allowed config extensions
+					$allowed_extensions = explode(',', FILE_FILTER_CONTROLLERS);
+					$allowed = false;
+					foreach($allowed_extensions as $ext) {
+						if ($this->endsWith($path, $ext)) {
+							$allowed = true;
+						}
+					}
+					// when allowed, add to array of controller pattern
+					if ($allowed) $results[] = $path;
+				} else if($value != "." && $value != "..") {
+					// on directory, browse
+					$this->getDirContents($path, $results);
+				}
+			}
+
+			return $results;
+		}
+
+		
 		public function __construct() {
+			global $main_path;
+			
 			// Get php's core declared classes count
 			$system_classes_count = count(get_declared_classes());
 			$system_classes = get_declared_classes();
 			
 			$paths_to_load = array();
 			// search for all files within the webapp directory
-			//$initial_directories = explode(',', SEARCH_DIRECTORY_CONTROLLERS);
-			foreach (array('webapp','admin') as $initial_dir) {
-				$it = new RecursiveDirectoryIterator($initial_dir);		//start at webapp and admin level
-				$webapp_files = explode(',', FILE_FILTER_CONTROLLERS);	//search for all php files
-				foreach(new RecursiveIteratorIterator($it) as $file) {
-					// when filename ends with webapp_files extension, include the file
-					if (in_array(substr($file, strpos($file, '.' ) + 1 ), $webapp_files) == true) {
-						$paths_to_load[] = $file;
-					}
-				}
+			
+			$initial_dirs = explode(',', SEARCH_DIRECTORY_CONTROLLERS);
+			
+			foreach ($initial_dirs as $dir) {
+				$paths_to_load[] = $this->getDirContents($dir);
 			}
 			
-			sort($paths_to_load, SORT_STRING);
-			
 			foreach ($paths_to_load as $path) {
-				include $path;
+				foreach ($path as $path_within) {
+					if ($path_within) include $path_within;
+				}
 			}
 			
 			// Remove all classes of php's core to identify webapp classes
 			$custom_classes = array_slice(get_declared_classes(), $system_classes_count);
-//echo $custom_classes;die();
+
 			// Instantiate each controller found (identified by class extended of Controller)
 			foreach($custom_classes as $class) {
 				if (in_array('Controller', class_parents($class))) {
@@ -54,9 +88,8 @@
 			if ($recursion_level > 999999)
 				die("Template ".$filename." surpasses maximum recursion level. (Prevented infinite loop from crashing server)");
 			
-			// start output buffer
 			ob_start();
-			
+			// start output buffer
 
 			// view is string or file
 			$view_output = ""; 
@@ -186,7 +219,9 @@
 
 		/* Main process thread */
 		public function process() {
+			global $docX;
 			global $global_models;
+			global $view_complete_output;
 			// validate and assign priorities to controllers
 			$priority_controllers = array();
 			foreach ($this->obj_controllers as $cname => $controller) {
@@ -211,7 +246,10 @@
 
 			// index of controllers
 			$controller_index=0;
-
+			
+			$output_buffer = '';
+			$injections = array();
+			
 			foreach ($priority_controllers as $cname => $priority) {
 				
 				// find controller of class name
@@ -230,44 +268,49 @@
 				// render each view of controller
 				$view_complete_output = '';
 				foreach($controller->views as $view) {
-					 $view_complete_output .= $this->process_view($controller, $view); 
+					$view_complete_output .= $this->process_view($controller, $view); 
+					$output_buffer .= $view_complete_output;
 				}
 
-				// render each injected view of controller
-				$dom = new domQuery();
-				$dom->load($view_complete_output);
-				foreach($controller->injected_views as $view) {
-					$selector = $view[0];
-					$mode = $view[1];
-					$view_filename = $view[2];
-					$template = $this->process_view($controller, $view_filename);
-					switch (trim($mode)) {
-						case 'append':
-							$dom->append($selector, $template);
-							break;
-						case 'prepend':
-							$dom->prepend($selector, $template);
-							break;
-						case 'replace':
-							$dom->replace($selector, $template);
-							break;
-					}
-				}
-				echo $dom->html;
-				
 				// re-add models to shared models
 				foreach ($controller->models as $key => $model) {
 					$global_models[$key] = $model;
 				}
-			
+				
+				foreach($controller->injected_views as $injected_view) {
+					$injections[] = $injected_view;
+				}
 			}
 			
+			$docX = phpQuery::newDocument($output_buffer);
+			
+			foreach($injections as $injected_view) {
+				$selector = $injected_view[0];
+				$mode = $injected_view[1];
+				$view_filename = $injected_view[2];
 
+				$injected_html = $this->process_view($controller, $view_filename);
+
+				switch ($mode) {
+					case 'append':
+						$docX[$selector]->append($injected_html);
+						break;
+					case 'prepend':
+						$docX[$selector]->prepend($injected_html);
+						break;
+					case 'replace':
+						$docX[$selector]->html($injected_html);
+						break;
+				}
+
+			}
+			
+			echo $docX->getDocument();
+			
 		}
 		
 	}
 	
-	include_once('core-selector.php');
 
 	// Run Core
 	global $core;
