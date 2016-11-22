@@ -88,24 +88,23 @@
 			if ($recursion_level > 999999)
 				die("Template ".$filename." surpasses maximum recursion level. (Prevented infinite loop from crashing server)");
 			
-			ob_start();
+			
 			// start output buffer
+			ob_start();
 
 			// view is string or file
 			$view_output = ""; 
 			if (substr($view, 0, 4 )=='http') {
 				$view_output = @file_get_contents($view);
-			}				
-			else if (!file_exists("webapp/views/".$view) && !file_exists("admin/views/".$view)) {
-				// when view isn't a file, view is a string
-				$view_output = $view;
-			} else if (!file_exists("webapp/views/".$view) && file_exists("admin/views/".$view)) {
+			} else if (file_exists("admin/views/".$view)) {
 				$view_output = @file_get_contents("admin/views/".$view);
+			} else if (file_exists("webapp/views/".$view)) {
+				$view_output = @file_get_contents("webapp/views/".$view);
 			} else {
 				// when view is a file, fetch content
-				$view_output = @file_get_contents("webapp/views/".$view);
+				$view_output = $view;
 			}
-			
+	
 			/* process subview arrays, syntax: 
 			[for:blocks]
 				[blocks.x]
@@ -207,7 +206,14 @@
 			foreach ($matches as $found_a) {
 				foreach ($found_a as $found) {
 					$filename = trim(substr($found, 1, -1));
-					if (file_exists(PATH.'webapp/views/'.$filename)) {
+					if (substr($filename, 0, 4)=='http') {
+						// file is a web fetch
+						$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
+					} else if (file_exists("admin/views/".$filename)) {
+						// file is an admin file
+						$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
+					} else if (file_exists("webapp/views/".$filename)) {
+						// file is an webapp file
 						$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
 					}
 				}

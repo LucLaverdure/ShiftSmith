@@ -1,4 +1,4 @@
-[default-theme/header.tpl]
+[admin/adminHeader.tpl]
 <div class="login">
 
 	<h1 style="border-radius:50px;background:#aaaaff;padding:20px;">[glob.title]</h1>
@@ -16,4 +16,4 @@
 	</form>	
 	
 </div>
-[default-theme/footer.tpl]
+[admin/adminFooter.tpl]
