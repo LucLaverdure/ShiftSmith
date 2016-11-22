@@ -13,7 +13,7 @@
 <link rel='stylesheet' type='text/css' href='/files/css/common.css' />
 <link rel='stylesheet' type='text/css' href='/files/css/prism.css' />
 
-<script src="/files/js/jquery-1.12.3.min.js" type="text/javascript"></script>
+<script src="/files/js/jquery-3.1.1.min.js" type="text/javascript"></script>
 <script src="/files/js/parallax.min.js" type="text/javascript"></script>
 <script src="/files/js/prism.js" type="text/javascript"></script>
 <script src="/files/js/main.js" type="text/javascript"></script>
@@ -25,7 +25,7 @@
 </head>
 
 <body>
-	<div class="parallax-window" data-parallax="scroll" data-image-src="/files/img/AdobeStock_44069441.jpeg">
+	<div class="parallax-window" data-parallax="scroll" data-image-src="/files/img/bg.jpeg">
 		<div id="wrapper">
 		
 			<div class="highlight cf">
@@ -37,8 +37,6 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- data-parallax="scroll" class="parallax-window cf" data-image-src="/files/img/luclaverdure.jpg" -->
-			
+		
 			<div class="inner-wrapper main-wrap">
 				<div class="pad">

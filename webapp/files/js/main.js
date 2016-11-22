@@ -6,6 +6,6 @@ $(function() {
 		return false;
 	});
 	
-	$('.parallax-window').parallax({imageSrc: '/files/img/AdobeStock_44069441.jpeg'});
+	$('.parallax-window').parallax({imageSrc: $(this).data('image-src')});
 	$(window).trigger('resize').trigger('scroll');
 });

@@ -1,0 +1,261 @@
+/* CSS Reset
+http://meyerweb.com/eric/tools/css/reset/ 
+v2.0 | 20110126
+License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
+/* Main */
+/* #e0e0ed url(http://beta.luclaverdure.com/wp-content/themes/luclaverdure/images/bg/bgpattern.jpg); */
+body {
+	background:#000;
+	font-family: 'PT Sans', sans-serif;
+	font-size:17px;
+	color: #181920;
+}
+h1,h2,h3,h4,h5 {
+	margin-top:10px;
+	margin-bottom:20px;
+}
+p{
+	margin-bottom:20px;
+}
+.login-box {
+	margin: 20px auto;
+	max-width:500px;
+	width:100%;
+	background-color: #4286f4;
+	color:#fff;
+	padding:30px;
+	transition: 2s all ease;
+}
+.login-button {
+	width:100%;
+	padding:20px;
+	box-sizing:border-box;
+	text-align:center;
+	text-decoration:none;
+	font-weight:bold;
+}
+.hvr-shutter-in-horizontal:before {
+	color:#000;
+	background: #FFA500;
+	text-shadow:none;
+}
+.login-box.redbg {
+	background-color: #aa0000;
+	transition: 2s all ease;
+}
+.login-box.greenbg {
+	background-color: #00aa00;
+	transition: 2s all ease;
+}
+.login {
+	float:left;
+	max-width:450px;
+	margin-top:150px;
+}
+
+.login label{
+	width:100%;
+}
+
+.login input[type=text], .login input[type=password] {
+	width:100%;
+	font-size:20px;
+	padding:5px;
+}
+.login-list {
+	margin:0 auto;
+	width:100%;
+}
+.checkfeature {
+	max-width: 30px;
+	width:100%;
+	height:auto;
+	display:block;
+	margin-right:20px;
+	float:left;
+	clear:left;
+}
+.bgw {
+	box-sizing:border-box;
+	padding:20px;
+	max-width:450px;
+	width:100%;
+	background: #fff;
+	border-radius:5px;
+	box-shadow: 2px 2px #000;
+	border: 3px solid #000;
+}
+.inner-wrapper {
+	max-width:1024px;
+	margin:0 auto;
+	width:100%;
+	
+}
+.parallax-mirror {
+	
+}
+.login .message {
+	box-sizing:border-box;
+	background:#00cc00;
+	border: 1px solid #00ff00;
+	border-radius:10px;
+	padding:10px;
+	margin-bottom:20px;
+	color:#fff;
+}
+
+.login .error {
+	box-sizing:border-box;
+	background:#ff0000;
+	border: 1px solid #ff0000;
+	border-radius:10px;
+	padding:10px;
+	margin-bottom:20px;
+	color:#fff;
+}
+.top-bar {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	min-height:50px;
+	padding:20px;
+	box-sizing:border-box;
+	opacity:0.8;
+	color:#fff;
+	background:#565758;
+	line-height:30px;
+}
+.top-bar a.home {
+	display:block;
+	max-width:50px;
+	float:left;
+}
+.top-bar a.home {
+	display:block;
+	max-width:50px;
+	float:left;
+}
+.top-bar a, .left-bar a {
+	display:block;
+	color:#fff;
+	height:30px;
+	text-decoration:none;
+	border-bottom:none;
+}
+.top-bar img {
+	max-width:30px;
+	width:100%;
+	margin-right:30px;
+}
+.top-bar input {
+	background:#fff;
+	color:#585758;
+	height:30px;
+	padding: 0 10px;
+	float:right;
+	margin-right:30px;
+	width:200px;
+}
+.top-bar .email {
+	margin-right:20px;
+	float:right;
+	color:#00ff00;
+}
+.top-bar .messages {
+	margin-right:20px;
+	float:right;
+}
+.left-bar {
+	position:fixed;
+	top:75px;
+	left:0;
+	background:#585758;
+	color:#fff;
+	padding:20px;
+	box-sizing:border-box;
+	opacity:0.8;
+	line-height:30px;
+}
+.notifications.new{
+	background:#ff0000;
+	color:#fff;
+	border-radius:5px;
+	display:block;
+	min-width:30px;
+	text-align:center;
+}

@@ -5,7 +5,7 @@
 <br/>
 <div class="download-box">
 	<div class="download-title">
-	Dream Forgery version <span id="version"></span>
+	Dream Forgery version <span class="core-version"></span>
 	<div class="download-title">
 		<p><img src="/files/img/check.png" class="checkfeature" />Free, Fast, Flexible</p>
 		<p><img src="/files/img/check.png" class="checkfeature" />Model-View-Controller Platform</p>
@@ -229,11 +229,16 @@ class formControl extends Controller {
 
 			</code></pre>
 		</div>
-		
-		<h4 class="expand"><a href="#">Dream Search</a></h4>
+	</div>
+	
+	<h3><a href="https://en.wikipedia.org/wiki/Content_management_system" target="_blank">Search Big Data</a></h3>
+	
+	<div class="cms-help bgw">
+		<h4 class="expand"><a href="#">Relevancy Ranking</a></h4>
 		<div class="box" style="display:none;">
-		<p>Create a file within webapp/controllers/home.php</p>
-			<pre><code class="language-php">
+			<p>Visit <a href="/user">/user</a> to manage your website.</p>
+			<p>You can input the credentials for administration.</p>
+<pre><code class="language-php">		
 [...]			
 	function execute() {
 		

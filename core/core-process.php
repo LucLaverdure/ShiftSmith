@@ -172,7 +172,7 @@
 			
 			// process if statements
 			$ifsfound = array();
-		    preg_match_all('~(?<block>\[if:(?<if_body>[^\].]+)\](?<body>.+)\[endif\])~siU', $view_output, $ifsfound, PREG_SET_ORDER);
+		    preg_match_all('~(?<block>\[if:(?<if_body>[^\]]+)\](?<body>.+)\[endif\])~siU', $view_output, $ifsfound, PREG_SET_ORDER);
 			if (count($ifsfound) > 0) {
 				foreach ($ifsfound as $found) {
 					$eval_code = 'return ('.$found['if_body'].');';
@@ -272,7 +272,7 @@
 				}
 				
 				// render each view of controller
-				$view_complete_output = '';
+				$view_complete_output .= '';
 				foreach($controller->views as $view) {
 					$view_complete_output .= $this->process_view($controller, $view); 
 					$output_buffer .= $view_complete_output;
@@ -312,7 +312,6 @@
 			}
 			
 			echo $docX->getDocument();
-			
 		}
 		
 	}

@@ -79,17 +79,14 @@ table {
 /* Main */
 /* #e0e0ed url(http://beta.luclaverdure.com/wp-content/themes/luclaverdure/images/bg/bgpattern.jpg); */
 body {
-	background: #fff;
+	background-position:fixed;
 	font-family: 'PT Sans', sans-serif;
 	font-size:17px;
 	color: #181920;
 }
 #wrapper .highlight {
 	background: #4286f4;
-	position:fixed;
 	width:100%;
-	top:0;
-	left:0;
 	z-index:999;
 }
 
@@ -152,9 +149,6 @@ h4, h4 a {
 	font-size:18px;
 	font-weight:bold;
 	margin-bottom:20px;
-}
-#wrapper .inner-wrapper.main-wrap {
-	margin-top:150px;
 }
 .download-box {
 	border-radius:10px;
@@ -303,6 +297,7 @@ pre code[class*="language"]:hover {
 }
 .login {
 	float:left;
+	max-width:450px;
 }
 
 .login label{
@@ -362,5 +357,5 @@ pre code[class*="language"]:hover {
 	font-size:72px;
 }
 .parallax-window {
-	min-height:800px;
+	min-height:100%;
 }
