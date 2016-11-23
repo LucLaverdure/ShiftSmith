@@ -10,13 +10,6 @@
 <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
 
-<link rel='stylesheet' type='text/css' href='/admin/files/css/hover-min.css' />
-<link rel='stylesheet' type='text/css' href='/admin/files/css/admin.css' />
-
-<script src="/admin/files/js/jquery-3.1.1.min.js" type="text/javascript"></script>
-<script src="/admin/files/js/parallax.min.js" type="text/javascript"></script>
-<script src="/admin/files/js/admin.js" type="text/javascript"></script>
-
 <meta property="og:image" content="http://www.dreamforgery.com/files/img/logo-black.gif" />
 <meta property="og:title" content="DreamForgery" />
 <meta property="og:site_name" content="DreamForgery"/>
@@ -25,5 +18,5 @@
 
 <body>
 
-	<div class="parallax-window" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.jpg">
-		<div class="inner-wrapper main-wrap cf">
+	<div style="background: transparent url(/admin/files/img/login-bg.jpg) no-repeat top left;backgroud-position:100%;min-height:800px;" class="cf">
+		<div style="max-width:1024px;width:100%;margin:0 auto;" class="cf">

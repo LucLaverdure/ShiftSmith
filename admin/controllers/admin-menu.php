@@ -27,7 +27,7 @@ class admin_menu_injection extends Controller {
 			$this->addModel('user', "email", 'error');
 		}
 		// inject required scripts and css
-		$this->injectView('html head', 'prepend', 'admin.inject.head.tpl');
+		$this->injectView('head', 'prepend', 'admin.inject.head.tpl');
 		
 		//inject administration menu
 		$this->injectView('html body', 'prepend', 'admin.inject.menu.tpl');

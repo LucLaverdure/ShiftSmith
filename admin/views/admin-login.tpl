@@ -2,6 +2,10 @@
 	
 		<div class="login">
 
+			<div id="stage" style="">
+				<div id="spinner" class="logo"></div>
+			</div>
+
 			<div class="hideonhover">
 			
 			<h1 style="border-radius:50px;background:#aaaaff;padding:20px;box-sizing:border-box;color:#fff;">[prompt.title]</h1>
@@ -16,8 +20,8 @@
 
 			<form id="thisform" action="/user" method="post">
 		
-				<p style="background:#fff;padding:10px;border-radius:5px;width:100%;box-sizing:border-box;"><label>Email: <input type="text" name="email"  style="width:90%;" /></label></p>
-				<p style="background:#fff;padding:10px;border-radius:5px;width:100%;box-sizing:border-box;"><label>Password: <input type="password" name="password" style="width:90%;"/></label></p>
+				<p style="background:#fff;padding:10px;border-radius:5px;width:100%;box-sizing:border-box;"><label>Email: <input type="text" name="email"  style="width:100%;box-sizing:border-box;" /></label></p>
+				<p style="background:#fff;padding:10px;border-radius:5px;width:100%;box-sizing:border-box;"><label>Password: <input type="password" name="password" style="width:100%;box-sizing:border-box;"/></label></p>
 			
 				<input type="hidden" name="login_entry" value="true" />
 			

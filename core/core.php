@@ -11,6 +11,7 @@
 	include "config/config.php";
 	if (file_exists('config/config-cms.php')) include "config/config-cms.php"; // include CMS configuration when installed
 	include "core-prefunctions.php";
+	include "core-file-upload.php";
 	include "core-db.php";
 	include "core-mvc.php";
 	include "core-process.php";

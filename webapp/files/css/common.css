@@ -79,7 +79,6 @@ table {
 /* Main */
 /* #e0e0ed url(http://beta.luclaverdure.com/wp-content/themes/luclaverdure/images/bg/bgpattern.jpg); */
 body {
-	background-position:fixed;
 	font-family: 'PT Sans', sans-serif;
 	font-size:17px;
 	color: #181920;
@@ -91,6 +90,8 @@ body {
 }
 
 .header {
+	max-width:800px;
+	width:100%;
 	margin-top:10px;
 	float:left;
 }
@@ -104,6 +105,11 @@ body {
 	float:left;
 	width:100px;
 	margin-top:20px;
+}
+.logo a {
+	height: 116px;
+	width:100px;
+	display:block;
 }
 h1 {
 	font-family: 'Source Code Pro', monospace;
@@ -124,19 +130,13 @@ h3 {
 	padding:20px;
 	max-width:450px;
 	width:100%;
-	background: #fff;
-	border-top:3px solid #000;
-	border-left:3px solid #000;
-	border-right:3px solid #000;
-	border-radius:5px;
-	border-radius-bottom-left:none;
-	border-radius-bottom-right:none;
 }
 h3, h3 a {
 	margin-top:22px;
 	color: #4286f4;
 	font-size:22px;
 	font-weight:bold;
+	cursor:pointer;
 }
 h3 .key {
 	color: #f49b42;
@@ -152,11 +152,9 @@ h4, h4 a {
 }
 .download-box {
 	border-radius:10px;
-	border:3px solid #000;
 	max-width:450px;
 	width:100%;
 	padding:20px 0px 0 0px;
-	background:#fff;
 	margin-bottom:30px;
 	text-shadow:none;
 }
@@ -168,33 +166,28 @@ h4, h4 a {
 	margin:0 auto 0 20px;
 	line-height:40px;
 }
-.download-button {
-	font-size:30px;
-	cursor:pointer;
-	text-decoration:none;
-	color:#fff;
-	margin:20px auto 0 auto;
-	display:block;
-	background:#4286f4;
-	border-radius:5px;
-	max-width:200px;
+.download-button{
+	float:right;
 	width:100%;
-	padding: 10px 20px;
-	text-align:center;
-	border:1px solid #000;
-	font-weight:bold;
-}
-.download-button:hover {
-	background: #00aa00;
-	transition: all .5s ease;
+	max-width:370px;
+	display:block;
+	padding:10px 20px;
+	background:#fff;
+	color:#fff;
+	background:#00cc00;
+	margin-top:25px;
+	border-bottom:none;
 }
 .inner-wrapper {
 	margin:0 auto;
 	max-width:1024px;
+	width:100%;
 }
 #wrapper {
 	width:100%;
 	z-index:0;
+	min-height:200px;
+	height:100%;
 }
 p {
 	font-size:18px;
@@ -269,14 +262,7 @@ pre code[class*="language"]:hover {
 	width:1024px;
 }
 .mvc-help, .cms-help {
-	background:#fff;
 	padding:0 20px 0 40px !important;
-	border-left: 3px solid #000;
-	border-right: 3px solid #000;
-	border-bottom: 3px solid #000;
-	border-top: none !important;
-	border-radius-top-left:none;
-	border-radius-top-right:none;
 }
 .login-box {
 	margin: 20px auto;
@@ -334,10 +320,7 @@ pre code[class*="language"]:hover {
 	padding:20px;
 	max-width:450px;
 	width:100%;
-	background: #fff;
 	border-radius:5px;
-	box-shadow: 2px 2px #000;
-	border: 3px solid #000;
 }
 .parallax-window {
 	min-height: 400px;
@@ -358,4 +341,74 @@ pre code[class*="language"]:hover {
 }
 .parallax-window {
 	min-height:100%;
+}
+.home{
+	min-height:1000px;
+}
+.home h3 {
+	color:#565758;
+	border:none;
+}
+.main-wrap{
+	
+}
+.unslider-wrap li {
+}
+.unslider-wrap li.active {
+	z-index: 9999 !important;
+}
+.unslider {
+}
+.slider{
+	min-height:800px;
+}
+.social {
+	max-width:450px;
+	margin-top:50px;
+}
+.social img{
+	width:25%;
+	padding-right:10px;
+	box-sizing:border-box;
+}
+.slider h3 {
+	background: #fff;
+	padding: 20px;
+	width:100%;
+	max-width:450px;
+	border: 3px solid #000;
+	border-radius:10px;
+	opacity:0.9;
+}
+.head-left {
+	float:left;
+	width:100%;
+	max-width:300px;
+}
+.unslider-nav ol {
+	margin: 10px auto;
+	max-width:1024px;
+	width:100%;
+}
+.unslider-nav ol li {
+	width:20px;
+	height:20px;
+	border-radius:10px;
+	background:#aaaaff;
+	float:left;
+}
+.unslider-nav ol li.unslider-active {
+	background:#0000aa;
+}
+.error {
+	box-sizing:border-box;
+	background:#ff0000;
+	border: 1px solid #ff0000;
+	border-radius:10px;
+	padding:10px;
+	margin-bottom:20px;
+	color:#fff;
+}
+.slider li {
+	cursor:pointer;
 }

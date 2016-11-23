@@ -1,105 +1,22 @@
 [default-theme/header.tpl]
 
-<div class="slider">
-	<ul>
-		<li>
-			<div style="background: #fff url(/files/img/slides/checks-bg.jpg) no-repeat center center;background-size:100%;">
-				<div class="inner-wrapper main-wrap">
-					<div class="pad">
-						<div class="home">
-							<h3><a href="#free">Free</a></h3>
-							<h3><a href="#free">Fast</a></h3>
-							<h3><a href="#free">Flexible</a></h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</li>
-		<li>
-			<div style="background: #fff url(/files/img/slides/social.jpg) no-repeat center center;background-size:100%;">
-				<div class="inner-wrapper main-wrap">
-					<div class="pad">
-						<div class="home">
-							<h3><a href="#social">Social Media Center</a></h3>
-							<div class="social">
-								<a href="#social">
-									<img src="/files/img/slides/social/Twitter.png" />
-									<img src="/files/img/slides/social/facebook.png" />
-									<img src="/files/img/slides/social/instagram.png" />
-									<img src="/files/img/slides/social/linkedin.png" />
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</li>
-		<li>
-			<div style="background: #fff url(/files/img/slides/cms.jpg) no-repeat center center;background-size:100%;">
-				<div class="inner-wrapper main-wrap">
-					<div class="pad">
-						<div class="home">
-							<h3><a href="#cms">Content Management System</a></h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</li>
-		<li>
-			<div style="background: #fff url(/files/img/slides/mvc.jpg) no-repeat center center;background-size:100%;">
-				<div class="inner-wrapper main-wrap">
-					<div class="pad">
-						<div class="home">
-							<h3><a href="#mvc">MVC Platform Architecture</a></h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</li>
-		<li>
-			<div style="background: #fff url(/files/img/slides/etl.jpg) no-repeat center center;background-size:100%;">
-				<div class="inner-wrapper main-wrap">
-					<div class="pad">
-						<div class="home">
-							<h3><a href="#etl">Extract, Transform, Load</a></h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</li>
-		<li>
-			<div style="background: #fff url(/files/img/slides/search.jpg) no-repeat center center;background-size:100%;">
-				<div class="inner-wrapper main-wrap">
-					<div class="pad">
-						<div class="home">
-							<h3><a href="#search">Search Engine Optimization</a></h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</li>
-	</ul>
-</div>
-
-<div class="inner-wrapper" id="mvc">
-	<div class="pad">
-<p>Dream Forgery, a PHP Framework designed with an <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" target="_blank" title="What is MVC?">MVC architecture</a>.</p>
-
-<div id="social" class="error">
-	Social Networks in development.
-</div>
-
-	<p class="bgw" id="free"><a href="https://github.com/LucLaverdure/DreamForgery" target="_blank">Github</a> - <a class="gh" href="https://github.com/LucLaverdure/DreamForgery" target="_blank">https://github.com/LucLaverdure/DreamForgery</a></p>
-
-	<h3><a href="https://en.wikipedia.org/wiki/Content_management_system" target="_blank">CMS Help</a></h3>
-	
-	<div id="cms" class="cms-help bgw">
-		<h4 class="expand"><a href="#">Administration URL</a></h4>
-		<div class="box" style="display:none;">
-			<p>Visit <a href="/user">/user</a> to manage your website.</p>
-			<p>You can input the credentials for administration.</p>
-		</div>
+<br/>
+<p class="bgw">Dream Forgery is a PHP Framework designed with an <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" target="_blank" title="What is MVC?">MVC structure</a>.</p>
+<br/>
+<div class="download-box">
+	<div class="download-title">
+	Dream Forgery version <span class="core-version"></span>
+	<div class="download-title">
+		<p><img src="/files/img/check.png" class="checkfeature" />Free, Fast, Flexible</p>
+		<p><img src="/files/img/check.png" class="checkfeature" />Model-View-Controller Platform</p>
+		<p><img src="/files/img/check.png" class="checkfeature" />Content Management System</p>
+		<p><img src="/files/img/check.png" class="checkfeature" />Extract, Transform, Load</p>
 	</div>
+	</div>
+	<p><a href="https://github.com/LucLaverdure/DreamForgery/archive/master.zip" class="hvr-bubble-float-right">Download</a></p>
+</div>
+
+	<p class="bgw"><a href="https://github.com/LucLaverdure/DreamForgery" target="_blank">Github</a> - <a class="gh" href="https://github.com/LucLaverdure/DreamForgery" target="_blank">https://github.com/LucLaverdure/DreamForgery</a></p>
 	
 	<h3><a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" target="_blank">MVC Help</a></h3>
 	<div class="mvc-help bgw">
@@ -314,7 +231,7 @@ class formControl extends Controller {
 		</div>
 	</div>
 	
-	<h3 id="search"><a href="https://en.wikipedia.org/wiki/Content_management_system" target="_blank">Search Big Data</a></h3>
+	<h3><a href="https://en.wikipedia.org/wiki/Content_management_system" target="_blank">Search Big Data</a></h3>
 	
 	<div class="cms-help bgw">
 		<h4 class="expand"><a href="#">Relevancy Ranking</a></h4>
@@ -440,13 +357,22 @@ class formControl extends Controller {
 			</code></pre>
 		</div>
 	</div>
+	
+	<h3><a href="https://en.wikipedia.org/wiki/Content_management_system" target="_blank">CMS Help</a></h3>
+	
+	<div class="cms-help bgw">
+		<h4 class="expand"><a href="#">Administration URL</a></h4>
+		<div class="box" style="display:none;">
+			<p>Visit <a href="/user">/user</a> to manage your website.</p>
+			<p>You can input the credentials for administration.</p>
+		</div>
+	</div>
 
-	<h3 id="etl"><a href="https://en.wikipedia.org/wiki/Extract,_transform,_load" target="_blank">ETL Help</a></h3>
+	<h3><a href="https://en.wikipedia.org/wiki/Extract,_transform,_load" target="_blank">ETL Help</a></h3>
 	<div class="cms-help bgw">
 		<h4 class="expand"><a href="#">Processing Data</a></h4>
 		<div class="box" style="display:none;">
 		</div>
-	</div>	
-	</div>	
-</div>
+	</div>
+
 [default-theme/footer.tpl]
