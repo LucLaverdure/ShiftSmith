@@ -450,9 +450,11 @@ pre code[class*="language"]:hover {
 	box-sizing:border-box;
 	clear:left;
 	float:right;
+	z-index:9;
 }
 .chatbox .line {
 	box-shadow: 10px 10px 5px #888;
+	clear:both;
 }
 .chatbox .line:nth-child(odd) {
 	background: #ffcccc;
@@ -473,6 +475,7 @@ pre code[class*="language"]:hover {
 .chatbox .comment {
 	padding:20px;
 	float:left;
+	max-width:330px;
 }
 .chatbox .user {
 	display:block;
