@@ -392,3 +392,6 @@ p{
     -webkit-animation-play-state: paused;
     animation-play-state: paused;
   }
+.logout.hvr-bounce-to-right:before {
+	background:#ff0000;
+}

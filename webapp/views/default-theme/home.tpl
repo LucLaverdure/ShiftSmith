@@ -10,36 +10,7 @@
 							<h3><a href="#free">Free</a></h3>
 							<h3><a href="#free">Fast</a></h3>
 							<h3><a href="#free">Flexible</a></h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</li>
-		<li>
-			<div style="background: #fff url(/files/img/slides/social.jpg) no-repeat center center;background-size:100%;">
-				<div class="inner-wrapper main-wrap">
-					<div class="pad">
-						<div class="home">
-							<h3><a href="#social">Social Media Center</a></h3>
-							<div class="social">
-								<a href="#social">
-									<img src="/files/img/slides/social/Twitter.png" />
-									<img src="/files/img/slides/social/facebook.png" />
-									<img src="/files/img/slides/social/instagram.png" />
-									<img src="/files/img/slides/social/linkedin.png" />
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</li>
-		<li>
-			<div style="background: #fff url(/files/img/slides/cms.jpg) no-repeat center center;background-size:100%;">
-				<div class="inner-wrapper main-wrap">
-					<div class="pad">
-						<div class="home">
-							<h3><a href="#cms">Content Management System</a></h3>
+							chatbox[home]
 						</div>
 					</div>
 				</div>
@@ -51,17 +22,19 @@
 					<div class="pad">
 						<div class="home">
 							<h3><a href="#mvc">MVC Platform Architecture</a></h3>
+							chatbox[mvc]
 						</div>
 					</div>
 				</div>
 			</div>
 		</li>
 		<li>
-			<div style="background: #fff url(/files/img/slides/etl.jpg) no-repeat center center;background-size:100%;">
+			<div style="background: #fff url(/files/img/slides/cms.jpg) no-repeat center center;background-size:100%;">
 				<div class="inner-wrapper main-wrap">
 					<div class="pad">
 						<div class="home">
-							<h3><a href="#etl">Extract, Transform, Load</a></h3>
+							<h3><a href="#cms">Content Management System</a></h3>
+							chatbox[cms]
 						</div>
 					</div>
 				</div>
@@ -73,11 +46,47 @@
 					<div class="pad">
 						<div class="home">
 							<h3><a href="#search">Search Engine Optimization</a></h3>
+							chatbox[seo]
 						</div>
 					</div>
 				</div>
 			</div>
 		</li>
+		<li>
+			<div style="background: #fff url(/files/img/slides/etl.jpg) no-repeat center center;background-size:100%;">
+				<div class="inner-wrapper main-wrap">
+					<div class="pad">
+						<div class="home">
+							<h3><a href="#etl">Extract, Transform, Load</a></h3>
+							chatbox[etl]
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div style="background: #fff url(/files/img/slides/social.jpg) no-repeat center center;background-size:100%;">
+				<div class="inner-wrapper main-wrap">
+					<div class="pad">
+						<div class="home">
+							<h3><a href="#social">Social Media Center</a></h3>
+							<h3 style="font-size:36px;">
+								<span style="color:#ffcccc;">@</span><span style="color:#ccccff;">chat</span><span style="color:#565758;">box</span>
+							</h3>
+							<div class="social">
+								<a href="#social">
+									<img src="/files/img/slides/social/Twitter.png" />
+									<img src="/files/img/slides/social/facebook.png" />
+									<img src="/files/img/slides/social/instagram.png" />
+									<img src="/files/img/slides/social/linkedin.png" />
+								</a>
+							</div>
+							chatbox[media]
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>		
 	</ul>
 </div>
 
@@ -447,6 +456,9 @@ class formControl extends Controller {
 		<div class="box" style="display:none;">
 		</div>
 	</div>	
+	
+	chatbox[eof]
+	
 	</div>	
 </div>
 [default-theme/footer.tpl]

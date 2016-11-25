@@ -29,4 +29,8 @@
 			<hr/>
 			
 			<a class="hvr-bounce-to-right" href="">Settings</a>
+
+			<hr/>
+			
+			<a class="hvr-bounce-to-right logout" href="/admin/logout">Logout</a>
 		</div>

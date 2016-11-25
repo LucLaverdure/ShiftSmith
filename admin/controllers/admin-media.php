@@ -28,7 +28,9 @@ class admin_media extends Controller {
 				$size = $this->format_size(filesize('webapp/files/upload/'.$file));
 				try {
 					list($width, $height) = getimagesize('webapp/files/upload/'.$file);
-				} catch (Exception $e) {}
+				} catch (Exception $e) {
+					var_dump($e);
+				}
 				$return[] = array('file' => $file,'size'=>$size,'width'=>$width,'height'=>$height);
 			}
 		}
@@ -60,6 +62,7 @@ class admin_media_del extends Controller {
 		try {
 			unlink($file);
 		} catch (Exception $e) {
+			var_dump($e);
 		}
 
 		// media gallery

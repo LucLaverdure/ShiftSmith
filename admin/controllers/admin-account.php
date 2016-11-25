@@ -58,7 +58,7 @@
 			email($_POST['email'], 'Confirm Administration Account', '<a href="http://dreamforgery.com/confirm/admin/'.$rnd.'/'.$db::param($_POST['email']).'">Click here to confirm your account</a>');
 
 			$this->addModel('prompt', 'message', "An email has been sent to ".htmlentities($_POST['email']).", please check your email and confirm the admin account.");
-			
+			$this->addModel('prompt', 'includes', 'true');
 			$this->loadView('admin-login.tpl');
 			return;
 		}
@@ -122,7 +122,7 @@
 			}
 
 			$this->addModel('prompt', 'title', 'Login');
-			
+			$this->addModel('prompt', 'includes', 'true');
 			$this->loadView('admin-login.tpl');
 		}
 	}
@@ -173,6 +173,7 @@
 				}
 			}
 			
+			$this->addModel('prompt', 'includes', 'true');
 			$this->loadView('admin-login.tpl');
 		}
 	}
@@ -204,6 +205,29 @@
 			$this->addModel('prompt', "message", $data[0]['email'].' logged In.');
 			$this->addModel('prompt', "error",'');
 			
+			$this->addModel('prompt', 'includes', 'false');
+			$this->loadView('admin-logged-in.tpl');
+			
+		}
+	}
+
+
+	// Logged in panel
+	class admin_logout extends Controller {
+		// Display function: validate urls to activate the controller
+		function validate() {
+			if ((q('0')=="admin" || q(1)=="logout") && (isset($_SESSION['login']))) {
+				return 1;	// priority 1
+			}
+			else return false;
+		}
+
+		function execute() {
+			
+			unset($_SESSION['login']);
+			redirect('/');
+			
+			$this->addModel('prompt', 'includes', 'false');
 			$this->loadView('admin-logged-in.tpl');
 			
 		}

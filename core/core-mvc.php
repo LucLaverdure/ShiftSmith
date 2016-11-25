@@ -24,7 +24,15 @@
 			}
 			if (in_array($dataOrName, explode(',',PROTECTED_VARIABLES))) return;
 				//throw new Exception ('Invalid model name: '.$form_name.' reserved for server-side access');
-			$this->models[$nameOrNamespace.'.'.$dataOrName] = $data;
+			try {
+				if (is_array($dataOrName)) {
+					foreach ($dataOrName as $key => $val) {
+						$this->models[$nameOrNamespace.'.'.$key] = $val;
+					}
+				} else {
+					$this->models[$nameOrNamespace.'.'.$dataOrName] = $data;
+				}
+			} catch (Exception $e) {var_dump($e);}
 		}
 		function setModel($nameOrNamespace, $dataOrName, $data=null) {
 			$this->addModel($nameOrNamespace, $dataOrName, $data);

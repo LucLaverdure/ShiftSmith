@@ -105,6 +105,7 @@ body {
 	float:left;
 	width:100px;
 	margin-top:20px;
+	margin-left:20px;
 }
 .logo a {
 	height: 116px;
@@ -411,4 +412,72 @@ pre code[class*="language"]:hover {
 }
 .slider li {
 	cursor:pointer;
+}
+.chatbox {
+	margin: 10px 0;
+	max-width:450px;
+	width:100%;
+}
+.chatbox .title {
+	font-weight:bold;
+	display:block;
+	margin-bottom:10px;
+}
+.chatbox .noid::placeholder {
+	color: #ffcccc;
+	font-size: 16px;
+}
+.chatbox .noid, .hasid {
+	font-size: 14px;
+	padding: 5px 10px;
+	float:left;
+	height:60px;
+	line-height:30px;
+	box-sizing:border-box;
+	z-index:99;
+	position:relative;
+	width:100%;
+	max-width:450px;
+	width:100%;
+}
+.chatbox .action {
+	border:5px solid #565758;
+	width:60px;
+	height:35px;
+	text-align:center;
+	line-height:20px;
+	font-size:30px;
+	box-sizing:border-box;
+	clear:left;
+	float:right;
+}
+.chatbox .line {
+	box-shadow: 10px 10px 5px #888;
+}
+.chatbox .line:nth-child(odd) {
+	background: #ffcccc;
+	transform: rotateZ(-2deg);
+}
+.chatbox .line:nth-child(odd) .picture {
+	float:left;
+}
+
+.chatbox .line:nth-child(even) {
+	transform: rotateZ(2deg);
+	background: #ccccff;
+}
+
+.chatbox .line:nth-child(even) .picture {
+	float:right;
+}
+.chatbox .comment {
+	padding:20px;
+	float:left;
+}
+.chatbox .user {
+	display:block;
+}
+.chatbox .line:hover {
+	transform: rotateZ(0deg);
+	transition: .2s all ease-in;
 }

@@ -200,6 +200,87 @@
 				}
 			}
 
+			// process translations, syntax: chatbox[id]
+			$matches = array();
+			preg_match_all('/chatbox\[[^\[]*[^\\\]\]/i', $view_output, $matches);
+			foreach ($matches as $found_a) {
+				foreach ($found_a as $found) {
+
+					$room_id = substr($found, 8, -1);
+					$chatbox = '';
+					
+					$db = new Database();
+					$db::connect();
+					
+					$data = $db::queryResults("SELECT liner, user
+											   FROM chatbox
+											   WHERE room_id='".$db::param($room_id)."'
+											   ORDER BY date DESC
+											   LIMIT 50");
+					if ($data !== false) {
+							// load with frontend
+					} else {
+						
+						$data = $db::queryResults("SELECT liner, user
+												   FROM chatbox
+												   LIMIT 1");
+
+						if ($data==false) {
+							$data = $db::query("CREATE TABLE IF NOT EXISTS `chatbox` (
+													  `id` int(11) NOT NULL AUTO_INCREMENT,
+													  `room_id` varchar(255) COLLATE latin1_general_ci NOT NULL,
+													  `user` varchar(255) COLLATE latin1_general_ci NOT NULL,
+													  `liner` varchar(255) COLLATE latin1_general_ci NOT NULL,
+													  PRIMARY KEY (`id`)
+													) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+													");
+						}
+						
+					}
+					
+					$chatbox .= '<div class="chatbox">';
+					$chatbox .= '<span class="title"><span style="color:#ffcccc;">@</span><span style="color:#ccccff;">chat</span><span style="color:#565758;">box</span></span>';
+
+					$chatbox .= '<input type="hidden" name="room_id" class="room_id" value="'.$db::param($room_id).'">';
+
+					if (isset($_SESSION['chatuser']))
+						$append = 'style="display:none;"';
+					else
+						$append = '';
+					$chatbox .= '<input class="noid" type="text" '.$append.' placeholder="email@provider.com" />';
+						
+						$chat_warmer = array();
+						$chat_warmer[] = "How's that for a feature!";
+						$chat_warmer[] = "IMHO...";
+						$chat_warmer[] = "But there's a catch!";
+						$chat_warmer[] = "Get in the fun.";
+						$chat_warmer[] = "What would you recommend?";
+						$chat_warmer[] = "I need a coffee before I think about this...";
+						$chat_warmer[] = "My energy drink levels will determine that.";
+						$chat_warmer[] = "That's cute.";
+						$chat_warmer[] = "More often than not, yes.";
+						$chat_warmer[] = "Yup, I'm serious!";
+						$chat_warmer[] = "It's way too late to think of chat lines";
+						$chat_warmer[] = "And here's the thing:";
+						$chat_warmer[] = "C'est la vie.";
+						$chat_warmer[] = "I had a dream last night";
+						
+						$keyin = array_rand($chat_warmer, 1);
+						if (isset($_SESSION['chatuser']))
+							$append = '';
+						else
+							$append = 'style="display:none;"';
+
+						$chatbox .= '<textarea class="hasid" '.$append.' placeholder="'.$db::param($chat_warmer[$keyin], true).'"></textarea><a href="#" class="action hvr-radial-in">+</a>';
+						
+					$chatbox .= '</div>';
+					
+					$view_output = str_replace($found, $chatbox, $view_output);
+				}
+				
+			}
+
+			
 			// process subview paths, syntax: [filename]
 			$matches = array();
 			preg_match_all('/\[[^\[]*[^\\\]\]/i', $view_output, $matches);
