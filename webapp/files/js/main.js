@@ -61,19 +61,23 @@ $(function() {
 		return false;
 	});
 	
-	$('.slider').unslider({
-		animation: 'fade',
-		autoplay: true,
-		arrows: false,
-		delay: 5000
-	});
+	if ($('.slider').length > 0) {
+		$('.slider').unslider({
+			animation: 'fade',
+			autoplay: true,
+			arrows: false,
+			delay: 5000
+		});
+	}
 
 	// slider
-	$(document).on('click', '.noid,.hasid', function(e) {
-		$('.slider').unslider('stop');
-		return false;
-	});
-
+	if ($('.slider').length > 0) {
+		$(document).on('click', '.noid,.hasid', function(e) {
+			$('.slider').unslider('stop');
+			return false;
+		});
+	}
+	
 	// email input
 	$(document).on('keypress', '.noid', function(e) {
 		if (e.which == 13) {
@@ -111,5 +115,6 @@ $(function() {
 		//chatbox/chatlog/room/last-post-id
 		getchatslive();
 	},5000);
+
 });
 

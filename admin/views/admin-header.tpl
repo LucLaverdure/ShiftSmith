@@ -28,5 +28,5 @@
 
 <body>
 
-	<div style="background: transparent url(/admin/files/img/login-bg.jpg) no-repeat top left;backgroud-position:100%;min-height:800px;" class="cf">
+	<div style="background: transparent url(/admin/files/img/login-bg.jpg) no-repeat top left;background-position:fixed;min-height:800px;" class="cf">
 		<div style="max-width:1024px;width:100%;margin:0 auto;" class="cf">

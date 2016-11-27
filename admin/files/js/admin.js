@@ -1,6 +1,3 @@
-$(function() {
-});
-
 $(document).on('click', '.media-button .del', function() {
 	
 	var file_to_del = $(this).parents('a').attr('href');
@@ -9,4 +6,19 @@ $(document).on('click', '.media-button .del', function() {
 	} 
 	
 	return false;
+});
+
+$(document).on('click', '.line .del', function() {
+	$.ajax({
+		url: "/admin/comments/del/"+$(this).parents('.line').attr('data-id'),
+		cache: false,
+		context: document.body
+	}).done(function(data) {
+		$(this).parents('.line').fadeOut();
+	});
+});
+
+
+$(function() {
+	setTimeout(function() {$('.line').append('<span class="del"></span>'); },1000);
 });

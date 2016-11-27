@@ -8,29 +8,31 @@
 		</div>
 		<div class="left-bar">
 		
+			<div class="cf">
 			<form id="mediaupload" action="/media" method="post" enctype="multipart/form-data">
-				<a class="hvr-bounce-to-right" href="#" onclick="$(this).next().click();">Upload Media</a>
+				<a href="/media" class="hvr-bounce-to-right left-nav">Media</a> <span>|</span> <a class="hvr-bounce-to-right" href="#" onclick="$(this).next().click();">Upload Media</a>
 				<input type="file" name="file[]" style="display:none;" id="file" multiple="multiple" />
 			</form>
+			</div>
 			
 			<script>
 				$(document).on('change', '#file', function(){ $('#mediaupload').submit(); });
 			</script>
 			
-			<a class="hvr-bounce-to-right" href="">Write Comment</a>
-			<a class="hvr-bounce-to-right" href="">Write Post</a>
-			<a class="hvr-bounce-to-right" href="">Write Page</a>
+			<div class="cf"><a href="/comments" class="hvr-bounce-to-right left-nav">Comments</a> <span>|</span> <a class="hvr-bounce-to-right" href="">Write Comment</a></div>
+			<div class="cf"><a href="/posts" class="hvr-bounce-to-right left-nav">Posts</a> <span>|</span> <a class="hvr-bounce-to-right" href="">Write Post</a></div>
+			<div class="cf"><a href="/pages" class="hvr-bounce-to-right left-nav">Pages</a> <span>|</span> <a class="hvr-bounce-to-right" href="">Write Page</a></div>
 			
 			<hr/>
 			
-			<a class="hvr-bounce-to-right" href="">Browse Plugins</a>
-			<a class="hvr-bounce-to-right" href="">Browse Themes</a>
+			<div class="cf"><a class="hvr-bounce-to-right" href="/plugins">Browse Plugins</a></div>
+			<div class="cf"><a class="hvr-bounce-to-right" href="/themes">Browse Themes</a></div>
 
 			<hr/>
 			
-			<a class="hvr-bounce-to-right" href="">Settings</a>
+			<div class="cf"><a class="hvr-bounce-to-right" href="/settings">Settings</a></div>
 
 			<hr/>
 			
-			<a class="hvr-bounce-to-right logout" href="/admin/logout">Logout</a>
+			<div class="cf"><a class="hvr-bounce-to-right logout" href="/admin/logout">Logout</a></div>
 		</div>

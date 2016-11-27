@@ -222,6 +222,7 @@ p{
 	height:30px;
 	text-decoration:none;
 	border-bottom:none;
+	float:left;
 }
 .top-bar img {
 	max-width:30px;
@@ -256,7 +257,7 @@ p{
 	box-sizing:border-box;
 	opacity:0.8;
 	line-height:30px;
-	max-width:200px;
+	max-width:320px;
 	width:100%;
 }
 .notifications.new{
@@ -276,10 +277,10 @@ p{
 	text-align:center;
 }
 .top-bar, .left-bar {
-	z-index:99999;
+	z-index:999;
 }
 .left-bar a {
-	padding:5px;
+	padding:5px 15px;
 	display:block;
 }
 .logo {
@@ -394,4 +395,102 @@ p{
   }
 .logout.hvr-bounce-to-right:before {
 	background:#ff0000;
+}
+.left-nav {
+	float:left;
+}
+.left-bar span {
+	display:block;
+	float:left;
+	z-index:9999;
+	margin:0 10px;
+}
+.left-nav a {
+	z-index:9999;
+	float:left;
+}
+
+
+.chatbox {
+	margin: 10px 0;
+	max-width:450px;
+	width:100%;
+}
+.chatbox .title {
+	font-weight:bold;
+	display:block;
+	margin-bottom:10px;
+}
+.chatbox .noid::placeholder {
+	color: #ffcccc;
+	font-size: 16px;
+}
+.chatbox .noid, .hasid {
+	font-size: 14px;
+	padding: 5px 10px;
+	float:left;
+	height:60px;
+	line-height:30px;
+	box-sizing:border-box;
+	z-index:99;
+	position:relative;
+	width:100%;
+	max-width:450px;
+	width:100%;
+}
+.chatbox .action {
+	border:5px solid #565758;
+	width:60px;
+	height:35px;
+	text-align:center;
+	line-height:20px;
+	font-size:30px;
+	box-sizing:border-box;
+	clear:left;
+	float:right;
+	z-index:9;
+}
+.chatbox .line {
+	box-shadow: 10px 10px 5px #888;
+	clear:both;
+}
+.chatbox .line:nth-child(odd) {
+	background: #ffcccc;
+	transform: rotateZ(-2deg);
+}
+.chatbox .line:nth-child(odd) .picture {
+	float:left;
+}
+
+.chatbox .line:nth-child(even) {
+	transform: rotateZ(2deg);
+	background: #ccccff;
+}
+
+.chatbox .line:nth-child(even) .picture {
+	float:right;
+}
+.chatbox .comment {
+	padding:20px;
+	float:left;
+	max-width:330px;
+}
+.chatbox .user {
+	display:block;
+}
+.chatbox .line:hover {
+	transform: rotateZ(0deg);
+	transition: .2s all ease-in;
+}
+h1 {
+	font-size:26px;
+	color:#fff;
+	margin:10px 0;
+	clear:both;
+}
+.line .del {
+	position:absolute;
+	right:-75px;
+	top:0;
+	cursor:pointer;
 }
