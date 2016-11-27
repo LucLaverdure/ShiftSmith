@@ -5,7 +5,8 @@ class admin_comments extends Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
-		if (isset($_SESSION['login']) && ((q()=='comments') || q()=='comments/'))
+
+		if (isset($_SESSION['login']) && ((q('0')=='admin') && q(1)=='comments'))
 			return 1;	// priority 2
 		else return false;
 	}

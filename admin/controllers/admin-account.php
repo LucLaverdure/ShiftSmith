@@ -216,7 +216,7 @@
 	class admin_logout extends Controller {
 		// Display function: validate urls to activate the controller
 		function validate() {
-			if ((q('0')=="admin" || q(1)=="logout") && (isset($_SESSION['login']))) {
+			if ((q('0')=="admin" && q(1)=="logout") && (isset($_SESSION['login']))) {
 				return 1;	// priority 1
 			}
 			else return false;

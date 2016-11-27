@@ -20,13 +20,18 @@
 <link rel='stylesheet' type='text/css' href='/admin/files/css/admin.css' />
 [endif]
 
-<script src="/admin/files/js/jquery-3.1.1.min.js" type="text/javascript"></script>
-<script src="/admin/files/js/admin.js" type="text/javascript"></script>
+<<script type="text/javascript">
+if (typpeof($) == 'undefined') document.write('<script src="/admin/files/js/jquery-3.1.1.min.js" type="text/javascript"></script>');
+</script>
 
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src="/admin/files/js/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/admin/files/lib/ckeditor/ckeditor.js"></script>
+<link rel="stylesheet" type="text/css" href="/files/css/jquery-ui.structure.min.css">
+<link rel="stylesheet" type="text/css" href="/files/css/jquery-ui.min.css">
+<script src="/admin/files/js/admin.js" type="text/javascript"></script>
 </head>
 
 <body>
 
-	<div style="background: transparent url(/admin/files/img/login-bg.jpg) no-repeat top left;background-position:fixed;min-height:800px;" class="cf">
+	<div style="" class="cf">
 		<div style="max-width:1024px;width:100%;margin:0 auto;" class="cf">

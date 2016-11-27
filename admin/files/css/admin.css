@@ -82,6 +82,8 @@ body {
 	font-family: 'PT Sans', sans-serif;
 	font-size:17px;
 	color: #181920;
+	background: transparent url(/admin/files/img/dreamforgery.jpg) no-repeat center center fixed; 
+	background-size: cover;
 }
 h1,h2,h3,h4,h5 {
 	margin-top:10px;
@@ -106,10 +108,14 @@ p{
 	text-align:center;
 	text-decoration:none;
 	font-weight:bold;
+	max-width:100px;
+	float:right;
+	box-shadow: 2px 2px 2px #565758;
+	color:#fff;
 }
 .hvr-shutter-in-horizontal:before {
-	color:#000;
-	background: #FFA500;
+	color:#fff;
+	background: #1068c1;
 	text-shadow:none;
 }
 .login-box.redbg {
@@ -124,6 +130,7 @@ p{
 	float:left;
 	max-width:450px;
 	margin-top:150px;
+	background: #fff;
 }
 
 .login label{
@@ -216,7 +223,6 @@ p{
 	float:left;
 }
 .top-bar a, .left-bar a {
-	background:#565758;
 	display:block;
 	color:#fff;
 	height:30px;
@@ -257,7 +263,7 @@ p{
 	box-sizing:border-box;
 	opacity:0.8;
 	line-height:30px;
-	max-width:320px;
+	max-width:250px;
 	width:100%;
 }
 .notifications.new{
@@ -280,7 +286,7 @@ p{
 	z-index:999;
 }
 .left-bar a {
-	padding:5px 15px;
+	padding:5px 10px;
 	display:block;
 }
 .logo {
@@ -291,9 +297,13 @@ p{
 	margin:20px auto 20px auto;
 }
 .login {
+	box-shadow: 20px 20px 20px #ccc;
+	transform: rotateY(1deg);
 	margin:0 auto;
 	max-width:450px;
 	width:100%;
+	box-sizing:border-box;
+	padding:0 20px 20px 20px
 }
 .media-gallery {
 	margin-top:75px;
@@ -342,7 +352,9 @@ p{
 }
 .media-gallery h1 {
 	color:#fff;
-	font-size:36px;
+	font-size:72px;
+	line-height:72px;
+	font-weight:bold;
 }
 /* WebKit and Opera browsers */
   @-webkit-keyframes spinner {
@@ -483,14 +495,247 @@ p{
 	transition: .2s all ease-in;
 }
 h1 {
-	font-size:26px;
+	font-size:72px;
 	color:#fff;
-	margin:10px 0;
+	margin:75px 0 10px 0;
 	clear:both;
+	z-index:99;
+}
+h2 {
+	font-size:22px;
+	color:#fff;
 }
 .line .del {
 	position:absolute;
 	right:-75px;
 	top:0;
 	cursor:pointer;
+}
+
+.login h1 {
+	margin-top:60px;
+	margin-bottom:40px;
+	border-radius:50px;
+	background:#aaaaff;
+	padding:20px 20px 20px 100px;
+	box-sizing:border-box;
+	color:#fff;
+	z-index:99;
+}
+
+.login-input{
+	padding:10px;
+	border-radius:5px;
+	width:100%;
+	box-sizing:border-box; 	
+	z-index:99;
+}
+.input-email-login {
+	width:100%;
+	box-sizing:border-box;
+	z-index:99;
+}
+#spinner {
+	position:absolute;
+	top:0;
+	left:auto;
+}
+body .fold-admin {
+	position:absolute;
+	float:right;
+	z-index:9999;
+	right:0;
+	bottom:0;
+	margin:0;
+	padding: 0;
+}
+.unfold-admin {
+	background: #565758;
+	position:fixed;
+	opacity:0;
+	top:-100px;
+	left:-100px;
+	max-width:75px;
+	display:block;
+	padding:5px;
+	z-index:999999;
+}
+body .unfold-admin:hover {
+	opacity:1 !important;
+}
+body .left-bar .quick-forge {
+	padding-left:10px;
+}
+body .left-bar .upload-media-link {
+	padding-left:10px;
+	display:block;
+	
+}
+body .left-bar span {
+	background-size: 30px 30px;
+	width:30px;
+	height:30px;
+}
+body .left-bar .quick-forge-ico {
+	display:block;
+	background: transparent url(/admin/files/img/ico/forge.png) no-repeat top left;
+	background-size: 30px 30px;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	float:left;
+}
+
+#mediaupload span.media-upload-admin-sub  {
+	display:block;
+	background: transparent url(/admin/files/img/ico/upload.png) no-repeat top left;
+	background-size: 30px 30px;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	float:left;
+}
+
+body .left-bar .chatbox-admin {
+	display:block;
+	background: transparent url(/admin/files/img/ico/chatbox.png) no-repeat top left;
+	background-size: 30px 30px;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	float:left;
+}
+.chatbox-link {
+	float:left;
+}
+.left-bar hr {
+	width:100%;
+}
+.plugins-admin {
+	display:block;
+	background: transparent url(/admin/files/img/ico/plugin.png) no-repeat top left;
+	background-size: 30px 30px;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	float:left;
+	clear:left;
+}
+.theme-admin {
+	display:block;
+	background: transparent url(/admin/files/img/ico/theme.png) no-repeat top left;
+	background-size: 30px 30px;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	float:left;
+	clear:left;
+}
+
+.translate-admin {
+	display:block;
+	background: transparent url(/admin/files/img/ico/lang.png) no-repeat top left;
+	background-size: 30px 30px;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	float:left;
+	clear:left;
+}
+body .left-bar .media-upload-admin {
+	background: transparent url(/admin/files/img/ico/moon.png) no-repeat top left;
+	display:block;
+	background-size: 30px 30px;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	float:left;
+}
+.quick-forge-admin  {
+	display:block;
+	background: transparent url(/admin/files/img/ico/quick-forge.png) no-repeat top left;
+	background-size: 30px 30px;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	float:left;
+	clear:left;
+}
+.settings-admin  {
+	display:block;
+	background: transparent url(/admin/files/img/ico/settings.png) no-repeat top left;
+	background-size: 30px 30px;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	float:left;
+	clear:left;
+}
+.logout-admin {
+	display:block;
+	background: transparent url(/admin/files/img/ico/logout.png) no-repeat top left;
+	background-size: 30px 30px;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	float:left;
+	clear:left;
+}
+hr {
+	display:none;
+}
+.left-bar:hover, .top-bar:hover {
+	opacity:1 !important;	
+}
+.admin-ico {
+	
+}
+
+.forge-title {
+    width: 100%;
+    font-size: 20px;
+    padding: 5px;
+}
+.forge-url-trigger{
+    width: 100%;
+    font-size: 20px;
+    padding: 5px;
+}
+.admin-panel {
+	color: #fff;
+}
+.admin-panel h1 {
+	margin-bottom:20px;
+}
+
+.admin-panel .body_type {
+	background: #fff;
+	padding:10px;
+}
+
+.admin-panel .body_type label, .admin-panel .body_type label a {
+	font-size:20px;
+	display:block;
+	line-height:22px;
+	padding:10px;
+	box-sizing:border-box;
+	width:100%;
+	color:#565758;
+	background:#ccc;
+}
+.admin-panel .body_type label:hover, .admin-panel .body_type label a:hover {
+	background:#565758;
+	color:#fff;
+	font-weight:500;
+	transition: all 0.2s ease-in;
+}
+body label input[type=radio] {
+	padding:10px;
+	box-sizing:border-box;
+	border-radius:5px;
+	zoom:2;
+}
+
+.media-upload {
+	
 }
