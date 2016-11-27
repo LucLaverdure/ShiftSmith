@@ -116,5 +116,7 @@ $(function() {
 		getchatslive();
 	},5000);
 
+	// funk features
+	//$('body').append($('<div class="matrix"></div><div class="moon"></div><div class="hammer-lady"><div class="luc-laverdure"></div>'));
 });
 

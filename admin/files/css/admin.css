@@ -82,8 +82,8 @@ body {
 	font-family: 'PT Sans', sans-serif;
 	font-size:17px;
 	color: #181920;
-	background: transparent url(/admin/files/img/dreamforgery.jpg) no-repeat center center fixed; 
-	background-size: cover;
+/*	background: transparent url(/admin/files/img/dreamforgery.jpg) no-repeat center center fixed; 
+	background-size: cover; */
 }
 h1,h2,h3,h4,h5 {
 	margin-top:10px;
@@ -595,7 +595,6 @@ body .left-bar .quick-forge-ico {
 	line-height:30px;
 	float:left;
 }
-
 body .left-bar .chatbox-admin {
 	display:block;
 	background: transparent url(/admin/files/img/ico/chatbox.png) no-repeat top left;
@@ -737,5 +736,43 @@ body label input[type=radio] {
 }
 
 .media-upload {
-	
+}
+
+.matrix, .moon, .lady-hammer, .luc-laverdure {
+	display:block;
+	position:fixed;
+}
+.matrix {
+	width:100%;
+	min-height:100%;
+	background: transparent url(/admin/files/img/bg-anim/bg.gif) no-repeat center center fixed;
+	top:0;
+	left:0;
+	z-index:-9999;
+}
+
+.moon {
+    bottom: 0;
+    background: transparent url(/admin/files/img/bg-anim/moon.png) no-repeat center bottom fixed;
+    z-index: -999;
+    height: 70%;
+    width: 100%;
+    background-size: 30%;
+}
+.hammer-lady {
+	left:20%;
+	bottom:0;
+	background: transparent url(/admin/files/img/bg-anim/hammer-lady.png) no-repeat top left fixed;
+	width:50%;
+	height:300px;
+	z-index:-99;
+}
+
+.luc-laverdure {
+	right:0;
+	bottom:0;
+	background: transparent url(/admin/files/img/bg-anim/luc-laverdure.png) no-repeat top left fixed;
+	z-index:9;
+	width:100%;
+	height:100%;
 }

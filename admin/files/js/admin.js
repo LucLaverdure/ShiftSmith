@@ -20,8 +20,14 @@ $(document).on('click', '.line .del', function() {
 
 
 $(function() {
+	// setup all datepickers of the page
 	$(".datepicker").datepicker();
+	
+	// select refresh rate of the chatboxes
 	setTimeout(function() {$('.line').append('<span class="del"></span>'); },1000);
+
+	//$('body').append('<div class="matrix"></div>').parent().append('<div class="moon"></div>').parent().append('<div class="hammer-lady"></div>').parent().append('<div class="luc-laverdure"></div>');
+	
 });
 
 
@@ -66,4 +72,27 @@ $(document).on('click', ".unfold-admin", function(e) {
 		left:'-100px',
 		opacity:0
 	});
+});
+
+$(document).on('click', ".body_type label input", function(e) {
+	var selected = $(this).val();
+
+	switch (selected) {
+		case 'content':
+			$('.markup-select').slideDown('fast');
+			$('.cache-select').slideUp('fast');
+			$('.live-select-').slideUp('fast');
+			break;
+		case 'cache':
+			$('.markup-select').slideUp('fast');
+			$('.cache-select').slideDown('fast');
+			$('.live-select-').slideUp('fast');
+			break;
+		case 'live':
+			$('.markup-select').slideUp('fast');
+			$('.cache-select').slideUp('fast');
+			$('.live-select-').slideDown('fast');
+			break;
+
+	}
 });
