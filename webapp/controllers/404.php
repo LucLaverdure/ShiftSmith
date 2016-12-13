@@ -4,6 +4,7 @@ class page404 extends Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
+		//return 999;	// last priority
 		return -999;	// last priority
 	}
 
@@ -15,6 +16,8 @@ class page404 extends Controller {
 		 */
 		if ($this->index == 0) {
 			$this->loadView('default-theme/404.tpl');		
+		} else {
+			//die();
 		}
 	}
 }

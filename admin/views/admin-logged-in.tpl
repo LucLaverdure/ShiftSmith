@@ -1,4 +1,9 @@
 [admin-header.tpl]
+<body class="shiftsmith">
+
+	<div style="" class="cf">
+	
+		<div style="max-width:1024px;width:100%;margin:0 auto;" class="cf">
 	
 		<div class="login">
 
@@ -15,5 +20,6 @@
 [endif]
 
 		</div>
+</div></div></body>
 
 [admin-footer.tpl]

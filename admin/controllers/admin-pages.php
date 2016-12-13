@@ -63,17 +63,15 @@ class admin_create_page extends Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
-		if (isset($_SESSION['login']) && ((q('0')=='admin') || q(1)=='dreamforgery'))
+		if (isset($_SESSION['login']) && (q('0')=='admin') && q(1)=='shiftsmith')
 			return 1;	// priority 2
 		else return false;
-		return false;
 	}
 	
 	function execute() {
 		
 		$this->cacheForm('page_admin', array('title'=>'', 'html'=>'', 'lang'=>'en'));
 
-		// media gallery
-		$this->loadView('admin.dreamforgery.tpl');
+		$this->loadView('admin.shiftsmith.tpl');
 	}
 }

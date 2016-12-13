@@ -84,7 +84,7 @@ body {
 	color: #181920;
 }
 #wrapper .highlight {
-	background: #4286f4;
+	background: #363738;
 	width:100%;
 	z-index:999;
 }
@@ -120,8 +120,8 @@ h1 {
 	color:#fff;
 }
 h2 {
-	font-family: 'Source Code Pro', monospace;
 	margin: 10px 0 10px 0;
+	font-family: 'Sarpanch', sans-serif;
 	color:#fff;
 	font-size:30px;
 	text-shadow:none;
@@ -151,6 +151,16 @@ h4, h4 a {
 	font-weight:bold;
 	margin-bottom:20px;
 }
+.title-left {
+	font-family: 'Sarpanch', sans-serif;
+	text-shadow: #fff 2px 2px;
+	color:#5cace2;
+}
+.title-right {
+	text-shadow: #fff 2px 2px;
+	font-family: 'Sarpanch', sans-serif;
+	color:#9b59b6;
+}
 .download-box {
 	border-radius:10px;
 	max-width:450px;
@@ -170,14 +180,24 @@ h4, h4 a {
 .download-button{
 	float:right;
 	width:100%;
-	max-width:370px;
+	max-width:270px;
 	display:block;
-	padding:10px 20px;
-	background:#fff;
+	background:#3e8e41;
 	color:#fff;
-	background:#00cc00;
 	margin-top:25px;
 	border-bottom:none;
+	line-height:20px;
+	padding:20px 20px 15px 20px;
+	border-radius: 15px;
+	box-shadow: 0 9px #999;	
+}
+.download-button:hover {
+	background-color: #3e8e41
+}
+.download-button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 .inner-wrapper {
 	margin:0 auto;
@@ -384,7 +404,7 @@ pre code[class*="language"]:hover {
 .head-left {
 	float:left;
 	width:100%;
-	max-width:300px;
+	max-width:480px;
 }
 .unslider-nav ol {
 	margin: 10px auto;

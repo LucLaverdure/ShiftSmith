@@ -1,3 +1,4 @@
+var image_gallery_timer;
 $(document).on('click', '.media-button .del', function() {
 	
 	var file_to_del = $(this).parents('a').attr('href');
@@ -27,8 +28,29 @@ $(function() {
 	setTimeout(function() {$('.line').append('<span class="del"></span>'); },1000);
 
 	//$('body').append('<div class="matrix"></div>').parent().append('<div class="moon"></div>').parent().append('<div class="hammer-lady"></div>').parent().append('<div class="luc-laverdure"></div>');
+
+	var $this = $('a.media-image').not(':visible').first();
+	if ($this.length > 0) {
+		image_gallery_timer = setTimeout(function() {
+			display_pictures();
+		}, 600);
+	}
 	
+	$('.admin-panel label a').click(function() {
+		$(this).parent().find('input[type=radio]').click();
+		return false;
+	});
 });
+
+function display_pictures() {
+	$this = $('a.media-image').not(':visible').first();
+	$this.fadeIn();
+	if ($this.length > 0) {
+		image_gallery_timer = setTimeout(function() {
+			display_pictures();
+		}, 600);
+	}
+}
 
 
 $(document).on('click', '.login-button', function() {
@@ -78,21 +100,31 @@ $(document).on('click', ".body_type label input", function(e) {
 	var selected = $(this).val();
 
 	switch (selected) {
-		case 'content':
+		case 'markup':
 			$('.markup-select').slideDown('fast');
-			$('.cache-select').slideUp('fast');
-			$('.live-select-').slideUp('fast');
+			$('.url-select').slideUp('fast');
+			$('.db-select').slideUp('fast');
+			$('.file-select').slideUp('fast');
 			break;
-		case 'cache':
+		case 'url':
 			$('.markup-select').slideUp('fast');
-			$('.cache-select').slideDown('fast');
-			$('.live-select-').slideUp('fast');
+			$('.url-select').slideDown('fast');
+			$('.db-select').slideUp('fast');
+			$('.file-select').slideUp('fast');
 			break;
-		case 'live':
+		case 'db':
 			$('.markup-select').slideUp('fast');
-			$('.cache-select').slideUp('fast');
-			$('.live-select-').slideDown('fast');
+			$('.url-select').slideUp('fast');
+			$('.db-select').slideDown('fast');
+			$('.file-select').slideUp('fast');
 			break;
-
+		case 'file':
+			$('.markup-select').slideUp('fast');
+			$('.url-select').slideUp('fast');
+			$('.db-select').slideUp('fast');
+			$('.file-select').slideDown('fast');
+			break;
 	}
+	
 });
+

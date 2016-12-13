@@ -48,7 +48,6 @@ table {
 	border-spacing: 0;
 }
 
-
 /**
  * For modern browsers
  * 1. The space content is one way to avoid an Opera bug when the
@@ -78,17 +77,46 @@ table {
 
 /* Main */
 /* #e0e0ed url(http://beta.luclaverdure.com/wp-content/themes/luclaverdure/images/bg/bgpattern.jpg); */
+
 body {
 	font-family: 'PT Sans', sans-serif;
 	font-size:17px;
 	color: #181920;
+	background: #585858;
 /*	background: transparent url(/admin/files/img/dreamforgery.jpg) no-repeat center center fixed; 
 	background-size: cover; */
+}
+
+.admin {
+	background: transparent url(/admin/files/img/login-bg.jpg) no-repeat center center fixed;
+	background-size: cover;
+}
+body.shiftsmith {
+	background: transparent url(/admin/files/img/shiftsmith.jpg) no-repeat center center fixed;
+	background-size: cover;
+}
+
+h1 {
+	font-family: 'Sarpanch', sans-serif;
+	color:#ccffcc;
+	text-shadow: #fff 2px 2px;
 }
 h1,h2,h3,h4,h5 {
 	margin-top:10px;
 	margin-bottom:20px;
 }
+.admin .title-left {
+    font-family: 'Sarpanch', sans-serif;
+    text-shadow: #fff 2px 2px;
+    color: #5cace2;
+	margin-left:100px;
+}
+.title-right {
+    text-shadow: #fff 2px 2px;
+    font-family: 'Sarpanch', sans-serif;
+    color: #9b59b6;
+}
+
 p{
 	margin-bottom:20px;
 }
@@ -96,7 +124,7 @@ p{
 	margin: 20px auto;
 	max-width:500px;
 	width:100%;
-	background-color: #4286f4;
+	border: 3px solid #4286f4;;
 	color:#fff;
 	padding:30px;
 	transition: 2s all ease;
@@ -108,10 +136,19 @@ p{
 	text-align:center;
 	text-decoration:none;
 	font-weight:bold;
-	max-width:100px;
+	max-width:150px;
 	float:right;
 	box-shadow: 2px 2px 2px #565758;
 	color:#fff;
+}
+.login-button img {
+	display:none;
+	max-width:40px;
+	width:100%;
+	float:left;
+}
+.login-button:hover img {
+	display:block;
 }
 .hvr-shutter-in-horizontal:before {
 	color:#fff;
@@ -307,7 +344,31 @@ p{
 }
 .media-gallery {
 	margin-top:75px;
+	position:relative;
+	transform-style: preserve-3d;
+	perspective: 1000px;
 }
+
+a.media-image.mover {
+	transition: all 0.5s ease-in-out;
+}
+
+a.media-image {
+	transform: rotate(15deg,45deg,20deg) translate(20px,0px);
+	display:block;
+	max-width:450px;
+	width:100%;
+	position:absolute;
+	top:0;
+	left:0;
+}
+.media-image img {
+	display: block;
+	padding: 41px 0px 0px 1px;	
+	max-width:450px;
+	width:100%;
+}
+/*
 .media-gallery img {
 	max-width:200px;
 	margin-right:20px;
@@ -341,6 +402,7 @@ p{
 .media-button:hover span.info {
 	padding: 20px 0;
 }
+*/
 .del {
 	position:absolute;
 	top:10px;
@@ -351,7 +413,6 @@ p{
 	height:50px;
 }
 .media-gallery h1 {
-	color:#fff;
 	font-size:72px;
 	line-height:72px;
 	font-weight:bold;
@@ -494,16 +555,31 @@ p{
 	transform: rotateZ(0deg);
 	transition: .2s all ease-in;
 }
-h1 {
+.admin h1 {
 	font-size:72px;
-	color:#fff;
-	margin:75px 0 10px 0;
-	clear:both;
 	z-index:99;
+	margin-top:70px;
+}
+h1 {
+	font-size:36px;
 }
 h2 {
 	font-size:22px;
 	color:#fff;
+}
+.admin h3 {
+	font-size:20px;
+	background: #363738;
+	color: #fff;
+	position:absolute;
+	top:-20px;
+	left:0;
+	width:100%;
+	padding:20px;
+	box-sizing:border-box;
+}
+#thisform {
+	padding-top:100px;
 }
 .line .del {
 	position:absolute;
@@ -519,7 +595,6 @@ h2 {
 	background:#aaaaff;
 	padding:20px 20px 20px 100px;
 	box-sizing:border-box;
-	color:#fff;
 	z-index:99;
 }
 
@@ -544,8 +619,8 @@ body .fold-admin {
 	position:absolute;
 	float:right;
 	z-index:9999;
-	right:0;
-	bottom:0;
+	right:3px;
+	bottom:6px;
 	margin:0;
 	padding: 0;
 }
@@ -694,11 +769,13 @@ hr {
     width: 100%;
     font-size: 20px;
     padding: 5px;
+	box-sizing:border-box;
 }
 .forge-url-trigger{
     width: 100%;
     font-size: 20px;
     padding: 5px;
+	box-sizing:border-box;
 }
 .admin-panel {
 	color: #fff;
@@ -708,22 +785,31 @@ hr {
 }
 
 .admin-panel .body_type {
+	opacity:0.9;
 	background: #fff;
 	padding:10px;
 }
 
-.admin-panel .body_type label, .admin-panel .body_type label a {
+.admin-panel .body_type label, .header-block, .sub-header-block {
 	font-size:20px;
 	display:block;
 	line-height:22px;
 	padding:10px;
 	box-sizing:border-box;
-	width:100%;
 	color:#565758;
-	background:#ccc;
+	background: #5cace2;
+	margin-bottom:0;
+	clear:right;
+	opacity:0.9;
+}
+body .sub-header-block {
+	opacity:0.9;
+	background: #9b59b6;
+	color:#fff;
 }
 .admin-panel .body_type label:hover, .admin-panel .body_type label a:hover {
-	background:#565758;
+	opacity:0.9;
+	background:#aed9c6;
 	color:#fff;
 	font-weight:500;
 	transition: all 0.2s ease-in;
@@ -738,41 +824,54 @@ body label input[type=radio] {
 .media-upload {
 }
 
-.matrix, .moon, .lady-hammer, .luc-laverdure {
-	display:block;
-	position:fixed;
+.left-nav .title-left, .left-nav .title-right{
+	font-size:24px;
+	margin:0;
+	width:60px;
+	box-sizing:border-box;
+	float:left;
+	clear:none;
+	font-weight:800;
+	
 }
-.matrix {
-	width:100%;
-	min-height:100%;
-	background: transparent url(/admin/files/img/bg-anim/bg.gif) no-repeat center center fixed;
-	top:0;
-	left:0;
-	z-index:-9999;
-}
-
-.moon {
-    bottom: 0;
-    background: transparent url(/admin/files/img/bg-anim/moon.png) no-repeat center bottom fixed;
-    z-index: -999;
-    height: 70%;
-    width: 100%;
-    background-size: 30%;
-}
-.hammer-lady {
-	left:20%;
-	bottom:0;
-	background: transparent url(/admin/files/img/bg-anim/hammer-lady.png) no-repeat top left fixed;
-	width:50%;
-	height:300px;
-	z-index:-99;
+.left-nav .title-right {
+	padding-right:80px;
 }
 
-.luc-laverdure {
-	right:0;
-	bottom:0;
-	background: transparent url(/admin/files/img/bg-anim/luc-laverdure.png) no-repeat top left fixed;
-	z-index:9;
-	width:100%;
-	height:100%;
+.create .title-left {
+	margin-left:0;
 }
+.process-button {
+	line-height:20px;
+	padding:20px 20px 15px 20px;
+	margin-bottom:30px;
+	max-width:360px;
+	width:100%;
+}
+.pipeline .title-left, .pipeline .title-right {
+	margin-left:0;
+	line-height:26px;
+	font-size:26px;
+}
+
+.title-jux {
+    text-shadow: #fff 2px 2px;
+    font-family: 'Sarpanch', sans-serif;
+    color: #00ff00;
+	font-size:26px;
+}
+
+.required:after {
+	background: transparent url(/admin/files/img/required.png) no-repeat center left;
+	background-size:22px 22px;
+	width:22px;
+	height:22px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+	 color: #fff;
+	 background: #9b59b6;
+	 padding:5px;
+ }
+ .select2 .select2-search--inline {
+	background:#fff; 
+ }

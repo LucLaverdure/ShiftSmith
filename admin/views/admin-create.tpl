@@ -1,4 +1,9 @@
 [admin-header.tpl]
+<body class="shiftsmith">
+
+	<div style="" class="cf">
+	
+		<div style="max-width:1024px;width:100%;margin:0 auto;" class="cf">
 	
 		<div class="login">
 
@@ -30,5 +35,7 @@
 			class="button login-button hvr-shutter-in-horizontal">Create Admin Account</a></p>
 			
 		</div>
+</div>
+</div></div></body>
 
 [admin-footer.tpl]

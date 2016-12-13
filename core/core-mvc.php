@@ -120,12 +120,31 @@
 		}
 
 		// Load view template from filename
+		/*
 		function injectView($selector, $mode, $view_filename) {
 			if (in_array($mode, array('prepend', 'append', 'replace', 'outer-replace'))) {
 				$this->injected_views[] = array($selector, $mode, $view_filename);
 			}
 		}
+		*/
 
+		// inject resource
+		function injectView($selector, $mode, $view_filename) {
+			if (in_array($mode, array('prepend', 'append', 'replace', 'outer-replace'))) {
+				switch (substr($view_filename,-3, 4)) {
+					case '.js':
+						$this->injected_views[] = array($view_filename, '<script src="'+$resource+'" type="text/javascript">', $mode);
+						break;
+					case 'css':
+						$this->injected_views[] = array($view_filename, '<link rel="stylesheet" type="text/css" href="'+$resource+'">', $mode);
+						break;
+					default:
+							$this->injected_views[] = array($selector, $mode, $view_filename);
+					break;
+				}
+			}
+		}
+			
 		
 		function loadViewAsJSON($omitted_namespaces, $ommited_models) {
 			$JSON = array();

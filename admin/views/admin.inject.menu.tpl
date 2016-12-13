@@ -3,16 +3,14 @@
 				<input type="text" placeholder="Post quick update to the cloud..." />
 				<a href="/user" class="email">[user.email]</a>
 			</form>
-			<a class="home hvr-radial-in" href="/"><img src="/admin/files/img/ico/home.png"/></a>
+			<a class="home hvr-grow" href="/"><img src="/admin/files/img/ico/home.png"/></a>
 			<a class="messages" href=""><span class="notifications new">0</span></a>
 		</div>
 		<div class="left-bar admin-bar">
 		
 			<div class="cf dreamforgery">
 				<span class="quick-forge-ico admin-ico"></span>
-				<a href="/admin/dreamforgery" class="hvr-bounce-to-right left-nav">Dream Forgery</a>
-				<span class="quick-forge-admin admin-ico"></span>
-				<a href="/admin/dreamforgery" class="quick-forge hvr-bounce-to-right"><span style="font-size:30px;">&#8614;</span> Quick Forge</a>
+				<a href="/admin/shiftsmith" class="hvr-bounce-to-right left-nav"><span class="title-left">Shift</span><span class="title-right">Smith</span></a>
 			</div>
 
 			<hr/>

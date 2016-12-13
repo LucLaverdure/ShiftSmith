@@ -5,13 +5,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
-<title>Dream Forgery MVC Platform</title>
+<title>ShiftSmith MVC Platform</title>
 
+<link href="https://fonts.googleapis.com/css?family=Sarpanch" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="/admin/files/lib/jquery-ui/jquery-ui.structure.min.css" />
-<link rel="stylesheet" type="text/css" href="/admin/files/lib/jquery-ui/jquery-ui/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="/admin/files/lib/jquery-ui/jquery-ui.theme.min.css" />
 
 <link rel="stylesheet" type="text/css" href="/admin/files/lib/prism/prism.css" />
 <link rel="stylesheet" type="text/css" href="/admin/files/lib/unslider/unslider.css" />
@@ -21,7 +22,7 @@
 <link rel="stylesheet" type="text/css" href="/files/css/common.css" />
 
 <script src="/admin/files/lib/jquery/jquery-1.12.3.min.js" type="text/javascript"></script>
-<script src="/admin/files/lib/jquery-ui/jquery-ui.js" type="text/javascript"></script>
+<script src="/admin/files/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="/admin/files/lib/unslider/unslider-min.js" type="text/javascript"></script>
 <script src="/admin/files/lib/parallax/parallax.min.js" type="text/javascript"></script>
 <script src="/admin/files/lib/prism/prism.js" type="text/javascript"></script>
@@ -34,20 +35,22 @@
 </head>
 
 <body>
-		
-			<div class="logo"><a href="/"></a></div>
 			<div id="wrapper">
 			<div class="highlight cf">
 				<div class="inner-wrapper cf">
 					<div class="header">
 						<div class="head-left">
-							<h1>DreamForgery</h1>
-							<h2><span title="Open Source Software">OOS</span>/<span title="Model View Controller">MVC</span>/<span title="Content Management System">CMS</span>/<span title="Extract, Transform, Load">ETL/<span title="Search Engine Optimization">SEO</h2>
+							<span class="logo"><a href="/"></a></span>
+							<a href="/">
+								<h1><span class="title-left">Shift</span><span class="title-right">Smith</span></h1>
+								<h2>Web Software Suite</h2>
+							</a>
 						</div>
-						<a style="line-height:20px;padding:20px 20px 15px 20px;" href="https://github.com/LucLaverdure/DreamForgery/archive/master.zip" class="download-button hvr-pulse-grow">
+						<a style="line-height:20px;padding:20px 20px 15px 20px;" href="https://github.com/LucLaverdure/DreamForgery/archive/master.zip" class="download-button hvr-grow">
 							<img src="/files/img/download.png" alt="download" style="max-width:30px;display:block;float:left;margin:10px;"/>
-							<div style="font-size:1.6em;">Download DreamForgery</div>
+							Download
 							<div>v<span id="version-inject"></span></div>
+							<span class="stats"></span>
 						</a>
 					</div>
 				</div>

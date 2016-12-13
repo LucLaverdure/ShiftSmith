@@ -7,10 +7,15 @@
 				<div class="inner-wrapper main-wrap">
 					<div class="pad">
 						<div class="home">
-							<h3><a href="#free">Free</a></h3>
-							<h3><a href="#free">Fast</a></h3>
-							<h3><a href="#free">Flexible</a></h3>
+							<h3>Open Source Software</h3>
+							<h3>Model, View, Controller architecture</h3>
+							<h3>Content Management System</h3>
+							<h3>Migration-ready</h3>
+							<h3>Extract, Transform &amp; Load</h3>
+							<h3>Search engine Optimization</h3>
+							
 							chatbox[home]
+							
 						</div>
 					</div>
 				</div>
