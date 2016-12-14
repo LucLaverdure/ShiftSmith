@@ -75,3 +75,40 @@ class admin_create_page extends Controller {
 		$this->loadView('admin.shiftsmith.tpl');
 	}
 }
+
+class shiftsmith extends Controller {
+		
+	// Display function: validate urls to activate the controller
+	function validate() {
+		// Activate home controller for /home and /home/*
+		if (isset($_SESSION['login']) && (q('0')=='admin') && q(1)=='shiftsmith' && isset($_POST['body_type']))
+			return 1;	// priority 2
+		else return false;
+	}
+	
+	function execute() {
+		
+		$title = $_POST['title'];
+		$description = $_POST['description'];
+		$body_type = $_POST['body_type'];
+		$tags = explode(',', $_POST['tagsDisplay']);
+		switch ($body_type) {
+			case 'markup':
+			
+				break;
+			case 'url':
+				break;
+			case 'db':
+				break;
+			case 'file':
+				break;
+			default:
+				return;
+		}
+
+		$db = new Database();
+		$db::connect();
+
+		
+	}
+}

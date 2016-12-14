@@ -36,6 +36,7 @@ class admin_media extends Controller {
 		}
 
 		$this->addModel('media', $return);
+		$this->addModel('web', 'url', "http://" . $_SERVER['SERVER_NAME']);
 
 		// media gallery
 		$this->loadView('admin.media.tpl');

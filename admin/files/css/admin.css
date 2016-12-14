@@ -116,7 +116,10 @@ h1,h2,h3,h4,h5 {
     font-family: 'Sarpanch', sans-serif;
     color: #9b59b6;
 }
-
+.title-right.tidy-up {
+	width:auto;
+	margin-left:0;
+}
 p{
 	margin-bottom:20px;
 }
@@ -869,9 +872,45 @@ body label input[type=radio] {
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
 	 color: #fff;
-	 background: #9b59b6;
+	 background: #6666ff;
 	 padding:5px;
  }
  .select2 .select2-search--inline {
 	background:#fff; 
+ }
+ .file-select {
+	 padding:20px;
+ }
+ .files-selected {
+	 color:#565758;
+	 margin-top:20px;
+	 line-height:30px;
+	 font-size:22px;
+ }
+ 
+ #gallery .box {
+	width:300px;
+	min-height:300px;
+	margin:50px;
+	float:left;
+	background: #fff;
+	box-sizing:border-box;
+ }
+ 
+ #gallery .box a {
+	max-width:100%;
+	width:100%;
+ }
+ #gallery .box img {
+	max-width:100%;
+	width:100%;
+ }
+ #gallery .box .link {
+	word-break: break-all;
+	padding:20px;
+	background:#fff;
+	color:#565758;
+	max-width:100%;
+	width:100%;
+	box-sizing:border-box;
  }

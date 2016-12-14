@@ -105,24 +105,56 @@ $(document).on('click', ".body_type label input", function(e) {
 			$('.url-select').slideUp('fast');
 			$('.db-select').slideUp('fast');
 			$('.file-select').slideUp('fast');
+			$('.drupal-select').slideUp('fast');
+			$('.wp-select').slideUp('fast');
 			break;
 		case 'url':
 			$('.markup-select').slideUp('fast');
 			$('.url-select').slideDown('fast');
 			$('.db-select').slideUp('fast');
 			$('.file-select').slideUp('fast');
+			$('.drupal-select').slideUp('fast');
+			$('.wp-select').slideUp('fast');
 			break;
 		case 'db':
 			$('.markup-select').slideUp('fast');
 			$('.url-select').slideUp('fast');
 			$('.db-select').slideDown('fast');
 			$('.file-select').slideUp('fast');
+			$('.drupal-select').slideUp('fast');
+			$('.wp-select').slideUp('fast');
+			break;
+		case 'drupal':
+			$('.markup-select').slideUp('fast');
+			$('.url-select').slideUp('fast');
+			$('.db-select').slideUp('fast');
+			$('.file-select').slideDown('fast');
+			$('.drupal-select').slideUp('fast');
+			$('.wp-select').slideUp('fast');
 			break;
 		case 'file':
 			$('.markup-select').slideUp('fast');
 			$('.url-select').slideUp('fast');
 			$('.db-select').slideUp('fast');
 			$('.file-select').slideDown('fast');
+			$('.drupal-select').slideUp('fast');
+			$('.wp-select').slideUp('fast');
+			break;
+		case 'wp-import':
+			$('.markup-select').slideUp('fast');
+			$('.url-select').slideUp('fast');
+			$('.db-select').slideUp('fast');
+			$('.file-select').slideUp('fast');
+			$('.drupal-select').slideUp('fast');
+			$('.wp-select').slideDown('fast');
+			break;
+		case 'drupal-import':
+			$('.markup-select').slideUp('fast');
+			$('.url-select').slideUp('fast');
+			$('.db-select').slideUp('fast');
+			$('.file-select').slideUp('fast');
+			$('.drupal-select').slideDown('fast');
+			$('.wp-select').slideUp('fast');
 			break;
 	}
 	

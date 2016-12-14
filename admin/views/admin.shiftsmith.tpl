@@ -3,12 +3,12 @@
 
 	<div style="" class="cf">
 	
-		<div style="max-width:1024px;width:100%;margin:0 auto;" class="cf">
+		<div style="max-width:1024px;width:100%;margin:100px auto;" class="cf">
 		
 		<form method="post" action="">
 <div class="admin-panel">
 
-	<h1 class="create"><img src="/admin/files/img/ico/forge.png" title="Forge" />
+	<h1 class="create" style="font-weight:800;"><img src="/admin/files/img/ico/forge.png" title="Forge" />
 	<span class="title-left">Shift</span><span class="title-right">Smith</span>
 	</h1>
 
@@ -50,7 +50,7 @@
 	<label>
 		<h2 class="header-block required">Tags</h2>
 	</label>
-	<select class="js-tags form-control" multiple="multiple" style="width:100%;">
+	<select class="js-tags form-control" multiple="multiple" style="width:100%;" name="tagsDisplay">
 		<option selected="selected" value="page">page</option>
 	</select>
 	</p>
@@ -133,8 +133,53 @@ $(function() {
 
 		<label><input type="radio" value="file" name="body_type" /><a href="#">Upload File(s) (*.csv, *.pdf, *.txt, *.doc, *.docx)</a></label>
 		<div class="file-select" style="display:none;">
-			<input type="file" name="file[]" id="file" multiple="multiple"
+			<input type="file" name="file[]" multiple="multiple" class="files-upload"
 			accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" />
+			<div class="files-selected"></div>
+		</div>
+<script type="text/javascript">
+	$(".files-upload").change(function(e) {
+
+		var f = e.target.files,
+            len = f.length,
+			files = '';
+        for (var i=0;i<len;i++) {
+			if (typeof(f[i].name) != 'undefined') {
+				files += f[i].name + '<br/>';
+			} else if (typeof(f[i].filename) != 'undefined') {
+				files += f[i].filename + '<br/>';
+			}
+        }
+
+		$('.files-selected').html(files);
+	});
+</script>
+		<label><input type="radio" value="drupal-import" name="body_type" /><a href="#">Migrate Drupal data to ShiftSmith</a></label>
+		<div class="drupal-select" style="display:none;">
+			<div>
+				<h3 class="sub-header-block">Drupal Database Hostname:</h3>
+				<input type="text" value="" placeholder="localhost" class="forge-url-trigger" />
+				<h3 class="sub-header-block">Drupal Database User:</h3>
+				<input type="text" value="" placeholder="user" class="forge-url-trigger" />
+				<h3 class="sub-header-block">Drupal Database Password:</h3>
+				<input type="password" value="" placeholder="password" class="forge-url-trigger" />
+				<h3 class="sub-header-block">Drupal Database Name:</h3>
+				<input type="text" value="" placeholder="db_data" class="forge-url-trigger" />
+			</div>
+		</div>
+
+		<label><input type="radio" value="wp-import" name="body_type" /><a href="#">Migrate Wordpress data to ShiftSmith</a></label>
+		<div class="wp-select" style="display:none;">
+			<div>
+				<h3 class="sub-header-block">Wordpress Database Hostname:</h3>
+				<input type="text" value="" placeholder="localhost" class="forge-url-trigger" />
+				<h3 class="sub-header-block">Wordpress Database User:</h3>
+				<input type="text" value="" placeholder="user" class="forge-url-trigger" />
+				<h3 class="sub-header-block">Wordpress Database Password:</h3>
+				<input type="password" value="" placeholder="password" class="forge-url-trigger" />
+				<h3 class="sub-header-block">Wordpress Database Name:</h3>
+				<input type="text" value="" placeholder="db_data" class="forge-url-trigger" />
+			</div>
 		</div>
 		
 	</div>
@@ -146,11 +191,17 @@ $(function() {
 	</div>
 
 	
-	<h2 class="required">Output Type</h2>
+	<h2 class="required">Parse Type</h2>
 	<div class="body_type">
-		<label><input type="radio" value="admin" name="output_type" /><a href="#">Administration Template Engine</a></label>
-		<label><input type="radio" value="html" name="output_type" checked="checked" /><a href="#">Third Party Output</a></label>
-		<label><input type="radio" value="download" name="output_type" /><a href="#">Download</a></label>
+		<label><input type="radio" value="admin" name="parse_type" /><a href="#">Admin Input (Allow shortcodes)</a></label>
+		<label><input type="radio" value="html" name="parse_type" checked="checked" /><a href="#">Third Party Input (Disable Shortcodes)</a></label>
+	</div>
+
+	<h2 class="required">Output type</h2>
+	<div class="body_type">
+		<label><input type="radio" value="download" name="output_type" /><a href="#">Databse Entry (useful for tabled data)</a></label>
+		<label><input type="radio" value="download" name="output_type" /><a href="#">Files: Generated Model, View, Controller files (useful for developers on design)</a></label>
+		<label><input type="radio" value="html" name="parse_type" checked="checked" /><a href="#">Download (Useful for reporting and exports)</a></label>
 	</div>
 
 		

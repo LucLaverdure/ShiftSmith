@@ -10,13 +10,14 @@
 
 	<h1>Media Gallery</h1>
 
+	<ul id="gallery">
 	[for:media]
-		<a target="_blank" href="/files/upload/[media.file]" class="media-image" style="display:none;" >
-			<img src="/files/upload/[media.file]" title="[media.file]" alt="[media.file]" />
-		</a>
+		<li class="box">
+			<a href="/files/upload/[media.file]" class="hvr-grow"><img src="/files/upload/[media.file]" alt="[media.file]" /></a>
+			<div class="link">[web.url]/files/upload/[media.file]</div>
+		</li>
 	[end:media]
-
-
+	</ul>
 </div>
 </div></div></body>
 [admin-footer.tpl]

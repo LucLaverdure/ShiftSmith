@@ -208,25 +208,25 @@
 
 					$room_id = substr($found, 8, -1);
 					$chatbox = '';
-					
+
 					$db = new Database();
 					$db::connect();
-					
 					$data = $db::queryResults("SELECT liner, user
 											   FROM chatbox
 											   WHERE room_id='".$db::param($room_id)."'
-											   ORDER BY date DESC
-											   LIMIT 50");
-					if ($data !== false) {
-							// load with frontend
-					} else {
+											   ORDER BY id DESC
+											   LIMIT 50;");
+					if ($data == false) {
 						
-						$data = $db::queryResults("SELECT liner, user
+						// verify if database structure is complete.
+						$struct_test = $db::queryResults("SELECT liner, user
 												   FROM chatbox
 												   LIMIT 1");
 
-						if ($data==false) {
-							$data = $db::query("CREATE TABLE IF NOT EXISTS `chatbox` (
+						//if structure is incomplete
+						if ($struct_test == false) {
+							// create it
+							$obj = $db::query("CREATE TABLE IF NOT EXISTS `chatbox` (
 													  `id` int(11) NOT NULL AUTO_INCREMENT,
 													  `room_id` varchar(255) COLLATE latin1_general_ci NOT NULL,
 													  `user` varchar(255) COLLATE latin1_general_ci NOT NULL,
@@ -274,7 +274,7 @@
 						$chatbox .= '<textarea class="hasid" '.$append.' placeholder="'.$db::param($chat_warmer[$keyin], true).'"></textarea><a href="#" class="action hvr-radial-in">+</a>';
 						
 					$chatbox .= '</div>';
-					
+
 					$view_output = str_replace($found, $chatbox, $view_output);
 				}
 				
