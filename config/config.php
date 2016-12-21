@@ -12,7 +12,7 @@
 	define('SEARCH_DIRECTORY_CONTROLLERS', 'webapp,admin');
 	
 	// filter file extensions for controllers and functions used in application
-	define('FILE_FILTER_CONTROLLERS', 'php,php5,php4,php3,php2');
+	define('FILE_FILTER_CONTROLLERS', 'php,php5');
 
 	// cron job password
 	define('CRON_JOB_PASSWORD', 'eedad41f42660e5cb7a4');

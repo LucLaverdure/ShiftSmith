@@ -80,11 +80,6 @@ table {
 
 body {
 	font-family: 'PT Sans', sans-serif;
-	font-size:17px;
-	color: #181920;
-	background: #585858;
-/*	background: transparent url(/admin/files/img/dreamforgery.jpg) no-repeat center center fixed; 
-	background-size: cover; */
 }
 
 .admin {
@@ -294,12 +289,12 @@ p{
 	float:right;
 }
 .left-bar {
-	position:fixed;
+	position:absolute;
 	top:75px;
 	left:0;
-	background:#585758;
+	background:#565758;
 	color:#fff;
-	padding:20px;
+	padding:10px;
 	box-sizing:border-box;
 	opacity:0.8;
 	line-height:30px;
@@ -799,16 +794,19 @@ hr {
 	line-height:22px;
 	padding:10px;
 	box-sizing:border-box;
-	color:#565758;
+	color:#fff;
 	background: #5cace2;
-	margin-bottom:0;
 	clear:right;
 	opacity:0.9;
+	margin-bottom:0;
 }
 body .sub-header-block {
 	opacity:0.9;
 	background: #9b59b6;
 	color:#fff;
+}
+body h2.sub-header-block {
+	margin-bottom:0;
 }
 .admin-panel .body_type label:hover, .admin-panel .body_type label a:hover {
 	opacity:0.9;
@@ -850,6 +848,15 @@ body label input[type=radio] {
 	margin-bottom:30px;
 	max-width:360px;
 	width:100%;
+	max-height:40px;
+	margin-top:80px;
+}
+.process-button img {
+	display:inline-block;
+	margin-top:-90px;
+}
+.process-button .title-left {
+	margin-left:20px;
 }
 .pipeline .title-left, .pipeline .title-right {
 	margin-left:0;
@@ -917,8 +924,41 @@ body label input[type=radio] {
  .helper {
 	 background: #fff;
 	 color:#565758;
-	 display:block;
-	 width:100%;
-	 padding:10px 20px;
+	 display:inline-block;
+	 padding:10px;
 	 box-sizing:border-box;
  }
+ 
+ a.hvr-bounce-to-right {
+	 width:100%;
+	 display:block;
+	 box-sizing:border-box;
+	 margin:5px 10px;
+	 height:auto;
+ }
+ .radiobg {
+	 background: #fff;
+	 padding:10px;
+	 color:#565758;
+ }
+ 
+.display-options {
+	margin-bottom:10px;
+}
+.display-options h3 {
+	font-size:20px;
+	margin-bottom: 0;
+}
+.trigers-area {
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.adv-settings {
+	display:none;
+}
+.tags-area {
+	margin-bottom:10px;
+}
+.wp-select {
+	margin-top:10px;
+}

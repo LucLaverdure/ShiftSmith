@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" href="/admin/files/lib/awesome/awesome.min.css" />
 <link rel="stylesheet" type="text/css" href="/admin/files/lib/hover/hover-min.css" />
 <link rel="stylesheet" type="text/css" href="/admin/files/lib/select2/select2.min.css" />
-
+<link rel="stylesheet" type="text/css" href="/admin/files/lib/lightbox2/dist/css/lightbox.min.css">
 <link rel="stylesheet" type="text/css" href="/files/css/common.css" />
 <link rel="stylesheet" type="text/css" href="/admin/files/css/admin.css" />
 <script src="/admin/files/lib/jquery/jquery-1.12.3.min.js" type="text/javascript"></script>

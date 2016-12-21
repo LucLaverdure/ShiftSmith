@@ -69,9 +69,46 @@ class admin_create_page extends Controller {
 	}
 	
 	function execute() {
-		
-		$this->cacheForm('page_admin', array('title'=>'', 'html'=>'', 'lang'=>'en'));
 
+		$this->setModel('tags', array(array('name' => 'page')));
+		$this->cacheForm('page',
+			array(
+				'title' => "",
+				'description' => "",
+				'date' => "",
+				'urltrigger' => "",
+				'privatecheck' => "",
+				'inputHTMLCheck' => 'checked="checked"',
+				'ckeditor' => "",
+				'fetchMarkupURLCheck' => "",
+				'urltofetch' => "",
+				'selector' => "",
+				'dbInCheck' => "",
+				'dbInHost' => "",
+				'dbInUser' => "",
+				'dbInPassword' => "",
+				'dbInName' => "",
+				'dbInSQL' => "",
+				'filesInCheck' => "",
+				'DrupalInCheck' => "",
+				'drupalInHost' => "",
+				'drupalInUser' => "",
+				'drupalInPassword' => "",
+				'drupalInName' => "",
+				'wpInHost' => "",
+				'wpInUser' => "",
+				'wpInPassword' => "",
+				'wpInName' => "",
+				'fetchOnceCheck' => 'checked="checked"',
+				'fetchLiveCheck' => "",
+				'adminInputCheck' => 'checked="checked"',
+				'thirdPartyCheck' => "",
+				'outputDBCheck' => 'checked="checked"',
+				'outputFileCheck' => "",
+				'outputDownloadCheck' => ""
+			)
+		);
+		
 		$this->loadView('admin.shiftsmith.tpl');
 	}
 }

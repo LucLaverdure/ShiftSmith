@@ -3,9 +3,11 @@
 class login_dispatch extends controller {
 	
 	public function validate() {
+		/*
 		if (q('0')=='user')
 			return 1;
 		else 
+		*/
 			return false;
 	}
 	

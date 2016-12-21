@@ -64,9 +64,9 @@ $(function() {
 	if ($('.slider').length > 0) {
 		$('.slider').unslider({
 			animation: 'fade',
-			autoplay: true,
+			autoplay: false,
 			arrows: false,
-			delay: 5000
+			delay: 2000
 		});
 	}
 
@@ -106,6 +106,12 @@ $(function() {
 			write_post(room, $this.parents('.chatbox').find('input[type="hidden"]').val());
 		}
 		$(this).parents('.chatbox').find('input,textarea').val('');
+		return false;
+	});
+	
+	$(document).on('click', '.showhide', function() {
+		var group = $(this).data('group');
+		$("#"+group).toggle('slider');
 		return false;
 	});
 	

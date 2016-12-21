@@ -31,7 +31,6 @@ class sleepwalk extends Controller {
 		
 		foreach ($files as $file) {
 			$path = explode('/', $file);
-			$
 			echo $file;
 		}
 		die();

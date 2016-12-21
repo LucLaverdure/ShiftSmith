@@ -28,9 +28,9 @@
 <script src="/admin/files/lib/prism/prism.js" type="text/javascript"></script>
 <script src="/files/js/main.js" type="text/javascript"></script>
 
-<meta property="og:image" content="http://www.dreamforgery.com/files/img/logo-black.gif" />
-<meta property="og:title" content="DreamForgery" />
-<meta property="og:site_name" content="DreamForgery"/>
+<meta property="og:image" content="http://www.ShiftSmith.com/files/img/logo-black.gif" />
+<meta property="og:title" content="ShiftSmith" />
+<meta property="og:site_name" content="ShiftSmith"/>
 
 </head>
 
@@ -38,7 +38,7 @@
 			<div id="wrapper">
 			<div class="highlight cf">
 				<div class="inner-wrapper cf">
-					<div class="header">
+					<div class="header cf">
 						<div class="head-left">
 							<span class="logo"><a href="/"></a></span>
 							<a href="/">
@@ -46,12 +46,21 @@
 								<h2>Web Software Suite</h2>
 							</a>
 						</div>
-						<a style="line-height:20px;padding:20px 20px 15px 20px;" href="https://github.com/LucLaverdure/DreamForgery/archive/master.zip" class="download-button hvr-grow">
-							<img src="/files/img/download.png" alt="download" style="max-width:30px;display:block;float:left;margin:10px;"/>
-							Download
-							<div>v<span id="version-inject"></span></div>
-							<span class="stats"></span>
-						</a>
+						<ul id="nav" class="cf">
+							<li><a href="#docs" id="docslink">Documentation</a></li>							
+							<li><a href="#tutorials" id="tutorialslink">Tutorials</a></li>
+							<li><a href="#downloads" id="downloadslink">Downloads</a></li>
+						</ul>
+<script>						
+		$('#docslink,#tutorialslink,#downloadslink').click(function() {
+			$this = $(this);
+			$('html, body').animate({
+					scrollTop: $($this.attr('href')).offset().top
+			}, 200);
+			return false;
+		});
+</script>
+						
 					</div>
 				</div>
 			</div>
