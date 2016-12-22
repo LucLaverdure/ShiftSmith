@@ -938,7 +938,7 @@ body label input[type=radio] {
  }
  .radiobg {
 	 background: #fff;
-	 padding:10px;
+	 padding:5px 10px;
 	 color:#565758;
  }
  
@@ -960,5 +960,11 @@ body label input[type=radio] {
 	margin-bottom:10px;
 }
 .wp-select {
+	margin-top:10px;
+}
+.save-wrapper {
+	background: #00ff00;
+}
+.output-type .radiobg {
 	margin-top:10px;
 }

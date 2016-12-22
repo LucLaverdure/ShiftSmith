@@ -1,11 +1,12 @@
 [admin-header.tpl]
 <body class="shiftsmith">
 
+	<form method="post" action="" enctype="multipart/form-data">
+	
 	<div style="" class="cf">
 	
 		<div style="max-width:1024px;width:100%;margin:100px auto;" class="cf">
 		
-			<form method="post" action="">
 				<div class="admin-panel">
 
 					<!-- Title Of Page (Not input)-->
@@ -28,12 +29,14 @@
 					<div class="files-import" style="display:none;">
 						[shiftsmith/admin.files.import.tpl]
 					</div>
-					
-					<div class="trigers-area adv-settings">
-						<div class="header-block">Triggers</div>
-						[shiftsmith/admin.trigger.url.tpl]
-						[shiftsmith/admin.trigger.date.tpl]
-						[shiftsmith/admin.trigger.require.admin.tpl]
+
+					<div class="adv-settings">
+						<div class="trigers-area">
+							<div class="header-block">Triggers</div>
+							[shiftsmith/admin.trigger.url.tpl]
+							[shiftsmith/admin.trigger.date.tpl]
+							[shiftsmith/admin.trigger.require.admin.tpl]
+						</div>
 					</div>
 
 					[shiftsmith/admin.CKEditor.tpl]
@@ -44,16 +47,20 @@
 					
 					<!-- Submit -->
 					
-					<p class="pipeline">
-						<a href="#" onclick="$(this).parents('form').submit();" class="process-button download-button hvr-grow">
-							<img src="/admin/files/img/save.png" alt="Submit &amp; Save" />
-							<span class="title-left">Save</span> <span class="title-right">It!</span>
-						</a>
-					</p>
 				</div>
-			</form>
-	</div>
-</div>
+			</div>
+			<div class="save-wrapper">
+				<div style="max-width:1024px;width:100%;margin:0px auto;" class="cf">
+				
+						<p class="pipeline">
+							<a href="#" onclick="$(this).parents('form').submit();" class="process-button download-button hvr-grow">
+								<img src="/admin/files/img/save.png" alt="Submit &amp; Save" />
+								<span class="title-left">Save</span> <span class="title-right">It!</span>
+							</a>
+						</p>
+				</div>		
+			</div>
+	</form>
 	<script type="text/javascript">
 
 		function cleanurl(url) {

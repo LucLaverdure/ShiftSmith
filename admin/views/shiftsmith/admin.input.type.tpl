@@ -37,7 +37,7 @@
 			
 			<div class="radiobg">
 			<label>
-				<input type="radio" name="action" [page.fetchurlcheck] value="fetchurl" /> Web Crawler
+				<input type="radio" name="action" [page.fetchurlcheck] value="crawl" /> Web Crawler
 			<span class="helper">&mdash; Use a url crawler that will fetch all urls and import them into your site. </span>
 			</label>
 			</div>
@@ -159,7 +159,21 @@
 					$('.files-import').slideUp();
 					$('.wp-select').slideUp();
 					$('.trigers-area').slideUp();
-					$('.db-select').slideDown();
+					$('.db-select').slideUp();
+					$('.trigers-area').slideUp();
+					$('.url-fetch').slideDown();
+					$('.output-type').slideDown();
+				break;
+			case 'crawl':
+					$('.title-area').slideUp();
+					$('.description-area').slideUp();
+					$('.date-area').slideUp();
+					$('.tags-area').slideUp();
+					$('.markup-select').slideUp();
+					$('.files-import').slideUp();
+					$('.wp-select').slideUp();
+					$('.trigers-area').slideUp();
+					$('.db-select').slideUp();
 					$('.trigers-area').slideUp();
 					$('.url-fetch').slideDown();
 					$('.output-type').slideDown();

@@ -5,6 +5,6 @@
 		<span class="helper">
 			Input the title of the item.
 		</span>
-		<input id="page-title" class="forge-title" type="text" value="[page.title]" placeholder="Wicked page about animals" name="description" />
+		<input id="page-title" class="forge-title" type="text" value="[page.title]" placeholder="" name="title" />
 	</label>
 </div>

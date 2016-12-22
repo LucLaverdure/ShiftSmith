@@ -7,7 +7,7 @@
 							<h2 class="header-block required">Tags</h2>
 							<span class="helper">Users and administrators can filter their searched results based on tags. "Page" is the default tag. Example tags: "page", "post", "project", "news"</span>
 						</label>
-						<select class="js-tags form-control" multiple="multiple" style="width:100%;" name="tagsDisplay">
+						<select class="js-tags form-control" multiple="multiple" style="width:100%;" name="tagsDisplay[]">
 							[for:tags]
 							<option selected="selected" value="[tags.name]">[tags.name]</option>
 							[end:tags]
