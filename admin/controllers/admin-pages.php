@@ -9,13 +9,16 @@ class view_page extends Controller {
 		$db = new Database();
 		$db::connect();
 
+		// get all triggers
 		$data = $db::queryResults("SELECT `namespace`, `id`, `key`, `value`
 								   FROM shiftsmith
 								   WHERE namespace = 'trigger'
 								   ORDER BY id DESC;");
 		
+		// when no triggers are found, cancel render
 		if ($data == false) return false;
 		
+		// start 
 		$verified = array();
 		
 		date_default_timezone_set("America/New_York");
@@ -33,7 +36,7 @@ class view_page extends Controller {
 			}
 
 			// verify page type 
-			if ( ($row['key'] == 'tag') && ($row['value'] == 'page') ) {
+			if ( ($row['key'] == 'tag') && (($row['value'] == 'page') || ($row['value'] == 'blog') || ($row['value'] == 'block'))) {
 				$verified[$row['id']]++;
 			}
 			
@@ -48,14 +51,12 @@ class view_page extends Controller {
 			} else if ($row['value']=='N') {
 				$verified[$row['id']]++;
 			}
-			
-		}
-		
-		
-		$valid_ids = array();
-		
-		foreach ($verified as $id => $count) {
 
+		}
+
+		$valid_ids = array();
+
+		foreach ($verified as $id => $count) {
 			if ($count >= 4) {
 				$valid_ids[] = $id;
 			}
@@ -80,17 +81,38 @@ class view_page extends Controller {
 			$shiftsmith[$key] = (int) $id;
 		}
 
-		// shiftroot validated
-		$shiftroot = $db::queryResults("SELECT `id`, `namespace`, `key`, `value`
+		// pages
+		$pages = $db::queryResults("SELECT `id`, `namespace`, `key`, `value`
 										FROM shiftsmith
 										WHERE id IN(".$db::param(implode(',', $shiftsmith_ids)).");");
 
+		foreach ($pages as $shift) {
+			$this->addModel('page', $shift['key'], $shift['value']);
+		}
 
-		foreach ($shiftroot as $shift) {
-			$this->addModel($shift['namespace'], $shift['key'], $shift['value']);
+		// posts
+		$posts = $db::queryResults("SELECT `id`, `namespace`, `key`, `value`
+										FROM shiftsmith
+										WHERE id IN(".$db::param(implode(',', $shiftsmith_ids)).")
+										AND id IN (SELECT id FROM shiftsmith WHERE `key`='tag' AND value='post');");
+
+		if ($posts != false) {
+			foreach ($posts as $shift) {
+				$this->addModel('posts', $shift['key'], $shift['value']);
+			}
 		}
 		
-		
+		// blocks
+		$blocks = $db::queryResults("SELECT `id`, `namespace`, `key`, `value`
+										FROM shiftsmith
+										WHERE id IN(".$db::param(implode(',', $shiftsmith_ids)).")
+										AND id IN (SELECT id FROM shiftsmith WHERE `key`='tag' AND value='block');");
+		if ($blocks != false) {
+			foreach ($blocks as $shift) {
+				$this->addModel('blocks', $shift['key'], $shift['value']);
+			}
+		}
+
 		// media gallery
 		$this->loadView('default-theme/page.common.tpl');
 	}

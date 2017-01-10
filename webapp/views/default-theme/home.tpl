@@ -23,7 +23,6 @@
 					<div class="inner-wrapper main-wrap">
 						<div class="pad">
 							<div class="home anim-group">
-								<div class="anim"></div>
 								<div class="anim">Modern "Model, View, Controller" Architecture!</div>
 								<div class="anim">Wordpress to ShiftSmith in minutes.</div>
 								<div class="anim">Content Management from easy to advanced</div>
