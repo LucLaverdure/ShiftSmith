@@ -5,7 +5,7 @@
 	global $main_path;
 	$global_models = array();
 
-	include_once($main_path.'/phpquery/phpQuery-onefile.php');
+	include_once($main_path.'core/phpquery/phpQuery-onefile.php');
 	
 	
 	class Core {
