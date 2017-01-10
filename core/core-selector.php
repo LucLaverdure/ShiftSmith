@@ -1,6 +1,6 @@
 <?php
 	if (!IN_DREAMFORGERY) die();
-	include_once('phpQuery/selector.php');
+	include_once($main_path.'core/phpQuery/selector.php');
 	
 	class domQuery {
 		public $html = '';

@@ -1,10 +1,10 @@
 <?php
 	if (!IN_DREAMFORGERY) die();
 
-	global $global_models;
+	global $global_models,$main_path;
 	$global_models = array();
 
-	include_once('core/phpQuery/phpQuery-onefile.php');
+	include_once($main_path.'core/phpQuery/phpQuery-onefile.php');
 	
 	
 	class Core {

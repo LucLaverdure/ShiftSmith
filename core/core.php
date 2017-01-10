@@ -8,12 +8,13 @@
 	define("PATH", $main_path);
 
 	// Includes
-	include "config/config.php";
-	if (file_exists('config/config-cms.php')) include "config/config-cms.php"; // include CMS configuration when installed
-	include "core-prefunctions.php";
-	include "core-file-upload.php";
-	include "core-db.php";
-	include "core-mvc.php";
-	include "core-process.php";
+	include $_SERVER["DOCUMENT_ROOT"]."/config/config.php";
+	if (file_exists($main_path."config/config-cms.php"))
+		include $main_path."config/config-cms.php"; // include CMS configuration when installed
+	include $main_path."core/core-prefunctions.php";
+	include $main_path."core/core-file-upload.php";
+	include $main_path."core/core-db.php";
+	include $main_path."core/core-mvc.php";
+	include $main_path."core/core-process.php";
 
 ?>

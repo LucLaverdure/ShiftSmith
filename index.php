@@ -1,4 +1,4 @@
 <?php
 	// Run core application.
-	include "core/core.php";
+	include $_SERVER["DOCUMENT_ROOT"]."/core/core.php";
 ?>
