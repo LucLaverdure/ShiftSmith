@@ -376,9 +376,15 @@
 				$selector = $injected_view[0];
 				$mode = $injected_view[1];
 				$view_filename = $injected_view[2];
+				$selector_after_fetch = $injected_view[3];
 
-				$injected_html = $this->process_view($controller, $view_filename);
-
+				$injected_html = '';
+				if (trim($selector_after_fetch) !== '') {
+					$docZ = phpQuery::newDocument(@file_get_contents($view_filename));
+					$injected_html = $docZ[$selector_after_fetch]->html();
+				} else {
+					$injected_html = $this->process_view($controller, $view_filename);
+				}
 				switch ($mode) {
 					case 'append':
 						$docX[$selector]->append($injected_html);
