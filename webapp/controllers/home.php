@@ -13,7 +13,7 @@ class homepage extends Controller {
 	function execute() {
 		$this->addModel('page','url', 'http://'.$_SERVER['HTTP_HOST']);
 		$this->loadView('default-theme/home.tpl');
-		$this->injectView('#version-inject','replace','https://raw.githubusercontent.com/LucLaverdure/ShiftSmith/master/admin/views/core-version.tpl');
+		$this->injectView('#version-inject','replace','https://raw.githubusercontent.com/LucLaverdure/ShiftSmith/master/admin/views/core-version.tpl','');
 	}
 }
 

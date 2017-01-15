@@ -2,15 +2,15 @@
 	<div class="header-block">Input type</div>
 		<div class="radiobg">
 		<label>
-			<input type="radio" name="action" [page.blogcheck] value="blog" /> Post blog entry.
-			<span class="helper">&mdash; Will appear in the newsfeed</span>
+			<input type="radio" name="action" [page.pagecheck] value="page" /> Create a Page.
+			<span class="helper">&mdash; Will be accessible at the url defined below.</span>
 		</label>
 		</div>
 
 		<div class="radiobg">
 		<label>
-			<input type="radio" name="action" [page.pagecheck] value="page" /> Create a Page.
-			<span class="helper">&mdash; Will be accessible at the url defined below.</span>
+			<input type="radio" name="action" [page.blogcheck] value="blog" /> Post blog entry.
+			<span class="helper">&mdash; Will appear in the newsfeed</span>
 		</label>
 		</div>
 

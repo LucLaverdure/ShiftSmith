@@ -3,18 +3,24 @@
 				<input type="text" placeholder="Post quick update to the cloud..." />
 				<a href="/user" class="email">[user.email]</a>
 			</form>
-			<a class="home hvr-grow" href="/"><img src="/admin/files/img/ico/home.png"/></a>
+			<a class="home hvr-grow" href="/">
+				<img src="/admin/files/img/ico/home.png" style="float:left;" />
+				<span style="float:left;">
+					<span class="quick-forge-ico admin-ico"></span><span class="title-left">Shift</span><span class="title-right">Smith</span>
+				</span>
+			</a>
 			<a class="messages" href=""><span class="notifications new">0</span></a>
 		</div>
 		<div class="left-bar admin-bar">
-		
-			<div class="cf dreamforgery">
-				<a href="/admin/shiftsmith" class="hvr-bounce-to-right left-nav"><span class="quick-forge-ico admin-ico"></span><span class="title-left">Shift</span><span class="title-right">Smith</span></a>
-			</div>
 
-			<hr/>
+			<a href="/admin/shiftsmith" class="hvr-bounce-to-right" title="Create content with the Forge"><span class="quick-forge-ico admin-ico"></span><span class="title-right tidy-up">Forge</span></a>
 			
-			
+			<a class="upload-media-link hvr-bounce-to-right" href="/admin/forged">
+				<span class="media-upload-admin-sub quick-forge-ico"></span>
+				<span style="font-size:30px;">&#8614;</span> <span class="title-right tidy-up">Forged</span>
+			</a>
+
+		
 			<div class="cf">
 				<form id="mediaupload" action="/media" method="post" enctype="multipart/form-data">
 					<a href="/media" class="hvr-bounce-to-right">

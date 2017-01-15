@@ -3,7 +3,7 @@
 <div class="nextvisual" style="">
 	<span class="header-block">HTML Editor content</span>
 	<div class="body_type">
-			<textarea id="ckeditor" name="ckeditor" placeholder="Write your story here.">[page.ckeditor]</textarea>
+			<textarea id="ckeditor" name="body" placeholder="Write your story here.">[page.body]</textarea>
 	</div>
 </div>
 					

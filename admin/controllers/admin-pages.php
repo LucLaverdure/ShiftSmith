@@ -131,7 +131,13 @@ class admin_create_page extends Controller {
 	
 	function execute() {
 
+		$init_shift = 0;
+	
 		$this->setModel('tags', array(array('name' => 'page')));
+
+		$db = new Database();
+		$db::connect();
+		
 		$this->cacheForm('page',
 			array(
 				'title' => "",
@@ -139,7 +145,8 @@ class admin_create_page extends Controller {
 				'date' => "",
 				'urltrigger' => "",
 				'privatecheck' => "",
-				'blogcheck' => 'checked="checked"',
+				'blogcheck' => '',
+				'pagecheck' => 'checked="checked"',
 				'inputHTMLCheck' => 'checked="checked"',
 				'ckeditor' => "",
 				'fetchMarkupURLCheck' => "",
@@ -178,56 +185,50 @@ class admin_create_page extends Controller {
 		$url = '';
 		$date = '';
 		$loggedasadmin = '';
+		
+		if (is_numeric(q(2))) {
+			$id = (int) q(2);
+			$data = $db::queryResults("select `key`, `value`
+										from shiftsmith
+										where id=".$id."
+										;");
+			if ($data) {
+				foreach ($data as $key => $row) {
+					$this->addModel('page', $row['key'], $row['value']);
+				}
+			}
+			
+			$tags = $db::queryResults("SELECT `value` as `name`
+							FROM shiftsmith
+							WHERE id=".$id."
+							AND `key`= 'tag' AND `namespace` = 'trigger';");
 
-		$db = new Database();
-		$db::connect();
+			$this->addModel('tags', $tags);
+			
+		}
+		
+		
+
 		if (isset($_POST['action']))
 			$input_type = $db::param(strtolower(trim($_POST['action'])));
 		else
 			$input_type = "";
-		switch ($input_type) {
-			case "blog":
-				$title = $db::param($_POST['title']);
-				$description = $db::param($_POST['description']);
-				$tags = $_POST['tagsDisplay'];
-				$content = $db::param($_POST['ckeditor']);
-				$url = $db::param($_POST['urltrigger']);
-				$date = $db::param($_POST['date']);
-				if (isset($_POST['loggedasadmin'])) {
-					$loggedasadmin = 'Y';
-				} else {
-					$loggedasadmin = 'N';
-				}
-				break;
-			case "page":
-				$title = $db::param($_POST['title']);
-				$description = $db::param($_POST['description']);
-				$tags = $_POST['tagsDisplay'];
-				$content = $db::param($_POST['ckeditor']);
-				$url = $db::param($_POST['urltrigger']);
-				$date = $db::param($_POST['date']);
-				if (isset($_POST['loggedasadmin'])) {
-					$loggedasadmin = 'Y';
-				} else {
-					$loggedasadmin = 'N';
-				}
-				break;
-			case "block":
-				$title = $db::param($_POST['title']);
-				$description = $db::param($_POST['description']);
-				$tags = $_POST['tagsDisplay'];
-				$content = $db::param($_POST['ckeditor']);
-				$url = $db::param($_POST['urltrigger']);
-				$date = $db::param($_POST['date']);
-				if (isset($_POST['loggedasadmin'])) {
-					$loggedasadmin = 'Y';
-				} else {
-					$loggedasadmin = 'N';
-				}
-				break;
-			case "download":
-				$files = $_POST['file'];
-				break;
+		
+		if (in_array($input_type, array('blog', 'page', 'block'))) {
+			$title = $db::param($_POST['title']);
+			$description = $db::param($_POST['description']);
+			$tags = $_POST['tagsDisplay'];
+
+			$content = $db::param($_POST['body']);
+			$url = $db::param($_POST['urltrigger']);
+			$date = $db::param($_POST['date']);
+			if (isset($_POST['loggedasadmin'])) {
+				$loggedasadmin = 'Y';
+			} else {
+				$loggedasadmin = 'N';
+			}
+		} elseif ($input_type == 'download') {
+			$files = $_POST['file'];
 		}
 
 		if (isset($_POST['output_type']))
@@ -236,26 +237,27 @@ class admin_create_page extends Controller {
 			$output_type = "";
 		
 		if ($output_type == 'database') {
-				$init_shift = 0;
+				$init_shift = 1;
 				$shiftroot = $db::queryResults("SELECT id
 												FROM shiftsmith
 												ORDER BY id DESC
 												LIMIT 1;");
 
 				if ($shiftroot == false) {
-					$query = $db::query("
-									CREATE TABLE IF NOT EXISTS `shiftsmith` (
-									  `id` int(11) NOT NULL,
-									  `namespace` varchar(255) COLLATE latin1_general_ci NOT NULL,
-									  `key` varchar(255) COLLATE latin1_general_ci NOT NULL,
-									  `value` text COLLATE latin1_general_ci NOT NULL,
-									  UNIQUE KEY `id` (`id`,`namespace`,`key`)
-									) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
-									");
-					$init_shift = 0;
+					$query = $db::query("CREATE TABLE IF NOT EXISTS `shiftsmith` (
+										  `id` int(11) NOT NULL,
+										  `namespace` varchar(255) COLLATE latin1_general_ci NOT NULL,
+										  `key` varchar(255) COLLATE latin1_general_ci NOT NULL,
+										  `value` text COLLATE latin1_general_ci NOT NULL,
+										  KEY `id` (`id`,`namespace`,`key`)
+										) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;");
+					$init_shift = 1;
 				} else {
-					$init_shift = $shiftroot[0]['id'] + 1;
+					if (is_numeric(q(2))) {
+						$init_shift = (int) q(2);
+					} else {
+						$init_shift = $shiftroot[0]['id'] + 1;
+					}
 				}
 				
 				$insert_tags = '';
@@ -263,7 +265,13 @@ class admin_create_page extends Controller {
 					$insert_tags .= ",(".$init_shift.", 'trigger', 'tag', '".$db::param($tag)."')";
 				}
 
-				$shiftroot = $db::query("INSERT INTO shiftsmith (`id`, `namespace`, `key`, `value`) VALUES
+				// delete previous data
+				if (is_numeric(q(2)) & isset($_POST['action'])) {
+					$shiftroot = $db::query("DELETE * FROM shiftsmith WHERE `id` = ".$db::param(q(2), true));
+				}
+				
+				//save new data
+				$sql = "INSERT INTO shiftsmith (`id`, `namespace`, `key`, `value`) VALUES
 											   (".$init_shift.", 'content', 'title', '".$title."'),
 											   (".$init_shift.", 'content', 'description', '".$description."')
 											   ".$insert_tags.",
@@ -271,8 +279,13 @@ class admin_create_page extends Controller {
 											   (".$init_shift.", 'trigger', 'url', '".$url."'),
 											   (".$init_shift.", 'trigger', 'date', '".$date."'),
 											   (".$init_shift.", 'trigger', 'admin_only', '".$loggedasadmin."')
-											   ;");
-				
+											   ;";
+				$shiftroot = $db::query($sql);
+
+		}
+
+		if (!is_numeric(q(2)) && isset($_POST['action'])) {
+			//redirect('/admin/shiftsmith/'.$init_shift);
 		}
 		
 		$this->loadView('admin.shiftsmith.tpl');

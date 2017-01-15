@@ -234,7 +234,7 @@ p{
 }
 .top-bar a.home {
 	display:block;
-	max-width:50px;
+	max-width:200px;
 	max-height:50px;
 	padding:10px;
 	box-sizing:border-box;
@@ -254,7 +254,6 @@ p{
 }
 .top-bar a.home {
 	display:block;
-	max-width:50px;
 	float:left;
 }
 .top-bar a, .left-bar a {
@@ -779,6 +778,7 @@ hr {
 	color: #fff;
 }
 .admin-panel h1 {
+	color:orange;
 	margin-bottom:20px;
 }
 
@@ -967,4 +967,44 @@ body label input[type=radio] {
 }
 .output-type .radiobg {
 	margin-top:10px;
+}
+.forged {
+	background: #565758;
+	box-shadow: 20px 20px 20px #ccc;
+}
+.forged .head {
+	font-weight:bold;
+	clear:both;
+	padding: 10px;
+	font-size:20px;
+	background: #eee;
+	color: #565758;
+}
+
+.forged .row {
+	clear:both;
+	padding: 10px;
+	font-size:16px;
+	line-height:16px;
+	box-sizing:border-box;
+}
+
+.forged .row:hover {
+	background: #aaa;
+}
+
+.forged .cell {
+	line-height:16px;
+	float:left;
+	max-width:300px;
+	width:100%;
+	
+}
+
+.forged .cell a {
+	color:#ccccff;
+}
+
+.forged .row:hover a {
+	color:#000022;
 }
