@@ -143,7 +143,7 @@ class admin_create_page extends Controller {
 				'title' => "",
 				'description' => "",
 				'date' => "",
-				'urltrigger' => "",
+				'url' => "",
 				'privatecheck' => "",
 				'blogcheck' => '',
 				'pagecheck' => 'checked="checked"',
@@ -220,12 +220,14 @@ class admin_create_page extends Controller {
 			$tags = $_POST['tagsDisplay'];
 
 			$content = $db::param($_POST['body']);
-			$url = $db::param($_POST['urltrigger']);
+			$url = $db::param($_POST['url']);
 			$date = $db::param($_POST['date']);
 			if (isset($_POST['loggedasadmin'])) {
 				$loggedasadmin = 'Y';
+				$this->addModel('page', 'privatecheck', 'checked="chceked"');
 			} else {
 				$loggedasadmin = 'N';
+				$this->addModel('page', 'privatecheck', '');
 			}
 		} elseif ($input_type == 'download') {
 			$files = $_POST['file'];
@@ -267,7 +269,9 @@ class admin_create_page extends Controller {
 
 				// delete previous data
 				if (is_numeric(q(2)) & isset($_POST['action'])) {
-					$shiftroot = $db::query("DELETE * FROM shiftsmith WHERE `id` = ".$db::param(q(2), true));
+					$id = (int) q(2);
+					$del_sql = "DELETE FROM `shiftsmith` WHERE `id`=".$id;
+					$shiftroot = $db::query($del_sql);
 				}
 				
 				//save new data
@@ -285,7 +289,7 @@ class admin_create_page extends Controller {
 		}
 
 		if (!is_numeric(q(2)) && isset($_POST['action'])) {
-			//redirect('/admin/shiftsmith/'.$init_shift);
+			redirect('/admin/shiftsmith/'.$init_shift);
 		}
 		
 		$this->loadView('admin.shiftsmith.tpl');

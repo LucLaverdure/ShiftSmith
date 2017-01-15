@@ -13,6 +13,8 @@
 					<h1 class="create" style="font-weight:800;">
 						<img src="/admin/files/img/ico/forge.png" title="Forge" />
 						<span class="title-left">Shift</span><span class="title-right">Smith</span>
+						
+						Forge
 					</h1>
 
 					[shiftsmith/admin.display.options.tpl]
@@ -76,7 +78,7 @@
 		// url generator
 		$(function() {
 			$(document).on('change', '#page-title', function() {
-				$('.forge-url-trigger[name=urltrigger]').val(cleanurl($(this).val()));
+				$('.forge-url-trigger[name=url]').val(cleanurl($(this).val()));
 			});
 		});
 		

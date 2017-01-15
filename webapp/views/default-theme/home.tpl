@@ -115,6 +115,10 @@
 	
 	<h3 id="tutorials">Tutorials</h3>
  	
+	<div class="videoWrapper">
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/2bgShhVAXFQ" frameborder="0" allowfullscreen></iframe>
+	</div>
+	
 	<p><a href="#" class="showhide" data-group="env">Environment Setup</a> &mdash; Copy, Extract, Build.</p>
 	<div id="env" style="display:none;">
 		<p>Requirements:</p>

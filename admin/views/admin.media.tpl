@@ -1,12 +1,12 @@
 [admin-header.tpl]
-<body class="shiftsmith">
+<body class="shiftsmith ">
 
 	<div style="" class="cf">
 	
 		<div style="max-width:1024px;width:100%;margin:0 auto;" class="cf">
 		
 
-<div class="media-gallery">
+<div class="media-gallery admin-panel">
 
 	<h1>Media Gallery</h1>
 
