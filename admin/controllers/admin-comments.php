@@ -23,7 +23,7 @@ class admin_comments extends Controller {
 
 		$this->addModel('box', $data);
 
-		// media gallery
+		// chatbox
 		$this->loadView('admin.comments.tpl');
 	}
 }

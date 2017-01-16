@@ -78,7 +78,9 @@
 		// url generator
 		$(function() {
 			$(document).on('change', '#page-title', function() {
-				$('.forge-url-trigger[name=url]').val(cleanurl($(this).val()));
+				if ($("input[name='action']:checked").val()=='page') {
+					$('.forge-url-trigger[name=url]').val(cleanurl($(this).val()));
+				}
 			});
 		});
 		

@@ -77,6 +77,7 @@
 					$('.trigers-area').slideDown();
 					$('.url-fetch').slideUp();
 					$('.output-type').slideDown();
+					$('.forge-url-trigger[name=url]').val('*');
 				break;
 			case 'page':
 					$('.title-area').slideDown();

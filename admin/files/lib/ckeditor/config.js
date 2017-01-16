@@ -7,4 +7,10 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
+	config.height = '500px';
+	config.protectedSource.push( /<\?php[\s\S]*/g );   // PHP Code
+	config.protectedSource.push( /<%[\s\S]*?%>/g );   // ASP Code
+	config.protectedSource.push( /(]+>[\s|\S]*?<\/asp:[^\>]+>)|(]+\/>)/gi );   // ASP.Net Code
+
+
 };

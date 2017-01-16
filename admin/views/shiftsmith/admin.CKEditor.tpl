@@ -1,12 +1,12 @@
 <div class="markup-select">
 
-<div class="nextvisual" style="">
-	<span class="header-block">HTML Editor content</span>
-	<div class="body_type">
-			<textarea id="ckeditor" name="body" placeholder="Write your story here.">[page.body]</textarea>
+	<div class="nextvisual" style="">
+		<span class="header-block">HTML Editor content</span>
+		<div class="body_type">
+				<textarea id="ckeditor" name="body" placeholder="Write your story here.">[page.body]</textarea>
+		</div>
 	</div>
-</div>
-					
+
 <script type="text/javascript">
 
 // Replace the <textarea id="editor1"> with a CKEditor
@@ -21,6 +21,8 @@ CKEDITOR.replace( 'ckeditor' );
 			 }
 		  });
 	});
+	
+
 });
 </script>
 </div>

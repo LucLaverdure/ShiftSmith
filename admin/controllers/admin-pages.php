@@ -113,8 +113,31 @@ class view_page extends Controller {
 			}
 		}
 
-		// media gallery
+		// load global template
 		$this->loadView('default-theme/page.common.tpl');
+	}
+}
+
+class admin_delete_page extends Controller {
+	
+	function validate() {
+		if ( (q('0')=='admin') && (q(1)=='del') && (q(2)=='db') && (isset($_SESSION['login'])) ) {
+			return 1;
+		} else {
+			return false;
+		}
+	}
+	
+	function execute() {
+		$db_to_del = (int) q(3);
+
+		$db = new Database();
+		$db::connect();
+		
+		$db::query('DELETE FROM `shiftsmith` WHERE `id` = '.$db_to_del.';');
+
+		redirect('/admin/forged');
+		die();
 	}
 }
 
@@ -125,7 +148,7 @@ class admin_create_page extends Controller {
 	function validate() {
 		// Activate home controller for /home and /home/*
 		if (isset($_SESSION['login']) && (q('0')=='admin') && q(1)=='shiftsmith')
-			return 1;	// priority 2
+			return 99;	// priority 99, late processing to get all controllers before
 		else return false;
 	}
 	
@@ -230,7 +253,9 @@ class admin_create_page extends Controller {
 				$this->addModel('page', 'privatecheck', '');
 			}
 		} elseif ($input_type == 'download') {
-			$files = $_POST['file'];
+			
+			// core-file-upload.php
+			
 		}
 
 		if (isset($_POST['output_type']))
