@@ -42,7 +42,7 @@
 
 		// set default values
 		foreach ($default_values as $key => $var) {
-			if ((!isset($_SESSION[$form_name][$key])) || $options='FORCE.CASH') {
+			if ((!isset($_SESSION[$form_name][$key])) || $options='FORCE.CACHE') {
 				$_SESSION[$form_name][$key] = $var;
 			}
 		}

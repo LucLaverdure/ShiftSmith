@@ -206,6 +206,17 @@
 			$this->addModel('prompt', "error",'');
 			
 			$this->addModel('prompt', 'includes', 'false');
+			
+			$d3data = $db::queryResults("SELECT COUNT(value) as valcount, value
+									   FROM `shiftsmith`
+									   WHERE `key`='tag'
+									   AND `namespace`='trigger'
+									   GROUP BY `value`
+									   ORDER BY id DESC");
+
+			$this->addModel('d3data', $d3data);
+									   
+			
 			$this->loadView('admin-logged-in.tpl');
 			
 		}

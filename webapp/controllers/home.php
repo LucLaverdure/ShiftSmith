@@ -13,21 +13,80 @@ class homepage extends Controller {
 	function execute() {
 		$this->addModel('page','url', 'http://'.$_SERVER['HTTP_HOST']);
 		$this->loadView('default-theme/home.tpl');
-		$this->injectView('#version-inject','replace','https://raw.githubusercontent.com/LucLaverdure/ShiftSmith/master/admin/views/core-version.tpl','');
 	}
 }
 
-class help extends Controller {
+class edocs extends Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
-		if (q()=="help") {
+		if (q()=="docs") {
 			return 1;	// priority 1
 		}
 		else return false;
 	}
 
 	function execute() {
-		$this->loadView('default-theme/help.tpl');
+		$this->loadView('default-theme/docs.tpl');
+	}
+}
+
+class tutorials extends Controller {
+	// Display function: validate urls to activate the controller
+	function validate() {
+		// Activate home controller for /home and /home/*
+		if (q()=="tutorials") {
+			return 1;	// priority 1
+		}
+		else return false;
+	}
+
+	function execute() {
+		$this->loadView('default-theme/tutorials.tpl');
+	}
+}
+
+class pluginspage extends Controller {
+	// Display function: validate urls to activate the controller
+	function validate() {
+		// Activate home controller for /home and /home/*
+		if (q()=="plugins") {
+			return 1;	// priority 1
+		}
+		else return false;
+	}
+
+	function execute() {
+		$this->loadView('default-theme/plugins.tpl');
+	}
+}
+
+class themespage extends Controller {
+	// Display function: validate urls to activate the controller
+	function validate() {
+		// Activate home controller for /home and /home/*
+		if (q()=="themes") {
+			return 1;	// priority 1
+		}
+		else return false;
+	}
+
+	function execute() {
+		$this->loadView('default-theme/themes.tpl');
+	}
+}
+
+class aboutpage extends Controller {
+	// Display function: validate urls to activate the controller
+	function validate() {
+		// Activate home controller for /home and /home/*
+		if (q()=="about") {
+			return 1;	// priority 1
+		}
+		else return false;
+	}
+
+	function execute() {
+		$this->loadView('default-theme/about.tpl');
 	}
 }

@@ -1,16 +1,8 @@
 [admin-header.tpl]
-<body class="shiftsmith">
+<div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 
-	<div style="" class="cf">
-	
-		<div style="max-width:1024px;width:100%;margin:0 auto;" class="cf">
-	
-		<div class="login">
-
-			<div class="hideonhover">
-			
-			<h1 style="border-radius:50px;background:#aaaaff;padding:20px;box-sizing:border-box;color:#fff;">[prompt.title]</h1>
-			
+		<div class="wrapper-login cf">
+			<h2>[prompt.title]</h2>
 [if:'[prompt.message]' != '']
 			<div class="message">[prompt.message]</div>
 [endif]
@@ -18,8 +10,56 @@
 [if:'[prompt.error]' != '']
 			<div class="error">[prompt.error]</div>
 [endif]
-
 		</div>
-</div></div></body>
+</div>
 
+<div class="wrapper admin-panel">
+	<div class="left-col">
+		<p><span class="letspa">Administration</span></p>
+		<form id="mediaupload" action="/media" method="post" enctype="multipart/form-data">
+		<ul>
+			<li class="branch"><a href="/admin/forge">Dashboard</a></li>
+			<li class="branch"><a href="/admin/forge">Forge</a></li>
+			<li><a href="/admin/forged">&gt; Forged</a></li>
+			<li class="branch"><a href="/admin/forge">Upload Media</a></li>
+			<li><a href="/admin/media">&gt; Gallery</a></li>
+			<li class="branch"><a href="/admin/comments">Comments</a></li>
+			<li class="branch"><a href="/admin/plugins">Plugins</a></li>
+			<li class="branch"><a href="/admin/themes">Themes</a></li>
+			<li class="branch"><a href="/admin/translate">Translations</a></li>
+			<li class="branch"><a href="/admin/settings">Settings</a></li>
+			<li class="branch"><a href="/admin/logout">Logout</a></li>
+		</ul>
+		</form>
+	</div>
+		
+	<div id="pie">
+	</div>
+</div>
+
+<script type="text/javascript">
+var pie = new d3pie("pie", {
+	header: {
+		title: {
+			text: "Content Tags",
+			fontSize: 24
+		}
+	},
+	labels : {
+		"mainLabel": {
+			"fontSize": 24
+		},
+		"percentage": {
+			"fontSize": 24
+		}
+	},
+	data: {
+		content: [
+			[for:d3data]
+			{ label: '[d3data.value]', value: [d3data.valcount]},
+			[end:d3data]
+		]
+	}
+});
+</script>
 [admin-footer.tpl]

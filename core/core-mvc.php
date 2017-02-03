@@ -133,10 +133,10 @@
 			if (in_array($mode, array('prepend', 'append', 'replace', 'outer-replace'))) {
 				switch (substr($view_filename,-3, 4)) {
 					case '.js':
-						$this->injected_views[] = array($view_filename, '<script src="'+$resource+'" type="text/javascript">', $mode, $selector_after_fetch);
+						$this->injected_views[] = array($selector_destination, $mode, '<script src="'+$view_filename+'" type="text/javascript">', $selector_after_fetch);
 						break;
 					case 'css':
-						$this->injected_views[] = array($view_filename, '<link rel="stylesheet" type="text/css" href="'+$resource+'">', $mode, $selector_after_fetch);
+						$this->injected_views[] = array($selector_destination, $mode, '<link rel="stylesheet" type="text/css" href="'+$view_filename+'">', $selector_after_fetch);
 						break;
 					default:
 							$this->injected_views[] = array($selector_destination, $mode, $view_filename, $selector_after_fetch);
@@ -168,4 +168,3 @@
 		}
 	}
 
-?>
