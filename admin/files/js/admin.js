@@ -22,12 +22,10 @@ $(document).on('click', '.line .del', function() {
 
 $(function() {
 	// setup all datepickers of the page
-	$(".datepicker").datepicker();
-	
+    $( ".datepicker" ).datepicker();
+  
 	// select refresh rate of the chatboxes
 	setTimeout(function() {$('.line').append('<span class="del"></span>'); },1000);
-
-	//$('body').append('<div class="matrix"></div>').parent().append('<div class="moon"></div>').parent().append('<div class="hammer-lady"></div>').parent().append('<div class="luc-laverdure"></div>');
 
 	var $this = $('a.media-image').not(':visible').first();
 	if ($this.length > 0) {
@@ -160,3 +158,58 @@ $(document).on('click', ".body_type label input", function(e) {
 	
 });
 
+function cleanurl(url) {
+	url = url.replace(/ /g, '+').replace(/%20/g, '+');
+	url = url.replace(/\W+/g, "-");
+	while (url.indexOf("--") > -1) {
+		url = url.replace("--", "-");
+	}
+	url = url.toLowerCase();
+	return '/'+url;		
+}
+
+$(document).on('change', '#forge-title', function() {
+	var $this = $(this);
+	$('#forge-url').val(cleanurl($this.val()));
+});
+
+$(document).on('click', '.save-button', function() {
+	$(this).parents('form').submit();
+	return false;
+});
+
+$(document).on('click', '.forge-option-block', function() {
+	window.location = $(this).find('a').attr('href');
+	return false;
+});
+
+$(function() {
+	
+	var select2 = $(".js-tags");
+
+	select2.on("select2:open", function (e) { 
+		if ($('.advancedDisplay').is(':checked')) {
+			$(".triggers").parents('.nextvisual').show('drop');
+		} else {
+			$(".input-type").parents('.nextvisual').show('drop');
+		}
+	});
+
+	$('.js-tags').select2({tags: true, tokenSeparators: [',', ' ']});
+});
+
+// Replace the <textarea id="editor1"> with a CKEditor
+// instance, using default configuration.
+$(function() {
+	if ($('#ckeditor').length > 0) {
+		CKEDITOR.replace( 'ckeditor' );
+		CKEDITOR.instances.ckeditor.on('contentDom', function() {
+			  CKEDITOR.instances.ckeditor.document.on('keydown', function(event) {
+				 var str = CKEDITOR.instances.ckeditor.getData();
+				 if (str.length > 5) {
+					 $('.pipeline a').show('drop');
+				 }
+			  });
+		});
+	}
+});

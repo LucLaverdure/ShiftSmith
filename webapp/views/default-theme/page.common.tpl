@@ -1,9 +1,10 @@
 [default-theme/header.tpl]
 
-<div class="inner-wrapper" id="mvc">
+<div class="parallax-window sub" data-parallax="scroll" data-image-src="/files/img/home-bg.jpg">
+	<h1 class="hero">ShiftSmith - [page.title]</h1>
+</div>
 
-	<h1>[page.title]</h1>
-
+<div class="wrapper features-area cf">
 	<div>
 		[page.body]
 	</div>

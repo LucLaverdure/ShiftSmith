@@ -164,7 +164,7 @@
 										   LIMIT 1");
 				if ($data !== false) {
 					$_SESSION['login'] = $data[0]['id'];
-					redirect('/');
+					redirect('/user');
 					return;
 				} else {
 					$this->addModel('prompt', 'title', 'Login');

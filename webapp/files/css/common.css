@@ -89,6 +89,9 @@ h1 {
 	font-size:31px;
 	color: #000;
 }
+h1 span {
+	color:#ccc;
+}
 h1 a {
 	color:#000;
 	text-decoration:none;

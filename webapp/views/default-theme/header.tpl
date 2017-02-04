@@ -28,7 +28,7 @@
 <body>
 
 <div class="wrapper cf">
-	<h1><a href="/">ShiftSmith</a></h1>
+	<h1><a href="/">ShiftSmith</a> <span>alpha<span></h1>
 	<ul class="nav">
 		<li><a href="/docs">Documentation</a></li>
 		<li><a href="/tutorials">Tutorials</a></li>

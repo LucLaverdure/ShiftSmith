@@ -67,7 +67,40 @@
 		static public function lastId() {
 			return mysqli_insert_id(self::$dblink);
 		}
+		
+		static public function getShift() {
+			$db = new Database();
+			$db::connect();
+
+			$init_shift = 1;
+			$shiftroot = $db::queryResults("SELECT id
+											FROM shiftsmith
+											ORDER BY id DESC
+											LIMIT 1;");
+
+			if ($shiftroot == false) {
+				$query = $db::query("CREATE TABLE IF NOT EXISTS `shiftsmith` (
+									  `id` int(11) NOT NULL,
+									  `namespace` varchar(255) COLLATE latin1_general_ci NOT NULL,
+									  `key` varchar(255) COLLATE latin1_general_ci NOT NULL,
+									  `value` text COLLATE latin1_general_ci NOT NULL,
+									  KEY `id` (`id`,`namespace`,`key`)
+									) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;");
+				$init_shift = 1;
+			} else {
+				if (is_numeric(q(3))) {
+					$init_shift = (int) q(3);
+				} else if (isset($_POST['id']) && is_numeric($_POST['id'])) {
+					$init_shift = (int) $_POST['id'];
+				} else {
+					$init_shift = $shiftroot[0]['id'] + 1;
+				}
+			}
+			return $init_shift;
+			
+		}
 	}
+	
 	class SearchInterface {
 		
 		private $p_fields;

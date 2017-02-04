@@ -1,35 +1,40 @@
 [admin-header.tpl]
-<body class="shiftsmith">
 
 	<form method="post" action="" enctype="multipart/form-data">
 	
-	<div style="" class="cf">
-	
-		<div style="max-width:1024px;width:100%;margin:100px auto;" class="cf">
-		
-				<div class="admin-panel">
+			<div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 
-					<!-- Title Of Page (Not input)-->
-					<h1 class="create" style="font-weight:800;">
-						<img src="/admin/files/img/ico/forge.png" title="Forge" />
-						Forged Items
-					</h1>
+					<div class="wrapper-login cf">
+						<h2>Forged - Database entries</h2>
+			[if:'[prompt.message]' != '']
+						<div class="message">[prompt.message]</div>
+			[endif]
+
+			[if:'[prompt.error]' != '']
+						<div class="error">[prompt.error]</div>
+			[endif]
+					</div>
+			</div>
+
+			<div class="wrapper">
 					
-					<h2>Database entries</h2>
+					<div class="breadcrumbs"><a href="/user" class="breadcrumbs">Administration</a> &gt; <a href="/admin/forged">Forged</a> &gt; Database entries</div>
 					
 					<div class="forged">
 						<div class="head cf">
 							<div class="cell">URL Trigger</div>
 							<div class="cell">Title</div>
-							<div class="cell">Actions</div>
+							<div class="cell">Tags</div>
+							<div class="cell operations">Actions</div>
 						</div>
-						<hr/>
+						
 					[for:forged]
 						<div class="row cf">
 							<div class="cell">[forged.url]&nbsp;</div>
 							<div class="cell">[forged.title]&nbsp;</div>
-							<div class="cell">
-								<a href="/admin/shiftsmith/[forged.id]" class="hvr-wobble-skew hvr-grow">Edit</a>
+							<div class="cell">[forged.tags]&nbsp;</div>
+							<div class="cell operations">
+								<a href="/admin/edit/page/[forged.id]" class="hvr-wobble-skew hvr-grow">Edit</a>
 								|
 								<a href="[forged.url]" class="hvr-wobble-skew hvr-grow">View</a>
 								|
@@ -38,22 +43,28 @@
 						</div>
 					[end:forged]
 					</div>
-
-					<h2>Controller (File) Entries</h2>
-
+			</div>	
+			<div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
+					<div class="wrapper-login cf">
+						<h2>Forged - File entries</h2>
+					</div>
+			</div>
+			<div class="wrapper">
+					<div class="breadcrumbs"><a href="/user">Administration</a> &gt; <a href="/admin/forged">Forged</a> &gt; File entries</div>
+			
 					<div class="forged">
 						<div class="head cf">
-							<div class="cell">Controller</div>
 							<div class="cell">Filename</div>
-							<div class="cell">Actions</div>
+							<div class="cell">Controller</div>
+							<div class="cell operations">Actions</div>
 						</div>
-						<hr/>
+						
 						<div class="file-forged">
 						[for:forgedfile]
 							<div class="row cf">
 								<div class="cell">[forgedfile.name]&nbsp;</div>
-								<div class="cell">[forgedfile.filename]&nbsp;</div>
-								<div class="cell" style="float:right;">
+								<div class="cell filename">[forgedfile.filename]&nbsp;</div>
+								<div class="cell operations">
 									<a href="/admin/file/editor?filename=[forgedfile.filename]" class="hvr-wobble-skew hvr-grow">Edit Controller</a>
 									|
 									<a href="/admin/shiftsmith/delete/[forged.id]" class="delete hvr-wobble-skew hvr-grow">Delete</a>
@@ -62,11 +73,8 @@
 						[end:forgedfile]
 						</div>
 					</div>
-
-					
-					
-				</div>
-		</div>
-</body>
+			</div>
+				
+</form>
 
 [admin-footer.tpl]
