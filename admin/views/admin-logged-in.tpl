@@ -17,8 +17,8 @@
 
 [admin-panel.tpl]
 
-<div id="pie">
-</div>
+	<div id="pie">
+	</div>
 
 <script type="text/javascript">
 var pie = new d3pie("pie", {

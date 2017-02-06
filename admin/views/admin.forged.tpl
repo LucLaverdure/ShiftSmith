@@ -34,8 +34,7 @@
 							<div class="cell">[forged.title]&nbsp;</div>
 							<div class="cell">[forged.tags]&nbsp;</div>
 							<div class="cell operations">
-								<a href="/admin/edit/page/[forged.id]" class="hvr-wobble-skew hvr-grow">Edit</a>
-								|
+								[forged.edits]
 								<a href="[forged.url]" class="hvr-wobble-skew hvr-grow">View</a>
 								|
 								<a href="/admin/del/db/[forged.id]" class="delete hvr-wobble-skew hvr-grow">Delete</a>

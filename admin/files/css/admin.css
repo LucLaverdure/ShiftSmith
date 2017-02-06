@@ -256,6 +256,7 @@ ul.nav li a{
 	padding:20px;
 	display:block;
 	float:right;
+	clear:both;
 }
 
 .nav .button {
@@ -304,7 +305,7 @@ a.button.download-theme {
 	margin-left:0;
 }
 .left-col {
-	background: #585f8c;
+	background: #585f8c url(/admin/files/img/admin-bg.png) top left;
 	max-width:250px;
 	width:100%;
 	float:left;
@@ -441,8 +442,7 @@ a.button.download-theme {
 }
 
 #pie {
-	margin-top:30px;
-	margin-left:30px;
+	margin: 30px auto 30px auto;
 	max-width:500px;
 	width:100%;
 	float:left;
@@ -471,7 +471,7 @@ a.button.download-theme {
 	margin-left:20px;
 }
 .forge-option-block.cl {
-	clear:left;
+	
 }
 .forge-option-block:hover {
 	background: #ccc;
@@ -482,8 +482,7 @@ a.button.download-theme {
 	min-height:130px;
 }
 .panel-container {
-	float:left;
-	max-width: 700px;
+	
 }
 
 .panel-container a {
@@ -494,15 +493,17 @@ a.button.download-theme {
 	display:block;
 }
 .panel-container p {
-	padding:30px;
+	padding-left:280px;
+	padding-top:30px;
 }
 body .wrapper h2 {
 	text-align:left;
 }
-.forge-title, .forge-url, .datepicker {
+.forge-title, .forge-url, .datepicker, .forge-shortcode, .price, .saleprice, .currency, .inventory, .fieldname, .field_type {
 	width:100%;
 	padding:10px;
 	font-size:20px;
+	box-sizing:border-box;
 }
 .required span {
 	margin-right:20px;
@@ -550,4 +551,35 @@ body .wrapper h2 {
 }
 .row .cell.filename {
 	max-width: 500px;
+}
+.field-head {
+	float:left;
+}
+.field-head, .field-val {
+	width:100%;
+	float:left;
+}
+.rowoutput .field-val {
+	float:right;
+}
+.field-sample {
+	clear:both;
+}
+.button.add-new, .privacy-wrap{
+	float:left;
+	clear:both;
+}
+.input-col {
+	max-width:420px;
+	clear:left;
+	float:left;
+	margin-bottom:20px;
+	width:100%;
+}
+.input-col2 {
+	margin-left:30px;
+	max-width:500px;
+	float:right;
+	clear:right;
+	width:100%;
 }

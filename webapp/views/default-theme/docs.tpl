@@ -3,7 +3,6 @@
 <div class="parallax-window sub" data-parallax="scroll" data-image-src="/files/img/home-bg.jpg">
 	<h1 class="hero">ShiftSmith - Docs</h1>
 </div>
-<div class="wrapper features-area cf">
 
 	<div class="left-col">
 		<p><span class="letspa">Documents in gear</span></p>
@@ -190,8 +189,7 @@
 			<p>Echoes JSON output of all models, no exceptions.</p>
 		</div>
 		
-	</div>
-
+	
 </div>
 
 

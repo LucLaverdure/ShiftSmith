@@ -191,7 +191,9 @@ ul.nav li a{
 	color:#565758;
 	text-decoration:none;
 }
-
+ul.nav li a:hover{
+	color:#5657ff;
+}
 .parallax-window {
 	width:100%;
 	height:600px;
@@ -270,7 +272,7 @@ a.button.download-theme {
 	margin-left:0;
 }
 .left-col {
-	background: #585f8c;
+	background: #585f8c url(/admin/files/img/admin-bg.png) top left;
 	max-width:250px;
 	width:100%;
 	float:left;
@@ -299,10 +301,15 @@ a.button.download-theme {
 	padding:20px;
 	max-width: 750px;
 }
+.docs-list.content {
+	max-width: 1050px;
+	width:100%;
+	margin:0 auto;
+}
 .docs-list .head {
 	text-align:left;
 	font-weight:bold;
-	font-size:14px;
+	font-size:20px;
 	background: #ccc;
 	display:block;
 	padding:20px;
@@ -361,7 +368,9 @@ a.button.download-theme {
 }
 .credit.large {
 	margin-left:30px;
-	max-width:600px;
+	max-width:670px;
+	box-sizing:border-box;
+	width:100%;
 }
 .credit img {
 	width:100%;
@@ -387,4 +396,15 @@ a.button.download-theme {
 }
 .theme-box img {
 	width:100%;
+}
+.footer {
+	background: #585f8c;
+	clear:both;
+	margin-top:30px;
+}
+.footer a {
+	float:right;
+	padding:20px 10px;
+	color:#fff;
+	margin-left:10px;
 }

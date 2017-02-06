@@ -31,10 +31,23 @@
 			ORDER BY s.id DESC");
 
 			if ($data != false) {
+				foreach($data as $key => $row) {
+					$tags = explode(',', $row['tags']);
+					$tagedits = '';
+					foreach ($tags as $tag) {
+						$tagline = trim(strtolower($tag));
+						if (in_array($tagline, array('page','post','block','sale', 'form'))) {
+							$tagedits .= '<a href="/admin/edit/'.$tagline.'/'.$row['id'].'"/">Edit '.$tag.'</a> |';
+						}
+					}
+					$row['edits'] = $tagedits;
+					$data[$key] = $row;
+				}
 				$this->addModel('forged', $data);
 			} else {
 				$this->addModel('forged', array());
 			}
+			
 
 			$classes_compiled = array();
 			$custom_classes = get_declared_classes();

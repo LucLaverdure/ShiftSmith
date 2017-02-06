@@ -4,7 +4,7 @@
 	<h1 class="hero">ShiftSmith - About</h1>
 </div>
 
-<div class="wrapper about-page">
+<div class="wrapper about-page cf">
 
 		<div class="credit">
 			<img src="/files/img/round-me.png" alt="Luc Laverdure"/>

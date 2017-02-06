@@ -19,6 +19,7 @@
 
 <script src="/admin/files/lib/jquery/jquery-1.12.3.min.js" type="text/javascript"></script>
 <script src="/admin/files/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/admin/files/lib/jquery.maskMoney/jquery.maskMoney.min.js" type="text/javascript"></script>
 <script src="/admin/files/lib/parallax/parallax.min.js" type="text/javascript"></script>
 <script src="/admin/files/lib/prism/prism.js" type="text/javascript"></script>
 <script src="/admin/files/lib/select2/select2.full.min.js" type="text/javascript"></script>

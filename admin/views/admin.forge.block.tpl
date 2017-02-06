@@ -2,7 +2,7 @@
 <div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 
 		<div class="wrapper-login cf">
-			<h2>Forge - Page</h2>
+			<h2>Forge - Block</h2>
 [if:'[prompt.message]' != '']
 			<div class="message">[prompt.message]</div>
 [endif]
@@ -15,13 +15,18 @@
 <!-- [admin-panel.tpl] -->
 <div class="wrapper">
 
-	<a href="/user">Administration</a> &gt; <a href="/admin/forge">Forge</a> &gt; Post
+	<a href="/user">Administration</a> &gt; <a href="/admin/forge">Forge</a> &gt; Block
 
 	<form method="post" action="" enctype="multipart/form-data">
 	
 		<label>
 			<h2 class="header-block required"><span></span>Title</h2>
 			<input id="forge-title" class="forge-title" type="text" value="[page.title]" placeholder="I love cats" name="title" />
+		</label>
+
+		<label>
+			<h2 class="header-block required"><span></span>Shortcode Trigger</h2>
+			<input id="forge-shortcode" class="forge-shortcode" type="text" value="[page.shortcode]" placeholder="[crazycatlady]" name="shortcode" />
 		</label>
 
 		<label>
@@ -44,7 +49,7 @@
 			
 		<label>
 			<h2 class="header-block required"><span></span>Privacy</h2>
-			<input id="forge-private" class="forge-private" type="checkbox" name="private" value="Y" [page.privatecheck] /> Make post private
+			<input id="forge-private" class="forge-private" type="checkbox" name="private" value="Y" [page.privatecheck] /> Make Block private
 		</label>
 
 		<label class="field-head sub-header-block required">

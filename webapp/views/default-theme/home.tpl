@@ -3,8 +3,7 @@
 <div class="parallax-window" data-parallax="scroll" data-image-src="/files/img/home-bg.jpg">
 	<h1 class="hero">ShiftSmith</h1>
 	<h2>The Blacksmith of Websites.</h2>
-	<a href="#" class="button">Get Started!</a>
-	<a href="/user" class="button">Admin Access</a>
+	<a href="/tutorials" class="button">Get Started!</a>
 </div>
 <div class="download-hero">
 	<div class="wrapper">

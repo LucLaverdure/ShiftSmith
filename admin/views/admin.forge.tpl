@@ -38,7 +38,7 @@
 
 	<div class="cl forge-option-block">
 		<div class="ico"><img src="/admin/files/img/ico/forge/sell.png" alt="block"></div>
-		<a href="/admin/create/sellable">Item to Sell</h3>
+		<a href="/admin/create/sale">Item to Sell</h3>
 	</div>
 
 	<div class="forge-option-block">
@@ -47,8 +47,18 @@
 	</div>
 
 	<div class="forge-option-block">
+		<div class="ico"><img src="/admin/files/img/ico/forge/images.png" alt="block"></div>
+		<a href="/admin/create/music">Add Image(s)</h3>
+	</div>
+
+	<div class="forge-option-block">
 		<div class="ico"><img src="/admin/files/img/ico/forge/music.png" alt="block"></div>
-		<a href="/admin/create/music">Add Music Track</h3>
+		<a href="/admin/create/music">Add Audio</h3>
+	</div>
+
+	<div class="forge-option-block">
+		<div class="ico"><img src="/admin/files/img/ico/forge/video.png" alt="block"></div>
+		<a href="/admin/create/music">Add Video</h3>
 	</div>
 
 	
