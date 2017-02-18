@@ -7,14 +7,14 @@
 </div>
 <div class="download-hero">
 	<div class="wrapper">
-		<span class="letspa">Free, Fast, Friendly!</span>
+		<span class="letspa">Build your Website: Free, Fast, Friendly!</span>
 	</div>
 </div>
 <div class="wrapper features-area cf">
 
 	<div class="feature-box">
 		<h4>MVC Architecture</h4>
-		<p>Model View Controller is a software design pattern for developing web applications.</p>
+		<p>Model View Controller is a modern software design pattern for developing web applications.</p>
 	</div>
 
 	<div class="feature-box">

@@ -30,7 +30,9 @@
 			<li><a href="#injectView">&gt; injectView</a></li>
 			<li><a href="#loadViewAsJSON">&gt; loadViewAsJSON</a></li>
 			<li><a href="#loadJSON">&gt; loadJSON</a></li>
-		</ul>
+
+			<li class="branch"><a href="#View">View</a></li>
+			</ul>
 	</div>
 	<div class="content docs-list">
 		<div class="doc">
@@ -92,6 +94,41 @@
 			<h3 id="email" class="head">email(string $to, string $subject, string $message)</h3>
 			<pre><code class="language-php">email('contact@luclaverdure.com', 'Hi Luc', 'ShiftSmith is awesome!')</code></pre>
 			<p>Send email to target $to, with $subject and $message.</p>
+		</div>
+
+		<div class="doc">
+			<h3 id="Controller" class="head">Controller</h3>
+			<pre><code class="language-php">class MyFirstController extends Controller {
+	function validate() {
+		// when this function returns false,
+		// the controller will be destroyed without execution.
+		
+		// the order of execution will be set by the value returned by this function.
+		// 1 being first, 2 being second, [...]
+		
+		// in the example below,
+		// on the page "/user",
+		// the controller will fire first.
+
+		// if the user visits any other url,
+		// we cancel the execution.
+		
+		if (inpath('user')) return 1;
+		else return false;
+		
+	}
+
+	function execute() {
+		// your application logic goes in this function.
+		
+		// add models to be passed on to the views
+		$this->addModel('page', 'title', 'My First Page Title');
+		
+		// render a view and give it all controllers models
+		$this->loadView('default-theme/home.tpl');
+	}
+}</code></pre>
+			<p></p>
 		</div>
 
 		<div class="doc">
@@ -187,6 +224,31 @@
 			<h3 id="loadJSON" class="head">Controller->loadJSON()</h3>
 			<pre><code class="language-php">$this->loadJSON()</code></pre>
 			<p>Echoes JSON output of all models, no exceptions.</p>
+		</div>
+
+		<div class="doc">
+			<h3 id="View" class="head">Views</h3>
+<pre>
+<code class="language-php">
+&lt;!-- Include header file -->
+[header.tpl]
+
+&lt;!-- output model value -->
+&lt;h1>[page.title]&lt;/h1>
+
+&lt;!-- output translated model value -->
+&lt;h2>t&#91;Welcome!]&lt;/h2>
+
+&lt;!-- output array block -->
+&lt;ul>
+[for:myblock]
+	&lt;li>&lt;a href="[myblock.link]">[myblock.text]&lt;/a>&lt;/li>
+[end:myblock]
+&lt;/ul>
+<!-- Include footer file -->
+[footer.tpl]
+</code>
+</pre>
 		</div>
 		
 	
