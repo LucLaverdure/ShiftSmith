@@ -9,7 +9,7 @@ class admin_forge_page extends Controller {
 	}
 	
 	function execute() {
-		$init_shift = 0;
+		$id = 0;
 		
 		$db = new Database();
 		$db::connect();
@@ -18,81 +18,28 @@ class admin_forge_page extends Controller {
 			
 			$id = (int) q(3);
 			
-			$data = $db::queryResults("SELECT `namespace`, `key`, `value`
-										FROM shiftsmith
-										WHERE id=".$id."
-										ORDER BY `namespace`, `key`;");
-										
-			foreach ($data as $value) {
-				$this->setModel('page', $value['key'], $value['value']);
-			}
+			$this->loadById($id);
 			
 		} else {
+			$id = 'new';
 			$this->cacheForm('page', array(
-													'id' => '',
-													'title' => '',
-													'date' => '',
-													'url' => '',
-													'privatecheck' => '',
-													'body' => ''
+				'item.id' => 'new',
+				'content.title' => '',
+				'trigger.date' => '',
+				'trigger.url' => '',
+				'trigger.admin_only' => '',
+				'content.body' => '',
+				'trigger.tags[]' => array(array('page', ''))
 			));
 		}
-		
-		$this->setModel('tags', array(array('name' => 'page')));
 		
 		$this->setModel('prompt', 'message', '');
 		$this->setModel('prompt', 'error', '');
 				
-		if (isset($_POST['title'])) {
-
-			$init_shift = (int) $db::getShift();
-
-			$this->setModel('page', 'id', $init_shift);
+		if (isset($_POST['id'])) {
 			
-			$tags = $db::queryResults("SELECT `value` as `name`
-										FROM shiftsmith
-										WHERE id=".$init_shift."
-										AND `key`= 'tag' AND `namespace` = 'trigger';");
-			
-			//save new data
-			$title = $db::param($_POST['title']);
-			$tags = $_POST['tagsDisplay'];
-			$content = $db::param($_POST['body']);
-			$url = $db::param($_POST['url']);
-			$date = $db::param($_POST['date']);
-
-			if (isset($_POST['private'])) {
-				$loggedasadmin = 'Y';
-				$this->addModel('page', 'privatecheck', 'checked="chceked"');
-			} else {
-				$loggedasadmin = 'N';
-				$this->addModel('page', 'privatecheck', '');
-			}
-
-			$insert_tags = '';
-			foreach($tags as $tag) {
-				$insert_tags .= ",(".$init_shift.", 'trigger', 'tag', '".$db::param($tag)."')";
-			}
+			$this->saveForm('new');
 				
-			// delete previous data
-			if (is_numeric($init_shift) & isset($_POST['title'])) {
-				$id = (int) $init_shift;
-				$del_sql = "DELETE FROM `shiftsmith` WHERE `id`=".$id;
-				$shiftroot = $db::query($del_sql);
-			}
-			
-			//save new data
-			$sql = "INSERT INTO shiftsmith (`id`, `namespace`, `key`, `value`) VALUES
-										   (".$init_shift.", 'content', 'title', '".$title."')
-										   ".$insert_tags.",
-										   (".$init_shift.", 'content', 'body', '".$content."'),
-										   (".$init_shift.", 'trigger', 'url', '".$url."'),
-										   (".$init_shift.", 'trigger', 'date', '".$date."'),
-										   (".$init_shift.", 'trigger', 'admin_only', '".$loggedasadmin."')
-										   ;";
-
-			$shiftroot = $db::query($sql);
-
 			$this->setModel('prompt', 'message', 'Page saved to database.');
 		
 			if (is_numeric($init_shift)) {
@@ -113,7 +60,7 @@ class admin_forge_post extends Controller {
 			return 1;
 		else return false;
 	}
-	
+
 	function execute() {
 			
 		$db = new Database();

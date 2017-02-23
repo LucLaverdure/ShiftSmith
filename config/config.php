@@ -23,12 +23,8 @@
 	/* protected server side session namespaces (string delimited by comas without spaces)
 					 accessible via controller->setcache and controller->getcache
 					 not accessible via controller->cacheform and not acccessible via controller->getModel */
-	define('PROTECTED_SESSION_NAMESPACES', 'admin,private,system,login,lobby');
+	define('PROTECTED_UNIT', 'admin,private,system,login,lobby,password,pwd,user_id');
 
-	/* protected server side variable names (string delimited by comas without spaces)
-				 accessible via controller->setcache and controller->getcache
-				 not accessible via controller->cacheform and not acccessible via controller->getModel */
-	define('PROTECTED_VARIABLES', 'password,pwd,user_id');
 
 
 ?>

@@ -1,15 +1,24 @@
 [admin-header.tpl]
-<body class="shiftsmith">
 
-	<div style="" class="cf">
+	<form method="post" action="" enctype="multipart/form-data">
 	
-		<div style="max-width:1024px;width:100%;margin:0 auto;" class="cf">
-	
-		<div class="login">
+			<div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 
-			<div class="hideonhover">
-			
-			<h1 style="border-radius:50px;background:#aaaaff;padding:20px;box-sizing:border-box;color:#fff;">[prompt.title]</h1>
+					<div class="wrapper-login cf">
+						<h2>Forged - Database entries</h2>
+			[if:'[prompt.message]' != '']
+						<div class="message">[prompt.message]</div>
+			[endif]
+
+			[if:'[prompt.error]' != '']
+						<div class="error">[prompt.error]</div>
+			[endif]
+					</div>
+			</div>
+
+			<div class="wrapper">
+					
+					<div class="breadcrumbs"><a href="/user" class="breadcrumbs">Administration</a> &gt; Account Creation</div>
 
 [if:'[prompt.message]' != '']
 			<div class="message">[prompt.message]</div>
@@ -21,18 +30,29 @@
 			
 			<form id="thisform" action="/user" method="post">
 		
-				<p style="background:#fff;padding:10px;border-radius:5px;width:100%;box-sizing:border-box;"><label>Email: <input type="text" name="email"  style="width:90%;" /></label></p>
-				<p style="background:#fff;padding:10px;border-radius:5px;width:100%;box-sizing:border-box;"><label>Password: <input type="password" name="password" style="width:90%;"/></label></p>
-				<p style="background:#fff;padding:10px;border-radius:5px;width:100%;box-sizing:border-box;"><label>Password (repeat): <input type="password" name="password2" style="width:90%;"/></label></p>
-			
+				<label>
+					<h2 class="header-block required"><span></span>Email</h2>
+					<input id="forge-url" class="forge-url" type="text" value="[trigger.email]" name="trigger.url" />
+				</label>
+
+				<label>
+					<h2 class="header-block required"><span></span>Email</h2>
+					<input id="forge-url" class="forge-url" type="text" value="[trigger.password]" name="trigger.password" />
+				</label>
+
+				<label>
+					<h2 class="header-block required"><span></span>Email</h2>
+					<input id="forge-url" class="forge-url" type="text" value="[trigger.email]" name="trigger.password2" />
+				</label>
+				
 			</form>	
 			
 			</div>
 			
-			<p><a href="#" onmouseenter="$('.hideonhover').css('opacity','0.6');" 
-			onmouseleave="$('.hideonhover').css('opacity','1');"
-			onclick="$('#thisform').submit();"
-			class="button login-button hvr-shutter-in-horizontal">Create Admin Account</a></p>
+			<p>
+				<a href="#" onclick="$('#thisform').submit();" class="button login-button hvr-shutter-in-horizontal">
+				Create Admin Account</a>
+			</p>
 			
 		</div>
 </div>

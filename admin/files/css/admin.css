@@ -469,6 +469,7 @@ a.button.download-theme {
 	padding:20px;
 	box-sizing:border-box;
 	margin-left:20px;
+	min-height:270px;
 }
 .forge-option-block.cl {
 	

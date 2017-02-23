@@ -53,7 +53,7 @@
 
 			
 			$data = $db::query("DELETE FROM users;");
-			$data = $db::query("INSERT INTO users (email, password, keygen, active) VALUES ('".$db::param($_POST['email'])."', '".md5($_POST['password'])."', '".$rnd."', 'N');");
+			$data = $db::query("INSERT INTO users (email, password, keygen, active) VALUES ('".$db::param($_POST['email'])."', '".crypt($_POST['password'], ')&(*"?/BOC(*"&?')."', '".$rnd."', 'N');");
 			
 			email($_POST['email'], 'Confirm Administration Account', '<a href="http://dreamforgery.com/confirm/admin/'.$rnd.'/'.$db::param($_POST['email']).'">Click here to confirm your account</a>');
 
@@ -159,7 +159,7 @@
 										   FROM users
 										   WHERE active='Y'
 										   AND email='".$db::param($_POST['email'])."'
-										   AND password='".md5($_POST['password'])."'
+										   AND password='".crypt($_POST['password'], ')&(*"?/BOC(*"&?')."'
 										   ORDER BY id DESC
 										   LIMIT 1");
 				if ($data !== false) {

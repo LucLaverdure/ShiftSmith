@@ -13,16 +13,16 @@
 		/*
 			usage: addModel('form1', 'title', 'mytitle') // with namespace
 			or
-			usage: addModel('title', 'mytitle') // no namespace
+			usage: addModel('title', 'mytitle') // no namespace //deprecated
 		*/
 		function addModel($nameOrNamespace, $dataOrName, $data=null) {
 			if ($data == null) {
-				if (in_array($nameOrNamespace, explode(',',PROTECTED_VARIABLES))) return;
+				if (in_array($nameOrNamespace, explode(',',PROTECTED_UNIT))) return;
 					//throw new Exception ('Invalid model name: '.$form_name.' reserved for server-side access');
 				
 				$this->models[$nameOrNamespace] = $dataOrName;
 			}
-			if (in_array($dataOrName, explode(',',PROTECTED_VARIABLES))) return;
+			if (in_array($dataOrName, explode(',',PROTECTED_UNIT))) return;
 				//throw new Exception ('Invalid model name: '.$form_name.' reserved for server-side access');
 			try {
 				if (is_array($dataOrName)) {
@@ -53,7 +53,7 @@
 		/*
 			usage: getModel('form1', 'title') // with namespace
 			or
-			usage: getModel('title') // no namespace
+			usage: getModel('title') // no namespace //deprecated
 		*/
 		function getModel($nameOrNamespace, $name=null) {
 			if ($name == null)
@@ -65,12 +65,12 @@
 		// Load model from a controller
 		function loadModel($varOrNamespace, $varOrController, $controller=null) {
 			if ($model == null) {
-				if (in_array($varOrNamespace, explode(',',PROTECTED_VARIABLES))) return;
+				if (in_array($varOrNamespace, explode(',',PROTECTED_UNIT))) return;
 					//throw new Exception ('Invalid model name: '.$form_name.' reserved for server-side access');
 				$model = new $varOrNamespace;
 				$this->models[$varOrNamespace] = $varOrController->execute();
 			}
-			if (in_array($controller, explode(',',PROTECTED_VARIABLES))) return;
+			if (in_array($controller, explode(',',PROTECTED_UNIT))) return;
 				//throw new Exception ('Invalid model name: '.$form_name.' reserved for server-side access');
 			$model = new $controller;
 			$this->models[$varOrNamespace.'.'.$varOrController] = $controller->execute();
@@ -78,17 +78,91 @@
 		}
 
 		// Save & Load form data into cache
-		function cacheForm($name, $default_values = array(), $forcecache='N') {
+		function cacheForm($name = 'page', $default_values = array(), $forcecache = 'N') {
 			$cache_vars = form_cache($name, $default_values, $forcecache);
+			
+			// skip protected namespaces
+			
 			foreach ($cache_vars as $var => $value) {
 				$this->addModel($name.'.'.$var, $value);
 			}
 		}
 
+		// save form data to database
+		function saveForm($id='new', $acceptedNamespaces = array('content', 'trigger', 'page')) {
+			
+			// get database
+			$db = new Database();
+			$db::connect();
+
+			// initialize db structure and get new id
+			$init_shift = $db::getShift();
+			
+			// cache info 
+			$this->cacheForm();
+
+			// delete previous data
+			if (is_numeric($init_shift) & isset($init_shift)) {
+				$id = (int) $init_shift;
+				$del_sql = "DELETE FROM `shiftsmith` WHERE `id`=".$id;
+				$shiftroot = $db::query($del_sql);
+			}
+			
+			
+			$sql = array();
+			
+			foreach ($this->models as $key => $value) {
+				$key_explosion = explode('.', $key);
+				$forekey = array_shift($key_explosion);
+				if (!in_array($forekey, explode(',', PROTECTED_UNIT))) {
+					$sql[] = "(".$init_shift.", '".$db::param($forekey)."' , '".$db::param(implode('.', $key_explosion))."', '".$db::param($value)."')";
+				}
+			
+			}
+			
+			//save new data
+
+			$fullQuery = "INSERT INTO shiftsmith (`id`, `namespace`, `key`, `value`) VALUES ".implode(', ', $sql);
+			
+			$shiftroot = $db::query($fullQuery);
+		}
+		
+		
+		/*
+		function clearCache() {
+			foreach ($_SESSION as $key => cache) {
+				if (!in_array($key, explode(',', PROTECTED_UNIT))) {
+					unset($_SESSION[$key]);
+				}
+			}
+		}
+		*/
+		
+		// loadById - load information from the db for a single item. // ignore protected values
+		function loadById($id) {
+			// ensure id is numeric
+			$id = (int) $id;
+			
+			// fetch all id related models
+			$data = $db::queryResults("SELECT `namespace`, `key`, `value`
+										FROM shiftsmith
+										WHERE id=".$id."
+										ORDER BY `namespace`, `key`;");
+										
+			foreach ($data as $value) {
+				if (!in_array($value['namespace'], explode(',', PROTECTED_UNIT))) {
+					if (!in_array($value['key'], explode(',', PROTECTED_UNIT))) {
+						$this->setModel($value['namespace'], $value['key'], $value['value']);
+					}
+				}
+			}		
+		}
+			
+		
 		// secure single property storage not accessible with formcache nor models
 		function setcache($namespace, $name, $value) {
 			// only admin access (configurable)
-			if (in_array($namespace, explode(',',PROTECTED_SESSION_NAMESPACES))) {
+			if (in_array($namespace, explode(',',PROTECTED_UNIT))) {
 				// set form array if not created
 				if (!isset($_SESSION[$namespace])) $_SESSION[$namespace] = array();
 				
@@ -100,7 +174,7 @@
 		// secure single property fetch not accessible with formcache nor models
 		function getcache($namespace, $name) {
 			// only admin access (configurable)
-			if (in_array($namespace, explode(',',PROTECTED_SESSION_NAMESPACES))) {
+			if (in_array($namespace, explode(',',PROTECTED_UNIT))) {
 				// set form array if not created
 				if (!isset($_SESSION[$namespace])) return '';
 				if (!isset($_SESSION[$namespace][$name])) return '';
@@ -119,14 +193,6 @@
 			}
 		}
 
-		// Load view template from filename
-		/*
-		function injectView($selector, $mode, $view_filename) {
-			if (in_array($mode, array('prepend', 'append', 'replace', 'outer-replace'))) {
-				$this->injected_views[] = array($selector, $mode, $view_filename);
-			}
-		}
-		*/
 
 		// inject resource
 		function injectView($selector_destination, $mode, $view_filename, $selector_after_fetch) {

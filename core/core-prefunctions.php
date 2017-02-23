@@ -32,7 +32,7 @@
 
 	function form_cache($form_name, $default_values = array(),$options='N') {
 		// prevent admin access (configurable)
-		if (in_array($form_name, explode(',', PROTECTED_SESSION_NAMESPACES))) {
+		if (in_array($form_name, explode(',', PROTECTED_UNIT))) {
 			throw new Exception ('Invalid form name: '.$form_name.' reserved for server-side access');
 			die();
 		}
@@ -42,7 +42,7 @@
 
 		// set default values
 		foreach ($default_values as $key => $var) {
-			if ((!isset($_SESSION[$form_name][$key])) || $options='FORCE.CACHE') {
+			if ((!isset($_SESSION[$form_name][$key])) || $options == 'FORCE.CACHE') {
 				$_SESSION[$form_name][$key] = $var;
 			}
 		}
@@ -50,14 +50,24 @@
 		// override previous values when form is posted
 		if ($options != 'FETCH.ONLY') {
 			foreach ($_REQUEST as $key => $var) {
-				$_SESSION[$form_name][$key] = $var;
+				if (strpos($key, '.') !== false) {
+					$key_explosion = explode('.', $key);
+					$forekey = array_shift($key_explosion);
+					if (in_array($forekey, explode(',', PROTECTED_UNIT))) {
+						throw new Exception ('Invalid form name: '.$forekey.' reserved for server-side access');
+						die();
+					}
+					$_SESSION[$forekey][implode('.', $key_explosion)] = $value;
+				} else {
+					$_SESSION[$form_name][$key] = $var;
+				}
 			}
 		}
 		
 		// return form cache
-		return $_SESSION[$form_name];
+		return $_SESSION;
 	}
-	
+
 	function validate_email($email) {
 		$isValid = true;
 		$atIndex = strrpos($email, "@");
