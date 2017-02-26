@@ -32,12 +32,12 @@
 			$this->addModel('prompt', 'error', "");
 			
 		if (
-			(isset($_POST['password'])) &&
-			(isset($_POST['password2'])) &&
-			(isset($_POST['email'])) &&
-			($_POST['password'] == $_POST['password2']) && 
-			($_POST['password'] != '') && 
-			(validate_email($_POST['email'])) 
+			(isset($_POST['trigger.password'])) &&
+			(isset($_POST['trigger.password2'])) &&
+			(isset($_POST['trigger.email'])) &&
+			($_POST['trigger.password'] == $_POST['trigger.password2']) && 
+			($_POST['trigger.password'] != '') && 
+			(validate_email($_POST['trigger.email'])) 
 		) {
 			$rnd = substr(str_shuffle('98v31b6opnh694o6nxd9804nb63029871n6bx0798bn32x691b603c2'),0,8);
 			Database::query("CREATE TABLE users (
@@ -53,9 +53,9 @@
 
 			
 			$data = $db::query("DELETE FROM users;");
-			$data = $db::query("INSERT INTO users (email, password, keygen, active) VALUES ('".$db::param($_POST['email'])."', '".crypt($_POST['password'], ')&(*"?/BOC(*"&?')."', '".$rnd."', 'N');");
+			$data = $db::query("INSERT INTO users (email, password, keygen, active) VALUES ('".$db::param($_POST['trigger.email'])."', '".crypt($_POST['trigger.password'], ')&(*"?/BOC(*"&?')."', '".$rnd."', 'N');");
 			
-			email($_POST['email'], 'Confirm Administration Account', '<a href="http://dreamforgery.com/confirm/admin/'.$rnd.'/'.$db::param($_POST['email']).'">Click here to confirm your account</a>');
+			email($_POST['trigger.email'], 'Confirm Administration Account', '<a href="http://dreamforgery.com/confirm/admin/'.$rnd.'/'.$db::param($_POST['trigger.email']).'">Click here to confirm your account</a>');
 
 			$this->addModel('prompt', 'message', "An email has been sent to ".htmlentities($_POST['email']).", please check your email and confirm the admin account.");
 			$this->addModel('prompt', 'includes', 'true');

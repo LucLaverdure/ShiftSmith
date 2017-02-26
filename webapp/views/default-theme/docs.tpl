@@ -186,7 +186,7 @@
 
 		<div class="doc">
 			<h3 id="injectView" class="head">Controller->injectView($selector_output, $mode, $inputURL, $selector_input)</h3>
-			<p>Input: (http://luclaverure.com)</p>
+			<p>Input: (http://luclaverdure.com)</p>
 			<pre><code class="language-php">
 				&lt;html>
 					&lt;head>&lt;/head>

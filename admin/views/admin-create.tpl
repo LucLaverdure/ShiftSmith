@@ -36,23 +36,22 @@
 				</label>
 
 				<label>
-					<h2 class="header-block required"><span></span>Email</h2>
+					<h2 class="header-block required"><span></span>Password</h2>
 					<input id="forge-url" class="forge-url" type="text" value="[trigger.password]" name="trigger.password" />
 				</label>
 
 				<label>
-					<h2 class="header-block required"><span></span>Email</h2>
+					<h2 class="header-block required"><span></span>Repeat Password</h2>
 					<input id="forge-url" class="forge-url" type="text" value="[trigger.email]" name="trigger.password2" />
 				</label>
 				
 			</form>	
 			
-			</div>
-			
-			<p>
 				<a href="#" onclick="$('#thisform').submit();" class="button login-button hvr-shutter-in-horizontal">
 				Create Admin Account</a>
-			</p>
+
+			</div>
+			
 			
 		</div>
 </div>
