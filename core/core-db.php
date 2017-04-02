@@ -1,5 +1,6 @@
 <?php
 	if (!IN_DREAMFORGERY) die();
+	
 	class Database {
 		static private $dbtype;
 		static private $dblink;

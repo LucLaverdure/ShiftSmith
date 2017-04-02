@@ -1,24 +1,11 @@
 [admin-header.tpl]
+<form id="thisform" action="/user" method="post">
+<div class="parallax-window" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
+	<h1 class="hero">ShiftSmith</h1>
+	<h2>Create Admin Account</h2>
 
-	<form method="post" action="" enctype="multipart/form-data">
-	
-			<div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
+		<div class="wrapper-login">
 
-					<div class="wrapper-login cf">
-						<h2>Forged - Database entries</h2>
-			[if:'[prompt.message]' != '']
-						<div class="message">[prompt.message]</div>
-			[endif]
-
-			[if:'[prompt.error]' != '']
-						<div class="error">[prompt.error]</div>
-			[endif]
-					</div>
-			</div>
-
-			<div class="wrapper">
-					
-					<div class="breadcrumbs"><a href="/user" class="breadcrumbs">Administration</a> &gt; Account Creation</div>
 
 [if:'[prompt.message]' != '']
 			<div class="message">[prompt.message]</div>
@@ -28,33 +15,26 @@
 			<div class="error">[prompt.error]</div>
 [endif]
 			
-			<form id="thisform" action="/user" method="post">
-		
-				<label>
-					<h2 class="header-block required"><span></span>Email</h2>
-					<input id="forge-url" class="forge-url" type="text" value="[trigger.email]" name="trigger.url" />
-				</label>
+			<p class="login-input"><label><span>New Admin Email:</span> <input type="text" name="trigger.email" class="input-email-login" placeholder="admin@luclaverdure.com" /></label></p>
+			<p class="login-input"><label><span>New Admin Password:</span> <input type="password" name="trigger.password"  class="input-email-login" /></label></p>
+			<p class="login-input"><label><span>Repeat Password:</span> <input type="password" name="trigger.password2"  class="input-email-login" /></label></p>
 
-				<label>
-					<h2 class="header-block required"><span></span>Password</h2>
-					<input id="forge-url" class="forge-url" type="text" value="[trigger.password]" name="trigger.password" />
-				</label>
+			<input type="hidden" name="trigger.entry" value="true" />
+			
+			<input type="submit" class="button login-button" value="Login" />
+		</div>	
 
-				<label>
-					<h2 class="header-block required"><span></span>Repeat Password</h2>
-					<input id="forge-url" class="forge-url" type="text" value="[trigger.email]" name="trigger.password2" />
-				</label>
-				
-			</form>	
-			
-				<a href="#" onclick="$('#thisform').submit();" class="button login-button hvr-shutter-in-horizontal">
-				Create Admin Account</a>
 
-			</div>
-			
-			
-		</div>
 </div>
-</div></div></body>
+</form>	
+<div class="download-hero">
+	<div class="wrapper">
+		<span class="letspa">Free, Fast, Friendly!</span>
+	</div>
+</div>
+
+
+</div>
+</div>
 
 [admin-footer.tpl]

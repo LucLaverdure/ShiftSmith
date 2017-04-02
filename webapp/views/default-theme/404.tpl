@@ -1,5 +1,5 @@
 [default-theme/header.tpl]
-<div class="e404">
+<div class="e404 wrapper">
 
 	<h1>404</h1>
 

@@ -8,6 +8,8 @@
 		public $injected_views = array();
 		public static $subviews = array();
 		public $index;
+		public $user;
+		public $db;
 		
 		// Add model data directly
 		/*
@@ -15,6 +17,16 @@
 			or
 			usage: addModel('title', 'mytitle') // no namespace //deprecated
 		*/
+		
+		function __construct() {
+			// setup user helper class
+			$this->user = new User();
+			
+			// setup database helper class
+			$this->db = new Database();
+			$this->db::connect();
+		}
+
 		function addModel($nameOrNamespace, $dataOrName, $data=null) {
 			if ($data == null) {
 				if (in_array($nameOrNamespace, explode(',',PROTECTED_UNIT))) return;
@@ -229,8 +241,9 @@
 			}
 			echo json_encode($JSON);
 		}
+		
 		function loadJSON() {
 			$this->loadViewAsJSON();
 		}
-	}
 
+}

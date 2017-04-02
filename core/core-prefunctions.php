@@ -15,6 +15,21 @@
 		return '';
 	}
 
+	function p($param) {
+		$db = new Database();
+		$dblink = $db::connect();
+		return mysqli_real_escape_string($dblink, $param);
+	}
+	
+	function input($key) {
+		$key = str_replace('.', '_', $key);
+
+		if (isset($_REQUEST[$key]))
+			return $_REQUEST[$key];
+		else
+			return '';
+	}
+
 	function inpath($url) {
 		$url = preg_quote($url, '/');
 		$url = str_replace('\*', '(.*)',$url);
@@ -30,19 +45,21 @@
 		@fclose($fh);
 	}
 
-	function form_cache($form_name, $default_values = array(),$options='N') {
+	function form_cache($form_name, $default_values = array(), $options='N') {
 		// prevent admin access (configurable)
 		if (in_array($form_name, explode(',', PROTECTED_UNIT))) {
-			throw new Exception ('Invalid form name: '.$form_name.' reserved for server-side access');
-			die();
+			$form_name = '';
 		}
-		
+
 		// set form array if not created
 		if (!isset($_SESSION[$form_name])) $_SESSION[$form_name] = array();
 
 		// set default values
 		foreach ($default_values as $key => $var) {
 			if ((!isset($_SESSION[$form_name][$key])) || $options == 'FORCE.CACHE') {
+				if (in_array($key, explode(',', PROTECTED_UNIT))) {
+					unset($_SESSION[$form_name][$key]);
+				}
 				$_SESSION[$form_name][$key] = $var;
 			}
 		}
@@ -54,12 +71,16 @@
 					$key_explosion = explode('.', $key);
 					$forekey = array_shift($key_explosion);
 					if (in_array($forekey, explode(',', PROTECTED_UNIT))) {
-						throw new Exception ('Invalid form name: '.$forekey.' reserved for server-side access');
-						die();
+						unset($_SESSION[$forekey]);
+					} else {
+						$_SESSION[$forekey][implode('.', $key_explosion)] = $value;
 					}
-					$_SESSION[$forekey][implode('.', $key_explosion)] = $value;
 				} else {
-					$_SESSION[$form_name][$key] = $var;
+					if (in_array($key, explode(',', PROTECTED_UNIT))) {
+                                                unset($_SESSION[$form_name][$key]);
+                                        } else {
+						$_SESSION[$form_name][$key] = $var;
+                                        }
 				}
 			}
 		}
@@ -123,7 +144,7 @@
 	function email($to, $subject, $message) {
 		$message='<table width="100%" colspan="0" cellpadding="0" border="0">
 	<tr>
-		<td width="350"><img src="http://dreamforgery.com/files/img/logo-black.gif" width="114" height="121" /></td>
+		<td width="350"><img src="http://'.$_SERVER["SERVER_NAME"].'/files/img/logo-black.gif" width="114" height="121" /></td>
 		<td colspan="2"><span style="font-size:20px;color:orange;font-family:\'Arial\';">'.$subject.'</span></td>
 	</tr>
 	<tr>
@@ -132,13 +153,13 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="3"><a href="http://www.dreamforgery.com">http://www.dreamforgery.com</a></td>
+		<td colspan="3"><a href="http://'.$_SERVER["SERVER_NAME"].'">http://'.$_SERVER["SERVER_NAME"].'</a></td>
 	</tr>
 </table>';
 
     // normal headers
 	$num = md5(time()); 
-    $headers  = "From: DreamForgery <noreply@dreamforgery.com>\r\n";
+    $headers  = "From: ShiftSmith <noreply@".$_SERVER["SERVER_NAME"].".com>\r\n";
 
     // This two steps to help avoid spam   
     $headers .= "Message-ID: <".time()." TheSystem@".$_SERVER['SERVER_NAME'].">\r\n";

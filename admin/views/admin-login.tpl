@@ -15,12 +15,12 @@
 [endif]
 		
 		
-			<p class="login-input"><label><span>Email:</span> <input type="text" name="email" class="input-email-login" placeholder="admin@luclaverdure.com" /></label></p>
-			<p class="login-input"><label><span>Password:</span> <input type="password" name="password" class="input-email-login" /></label></p>
+			<p class="login-input"><label><span>Email:</span> <input type="text" name="trigger.email" class="input-email-login" placeholder="admin@luclaverdure.com" /></label></p>
+			<p class="login-input"><label><span>Password:</span> <input type="password" name="trigger.password" class="input-email-login" /></label></p>
 		
-			<input type="hidden" name="login_entry" value="true" />
+			<input type="hidden" name="trigger.entry" value="true" />
 			
-			<a href="#" class="button login-button">Login</a>
+			<input type="submit" class="button login-button" value="Login" />
 		</div>	
 
 

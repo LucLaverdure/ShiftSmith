@@ -1,213 +1,119 @@
 <?php
-	// Step 1: Create adminisatrator account
-	class create_admin extends Controller {
+	// Step 1: Create admin account
+	class create_user extends Controller {
 		
-		// Display function: validate urls to activate the controller
 		function validate() {
-			// Activate home controller for /home and /home/*
-
-			$db = new Database();
-			$db::connect();
-			
-			$data = $db::queryResults("SELECT id, email
-									   FROM users
-									   ORDER BY id DESC
-									   LIMIT 1");
-			
-			if ((q()=="user" || q()=="user/") && $data === false && !isset($_SESSION['login']) ) {
+			// inpath /user
+			if (q('user') && (!$this->user->isLoggedIn()) && ($this->user->counted() == 0)) {
 				return 1;	// priority 1
 			}
 			else return false;
 		}
 
 		function execute() {
-			$db = new Database();
-			$db::connect();
-
 			// Step 1: Create Account
-			// no users are registered
 			
 			$this->addModel('prompt', 'title', 'Create Admin Account');
-			$this->addModel('prompt', 'message', "");
-			$this->addModel('prompt', 'error', "");
-			
-		if (
-			(isset($_POST['trigger.password'])) &&
-			(isset($_POST['trigger.password2'])) &&
-			(isset($_POST['trigger.email'])) &&
-			($_POST['trigger.password'] == $_POST['trigger.password2']) && 
-			($_POST['trigger.password'] != '') && 
-			(validate_email($_POST['trigger.email'])) 
-		) {
-			$rnd = substr(str_shuffle('98v31b6opnh694o6nxd9804nb63029871n6bx0798bn32x691b603c2'),0,8);
-			Database::query("CREATE TABLE users (
-										id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-										email VARCHAR(50) NOT NULL,
-										password VARCHAR(32) NOT NULL,
-										keygen VARCHAR(32) NOT NULL,
-										active VARCHAR(1) NOT NULL
-										);");
-										
-			
-			$this->addModel('prompt', 'title', 'Login');
+			$this->addModel('prompt', 'message', '');
+			$this->addModel('prompt', 'error', '');
 
+			$ret = false;
 			
-			$data = $db::query("DELETE FROM users;");
-			$data = $db::query("INSERT INTO users (email, password, keygen, active) VALUES ('".$db::param($_POST['trigger.email'])."', '".crypt($_POST['trigger.password'], ')&(*"?/BOC(*"&?')."', '".$rnd."', 'N');");
-			
-			email($_POST['trigger.email'], 'Confirm Administration Account', '<a href="http://dreamforgery.com/confirm/admin/'.$rnd.'/'.$db::param($_POST['trigger.email']).'">Click here to confirm your account</a>');
+			if (input('trigger.email') != '') {
+				$ret = $this->user->add(input('trigger.email'), input('trigger.password'), input('trigger.password2'));
+			}
 
-			$this->addModel('prompt', 'message', "An email has been sent to ".htmlentities($_POST['email']).", please check your email and confirm the admin account.");
-			$this->addModel('prompt', 'includes', 'true');
-			$this->loadView('admin-login.tpl');
-			return;
+			if ($ret === true) {
+				$this->addModel('prompt', 'message', "A confirmation email has been sent to validate your account.");
+				$this->loadView('admin-login.tpl');
+				return true;
+			} else {
+				$this->addModel('prompt', 'error', $ret);
+			}
+			
+			$this->loadView('admin-create.tpl');
 		}
-		
-		$this->addModel('error', "");
-		
-		$this->loadView('admin-create.tpl');
 	}
-}
 
 	// Step 2: Confirm account creation by email.
-	class admin_confirm_key extends Controller {
+	class user_confirm_key extends Controller {
 		// Display function: validate urls to activate the controller
 		function validate() {
-			$db = new Database();
-			$db::connect();
-			
-			$data = $db::queryResults("SELECT id, email
-									   FROM users
-									   WHERE active='N'
-									   ORDER BY id DESC
-									   LIMIT 1");
-			
-			if ((q('0')=="confirm" || q(1)=="admin") && ($data !== false) && !isset($_SESSION['login'])) {
+			if (q('confirm/admin/*/*') && (!$this->user->isLoggedIn())) {
 				return 1;	// priority 1
 			}
 			else return false;
 		}
 
 		function execute() {
-			// Step 1: Create Account
-			// no users are registered
-			$db = new Database();
-			$db::connect();
-
 			$this->addModel('prompt', "message",'');
 			$this->addModel('prompt', 'error', "");
+		
+			//url: confirm/admin/{key}/{email}
+			$key = q(2);
+			$email = q(3); 
 
-			if (q('0')=='confirm' && q(1) == 'admin') {
-				$data = $db::queryResults("SELECT id, email
-										   FROM users
-										   WHERE active='N'
-										   AND keygen='".$db::param(q(2))."'
-										   AND email='".$db::param(q(3))."'
-										   ORDER BY id DESC
-										   LIMIT 1");
-				if ($data != false) {
-					$data = $db::queryResults("	UPDATE users
-												SET active='Y'
-												WHERE
-											   keygen='".$db::param(q(2))."'
-											   AND email='".$db::param(q(3))."'
-											   ORDER BY id DESC
-											   LIMIT 1");
-					
-					$this->addModel('prompt', "message", 'Key: '.$db::param(q(2)).' applied to account "'.$db::param(q(3)).'". This account is now active, you may now login.');
-				} else {
-					$this->addModel('prompt', "error", 'Key: '.$db::param(q(2)).' could not be applied to account "'.$db::param(q(3)).'".');
-				}
+			// verify key to user combination to activate account (no login yet)
+			$ret = $this->user->confirm($email, $key);
 			
+			if ($ret === true) {
+				// account activated.
+				$this->addModel('prompt', "message", 'Key: '.p($key).' applied to account "'.p($email).'". This account is now active, you may now login.');
+			} else {
+				// invalid key to user
+				$this->addModel('prompt', "error", 'Key: '.p($key).' could not be applied to account "'.p($email).'".');
 			}
-
 			$this->addModel('prompt', 'title', 'Login');
-			$this->addModel('prompt', 'includes', 'true');
 			$this->loadView('admin-login.tpl');
 		}
 	}
 
 	// Step 3: Login.
-	class admin_login extends Controller {
+	class user_login extends Controller {
 		// Display function: validate urls to activate the controller
 		function validate() {
-			$db = new Database();
-			$db::connect();
-			
-			$data = $db::queryResults("SELECT id, email
-									   FROM users
-									   ORDER BY id DESC
-									   LIMIT 1");
-			
-			if ((q()=="user" || q()=="user/") && ($data !== false) && !isset($_SESSION['login'])) {
+			if ((q('user')) && (!$this->user->isLoggedIn()) && ($this->user->counted() > 0) ) {
 				return 1;	// priority 1
 			}
 			else return false;
 		}
 
 		function execute() {
+			// login user
+			$ret = $this->user->login(input('trigger.email'), input('trigger.password'));
 
-			$db = new Database();
-			$db::connect();
+			$this->addModel('prompt', "message", '');
+			$this->addModel('prompt', "error", '');
 
-			$this->addModel('prompt', 'title', 'Login');
-			$this->addModel('prompt', "message",'');
-			$this->addModel('prompt', 'error', "");
-
-			if (isset($_POST['login_entry']) && ($_POST['login_entry']=='true') && isset($_POST['password'])) {
-				$data = $db::queryResults("SELECT id, email
-										   FROM users
-										   WHERE active='Y'
-										   AND email='".$db::param($_POST['email'])."'
-										   AND password='".crypt($_POST['password'], ')&(*"?/BOC(*"&?')."'
-										   ORDER BY id DESC
-										   LIMIT 1");
-				if ($data !== false) {
-					$_SESSION['login'] = $data[0]['id'];
-					redirect('/user');
-					return;
-				} else {
-					$this->addModel('prompt', 'title', 'Login');
-					$this->addModel('prompt', "message",'');
-					$this->addModel('prompt', 'error', "Invalid Credentials.");
-				}
+			if ($ret === true) {
+				$this->addModel('prompt', "message", 'Login success!');
+			} else if(input('trigger.email') != '') {
+				$this->addModel('prompt', "error", 'Invalid email/password combination or account');
 			}
 			
-			$this->addModel('prompt', 'includes', 'true');
 			$this->loadView('admin-login.tpl');
-		}
+		}	
 	}
 
 	// Logged in panel
-	class admin_logged_in extends Controller {
+	class user_logged_in extends Controller {
 		// Display function: validate urls to activate the controller
 		function validate() {
-			if ((q()=="user" || q()=="user/") && (isset($_SESSION['login']))) {
+			if ((q('user')) && ($this->user->isLoggedIn()) && ($this->user->isAdmin())) {
 				return 1;	// priority 1
 			}
 			else return false;
 		}
 
 		function execute() {
-
-			$db = new Database();
-			$db::connect();
-
-			$data = $db::queryResults("SELECT email
-									   FROM users
-									   WHERE active='Y'
-									   AND id='".$db::param($_SESSION['login'])."'
-									   ORDER BY id DESC
-									   LIMIT 1");
-
+			$email = $this->user->getEmail();
 			
 			$this->addModel('prompt', "title",'Account Status');
-			$this->addModel('prompt', "message", $data[0]['email'].' logged In.');
+			$this->addModel('prompt', "message", p($email).' logged In.');
 			$this->addModel('prompt', "error",'');
 			
-			$this->addModel('prompt', 'includes', 'false');
-			
-			$d3data = $db::queryResults("SELECT COUNT(value) as valcount, value
+			// custom visualization
+			$d3data = $this->db::queryResults("SELECT COUNT(value) as valcount, value
 									   FROM `shiftsmith`
 									   WHERE `key`='tag'
 									   AND `namespace`='trigger'
@@ -223,23 +129,18 @@
 	}
 
 
-	// Logged in panel
-	class admin_logout extends Controller {
+	// Log out in panel
+	class user_logout extends Controller {
 		// Display function: validate urls to activate the controller
 		function validate() {
-			if ((q('0')=="admin" && q(1)=="logout") && (isset($_SESSION['login']))) {
+			if (q('admin/logout') && ($this->user->isLoggedIn())) {
 				return 1;	// priority 1
 			}
 			else return false;
 		}
 
 		function execute() {
-			
-			unset($_SESSION['login']);
+			$this->user->logout();
 			redirect('/');
-			
-			$this->addModel('prompt', 'includes', 'false');
-			$this->loadView('admin-logged-in.tpl');
-			
 		}
 	}
