@@ -128,7 +128,9 @@
 								// set model values within the loop, ex: blocks.x value
 								$block_content = $foundForBlock['content'];
 								foreach ($row as $subvar => $value) {
-									$block_content = str_replace('['.$var.'.'.$subvar.']', $value, $block_content);
+									if (!is_array($value)) {
+										$block_content = str_replace('['.$var.'.'.$subvar.']', $value, $block_content);
+									}
 								}
 								// append the parsed new block (of for loop) as processed view to render (ifs and setters for example)
 								$foreach_data .=  $this->process_view($controller, $block_content, $recursion_level + 1);

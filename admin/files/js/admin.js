@@ -178,6 +178,12 @@ $(document).on('click', '.save-button', function() {
 	return false;
 });
 
+$(document).on('click', '.add-button-custom', function() {
+	$('#template-placeholder').append($('#template-custom-field').html());
+	$('#template-placeholder').find('.field-head').last().fadeIn();
+	return false;
+});
+
 $(document).on('click', '.forge-option-block', function() {
 	window.location = $(this).find('a').attr('href');
 	return false;

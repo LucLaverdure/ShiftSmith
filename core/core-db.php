@@ -14,8 +14,102 @@
 			}
 
 			return self::$dblink;
+			
+		}
+		
+/* optimization?
+select
+    id,
+    max(if(concat(namespace, '.', `key`) = 'page.item.id', `value`, null)) as `page.item.id`,
+    max(if(concat(namespace, '.', `key`) = 'page.content.title', `value`, null)) as `page.content.title`,
+    max(if(concat(namespace, '.', `key`) = 'trigger.tag', `value`, null)) as `trigger.tag`,
+    max(if(concat(namespace, '.', `key`) = 'oddball.num', `value`, null)) as `oddball.num`
+from
+    `data`
+group by
+    id;
+*/
+		// array str
+		static public function loadById($id) {
+			$sql = '';
+			if (is_array($id)) {
+				foreach ($id as $k => $i) {
+					$id[$k] = (int) $i;
+				}
+				
+				$sql = "SELECT CONCAT(namespace,'.',`key`) `var`, `value`, id
+										FROM shiftsmith
+										WHERE id IN(".implode(',',$id).")
+										ORDER BY id DESC, namespace ASC, `key` ASC;";
+			} else {
+				$id = (int) $id;
+				$sql = "SELECT CONCAT(namespace,'.',`key`) `var`, `value`, id
+										FROM shiftsmith
+										WHERE id=".$id."
+										ORDER BY id DESC, namespace ASC, `key` ASC;";
+			}
+			$dbq = self::query($sql);
+			$ret = array();
+			if ($dbq->num_rows > 0) {
+				while ($data = $dbq->fetch_assoc()) {
+					$ret[] = $data;
+				}
+				return $ret;
+			}
+			return false;
 		}
 
+		static public function loadMatch($var, $value) {
+			$sql = "SELECT id
+					FROM shiftsmith
+					WHERE CONCAT(namespace,'.',`key`) = '".self::param($var)."'
+					AND value = '".self::param($value)."'
+					ORDER BY id DESC, namespace ASC, `key` ASC;";
+
+			$dbq = self::query($sql);
+			if ($dbq->num_rows > 0) {
+				while ($data = $dbq->fetch_assoc()) {
+					$ret[] = $data['id'];
+				}
+				return $ret;
+			}
+			return false;
+		}
+
+		static public function loadAll($var, $value) {
+			$id = (int) $id;
+			$sql = "SELECT id
+					FROM shiftsmith
+					WHERE CONCAT(namespace,'.',`key`) = '".self::param($var)."'
+					AND value = '".self::param($value)."'
+					ORDER BY id DESC, namespace ASC, `key` ASC;";
+
+			$dbq = self::query($sql);
+			if ($dbq->num_rows > 0) {
+				while ($data = $dbq->fetch_assoc()) {
+					$ret[] = self::loadById($data['id']);
+				}
+				return $ret;
+			}
+			return false;
+		}
+
+		static public function loadIdHas($var) {
+			$sql = "SELECT id
+					FROM shiftsmith
+					WHERE CONCAT(namespace,'.',`key`) = '".self::param($var)."'
+					ORDER BY id DESC, namespace ASC, `key` ASC;";
+
+			$dbq = self::query($sql);
+			if ($dbq->num_rows > 0) {
+				while ($data = $dbq->fetch_assoc()) {
+					$ret[] = $data['id'];
+				}
+				return $ret;
+			}
+			return false;
+		}
+		
 		static public function query($query_string) {
 			if (self::$dbtype == 'mysql') {
 				$ret = self::$dblink->query($query_string);
@@ -32,6 +126,8 @@
 
 		static public function param($param, $strip_tags = true) {
 			if (self::$dbtype == 'mysql') {
+				if (in_array($param, explode(',', PROTECTED_UNIT)))
+					return '';
 				if ($strip_tags) $param = strip_tags($param);
 				return self::$dblink->real_escape_string($param);
 			}
@@ -89,10 +185,8 @@
 									) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;");
 				$init_shift = 1;
 			} else {
-				if (is_numeric(q(3))) {
-					$init_shift = (int) q(3);
-				} else if (isset($_POST['id']) && is_numeric($_POST['id'])) {
-					$init_shift = (int) $_POST['id'];
+				if (input('id') != '' && is_numeric(input('id'))) {
+					$init_shift = (int) input('id');
 				} else {
 					$init_shift = $shiftroot[0]['id'] + 1;
 				}

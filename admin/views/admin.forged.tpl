@@ -5,7 +5,7 @@
 			<div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 
 					<div class="wrapper-login cf">
-						<h2>Forged - Database entries</h2>
+						<h1>Forged - Database entries</h1>
 			[if:'[prompt.message]' != '']
 						<div class="message">[prompt.message]</div>
 			[endif]

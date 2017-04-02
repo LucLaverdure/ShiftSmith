@@ -151,7 +151,7 @@
 		}
 
 		// save form data to database
-		function saveForm($id='new', $acceptedNamespaces = array('content', 'trigger', 'page')) {
+		function saveForm($id='new', $acceptedNamespaces = array('content', 'trigger', 'page', 'item')) {
 			
 			// get database
 			$db = new Database();
@@ -176,7 +176,8 @@
 			foreach ($this->models as $key => $value) {
 				$key_explosion = explode('.', $key);
 				$forekey = array_shift($key_explosion);
-				if (!in_array($forekey, explode(',', PROTECTED_UNIT))) {
+				if (!in_array($forekey, explode(',', PROTECTED_UNIT)) && in_array($forekey, $acceptedNamespaces)) {
+					if ($db::param($forekey) != '' && $db::param(implode('.', $key_explosion)) != '' && (trim($value) != ''))
 					$sql[] = "(".$init_shift.", '".$db::param($forekey)."' , '".$db::param(implode('.', $key_explosion))."', '".$db::param($value)."')";
 				}
 			
@@ -185,8 +186,14 @@
 			//save new data
 
 			$fullQuery = "INSERT INTO shiftsmith (`id`, `namespace`, `key`, `value`) VALUES ".implode(', ', $sql);
-			
+
 			$shiftroot = $db::query($fullQuery);
+			if ($shiftroot != false) {
+				foreach ($acceptedNamespaces as $namespace) {
+					unset($_SESSION[$namespace]);
+				}
+				redirect('/admin/edit/'.q(2).'/'.$init_shift);
+			}
 		}
 		
 		
@@ -204,6 +211,9 @@
 		function loadById($id) {
 			// ensure id is numeric
 			$id = (int) $id;
+			
+			$db = new Database();
+			$db::connect();
 			
 			// fetch all id related models
 			$data = $db::queryResults("SELECT `namespace`, `key`, `value`

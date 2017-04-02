@@ -3,7 +3,7 @@
 class admin_forge_page extends Controller {
 
 	function validate() {
-		if (($this->user->isAdmin()) && (q('admin/create/page') || q('admin/edit/page')))
+		if (($this->user->isAdmin()) && (q('admin/create/page') || q('admin/edit/page/*')))
 			return 1;
 		else return false;
 	}
@@ -14,34 +14,33 @@ class admin_forge_page extends Controller {
 		if (q(1)=='edit') {
 			
 			$id = (int) q(3);
-			
 			$this->loadById($id);
 			
 		} else {
 			$id = 'new';
 			$this->cacheForm('page', array(
 				'item.id' => 'new',
-				'content.title' => 'test',
-				'trigger.date' => 'b',
-				'trigger.url' => 'c',
-				'trigger.admin_only' => 'y',
-				'content.body' => 's'
+				'content.title' => '',
+				'trigger.date' => '',
+				'trigger.url' => '',
+				'trigger.admin_only' => 'N',
+				'content.body' => ''
 			));
 			
-			$this->cacheForm('tag.name', array('page', 'block'));
+			$this->addModel('tag', array(array('name'=>'page')));
 		}
 		
 		$this->setModel('prompt', 'message', '');
 		$this->setModel('prompt', 'error', '');
 				
-		if (isset($_POST['id'])) {
+		if (input('item.id') != '') {
 			
-			$this->saveForm('new');
+			$this->saveForm(input('item.id'));
 				
 			$this->setModel('prompt', 'message', 'Page saved to database.');
 		
-			if (is_numeric($init_shift)) {
-				redirect('/admin/edit/page/'.$init_shift);
+			if (is_numeric(input('item.id'))) {
+				redirect('/admin/edit/page/'.input('item.id'));
 			}
 		}
 
