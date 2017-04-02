@@ -1,5 +1,5 @@
 <?php
-	if (!IN_DREAMFORGERY) die();
+	if (!IN_SHIFTSMITH) die();
 	
 	/*
 	 *  Main User class

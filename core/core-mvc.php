@@ -1,5 +1,5 @@
 <?php
-	if (!IN_DREAMFORGERY) die();
+	if (!IN_SHIFTSMITH) die();
 
 	// Core Controller class for all controller objects to extend
 	class Controller {
@@ -14,8 +14,6 @@
 		// Add model data directly
 		/*
 			usage: addModel('form1', 'title', 'mytitle') // with namespace
-			or
-			usage: addModel('title', 'mytitle') // no namespace //deprecated
 		*/
 		
 		function __construct() {
@@ -27,28 +25,36 @@
 			$this->db::connect();
 		}
 
-		function addModel($nameOrNamespace, $dataOrName, $data=null) {
-			if ($data == null) {
-				if (in_array($nameOrNamespace, explode(',',PROTECTED_UNIT))) return;
-					//throw new Exception ('Invalid model name: '.$form_name.' reserved for server-side access');
-				
-				$this->models[$nameOrNamespace] = $dataOrName;
+		function addModel($namespace, $name, $data='') {
+			if (!is_array($namespace) && is_array($name) && $data=='') {
+				$this->models[$namespace] = $name;
+				return;
 			}
-			if (in_array($dataOrName, explode(',',PROTECTED_UNIT))) return;
-				//throw new Exception ('Invalid model name: '.$form_name.' reserved for server-side access');
-			try {
-				if (is_array($dataOrName)) {
-					foreach ($dataOrName as $key => $val) {
-						$this->models[$nameOrNamespace.'.'.$key] = $val;
-					}
-				} else {
-					$this->models[$nameOrNamespace.'.'.$dataOrName] = $data;
+			if (is_array($namespace)) {
+				foreach ($namespace as $n) {
+					$this->addModel($n, $name, $data);
 				}
-			} catch (Exception $e) {var_dump($e);}
+				return;
+			}
+			if (is_array($name)) {
+				foreach ($name as $n) {
+					$this->addModel($namespace, $n, $data);
+				}
+				return;
+			}
+			if (is_array($data)) {
+				foreach ($data as $d) {
+					$this->addModel($namespace, $name, $d);
+				}
+				return;
+			}
+			$this->models[$namespace.'.'.$name] = $data;
 		}
-		function setModel($nameOrNamespace, $dataOrName, $data=null) {
-			$this->addModel($nameOrNamespace, $dataOrName, $data);
+		
+		function setModel($namespace, $name, $data) {
+			$this->addModel($namespace, $name, $data);
 		}
+		
 		function modResultsModel(&$results, $keys, $function, $new_col=null) {
 			if ($new_col==null) $newcol=$keys;
 			if (is_array($results)) {
@@ -64,14 +70,9 @@
 		// get model usually variable
 		/*
 			usage: getModel('form1', 'title') // with namespace
-			or
-			usage: getModel('title') // no namespace //deprecated
 		*/
-		function getModel($nameOrNamespace, $name=null) {
-			if ($name == null)
-				return $this->models[$nameOrNamespace];
-			
-			return $this->models[$nameOrNamespace.'.'.$name];
+		function getModel($namespace, $name) {
+			return $this->models[$namespace.'.'.$name];
 		}
 		
 		// Load model from a controller
@@ -90,14 +91,63 @@
 		}
 
 		// Save & Load form data into cache
-		function cacheForm($name = 'page', $default_values = array(), $forcecache = 'N') {
-			$cache_vars = form_cache($name, $default_values, $forcecache);
-			
-			// skip protected namespaces
-			
-			foreach ($cache_vars as $var => $value) {
-				$this->addModel($name.'.'.$var, $value);
+		function cacheForm($form_name = 'page', $default_values = array(), $options = 'N') {
+			// prevent admin access (configurable)
+			if (in_array($form_name, explode(',', PROTECTED_UNIT))) {
+				$form_name = '';
 			}
+
+			// set form array if not created
+			if (!isset($_SESSION[$form_name])) $_SESSION[$form_name] = array();
+
+			// set default values
+			foreach ($default_values as $key => $var) {
+				if ((!isset($_SESSION[$form_name][$key])) || $options == 'FORCE.CACHE') {
+					if (in_array($key, explode(',', PROTECTED_UNIT))) {
+						unset($_SESSION[$form_name][$key]);
+					} else {
+						$_SESSION[$form_name][$key] = $var;
+					}
+				}
+			}
+
+			// override previous values when form is posted
+			if ($options != 'FETCH.ONLY') {
+				$allkeys = input();
+				foreach ($allkeys as $key => $var) {
+					if (strpos($key, '.') !== false) {
+						$key_explosion = explode('.', $key);
+						$forekey = array_shift($key_explosion);
+						if (in_array($forekey, explode(',', PROTECTED_UNIT))) {
+							unset($_SESSION[$forekey]);
+						} else {
+							$_SESSION[$form_name][$forekey.'.'.implode('.', $key_explosion)] = $var;
+						}
+					} else {
+						if (in_array($key, explode(',', PROTECTED_UNIT))) {
+							unset($_SESSION[$form_name][$key]);
+						} else {
+							$_SESSION[$form_name][$key] = $var;
+						}
+					}
+				}
+			}
+			
+			foreach ($_SESSION as $var => $value) {
+				if (is_numeric($var)) {
+					$this->addModel($form_name, $key, $value);
+				} else if (is_array($value)) {
+					foreach ($value as $key => $val) {
+						$this->addModel($var, $key, $val);
+					}
+				} else {
+					$this->addModel($form_name, $var, $value);
+				}
+				
+			}
+
+			// return form cache
+			return true;
 		}
 
 		// save form data to database

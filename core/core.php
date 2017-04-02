@@ -4,7 +4,7 @@
 	session_start();
 	srand();
 
-	define('IN_DREAMFORGERY', true);
+	define('IN_SHIFTSMITH', true);
 	define("PATH", $main_path);
 
 	// Includes

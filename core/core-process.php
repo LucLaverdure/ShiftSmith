@@ -1,5 +1,5 @@
 <?php
-	if (!IN_DREAMFORGERY) die();
+	if (!IN_SHIFTSMITH) die();
 
 	global $global_models,$main_path;
 	$global_models = array();
@@ -114,7 +114,6 @@
 				[blocks.t]
 			[end:blocks]
 			*/
-
 			// process shared models (variables)
 			foreach ($global_models as $var => $data) {
 				// when model data is an array
@@ -137,6 +136,7 @@
 							$view_output = str_replace($foundForBlock['block'], $foreach_data, $view_output);
 						}
 					}
+
 				} else {
 					// simple model, replace model with value ex: "[stats.x]" by "18"
 					$view_output = str_replace('['.$var.']', $data, $view_output);
@@ -300,8 +300,6 @@
 				$view_filename = $injected_view[2];
 				$selector_after_fetch = $injected_view[3];
 				
-//echo $selector.'|||'.$mode.'|||'.$view_filename.'|||'.$selector_after_fetch."||||\n\n\n";
-
 				$injected_html = '';
 				if ((trim($selector_after_fetch) != '') && (trim($selector_after_fetch) != "0")) {
 					$docZ = phpQuery::newDocument(@file_get_contents($view_filename));

@@ -1,5 +1,5 @@
 <?php
-	if (!IN_DREAMFORGERY) die();
+	if (!IN_SHIFTSMITH) die();
 	include_once($main_path.'core/phpQuery/selector.php');
 	
 	class domQuery {

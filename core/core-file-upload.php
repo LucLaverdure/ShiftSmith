@@ -1,5 +1,5 @@
 <?php
-	if (!IN_DREAMFORGERY) die();
+	if (!IN_SHIFTSMITH) die();
 
 	$uploads_dir = 'webapp/files/upload';
 	if (isset($_FILES) && isset($_FILES['file']) && isset($_SESSION['login'])) {

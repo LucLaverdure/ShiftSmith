@@ -80,14 +80,22 @@
 
 		function execute() {
 			// login user
-			$ret = $this->user->login(input('trigger.email'), input('trigger.password'));
-
+			
+			// default values
+			$ret = false;
 			$this->addModel('prompt', "message", '');
 			$this->addModel('prompt', "error", '');
 
+			// login user when form submitted
+			if (input('trigger.email') != '') {
+				$ret = $this->user->login(input('trigger.email'), input('trigger.password'));
+			}
+
+			// when user is logged in, redirect to dashboard
 			if ($ret === true) {
 				$this->addModel('prompt', "message", 'Login success!');
-			} else if(input('trigger.email') != '') {
+				redirect('/user');
+			} elseif (input('trigger.email') != '') {
 				$this->addModel('prompt', "error", 'Invalid email/password combination or account');
 			}
 			
@@ -113,7 +121,7 @@
 			$this->addModel('prompt', "error",'');
 			
 			// custom visualization
-			$d3data = $this->db::queryResults("SELECT COUNT(value) as valcount, value
+			$d3data = $this->db::queryResults("SELECT COUNT(value) valcount, value
 									   FROM `shiftsmith`
 									   WHERE `key`='tag'
 									   AND `namespace`='trigger'

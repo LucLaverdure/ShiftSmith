@@ -1,5 +1,5 @@
 <?php
-	if (!IN_DREAMFORGERY) die();
+	if (!IN_SHIFTSMITH) die();
 
 	function q($arg_number='all') {
 		if ($arg_number=='all') {
@@ -21,13 +21,21 @@
 		return mysqli_real_escape_string($dblink, $param);
 	}
 	
-	function input($key) {
-		$key = str_replace('.', '_', $key);
+	function input($key='all') {
+		if ($key=='all') {
+			$keys = array();
+			foreach($_REQUEST as $mkey => $val) {
+				$keys[str_replace('_', '.', $mkey)] = $val;
+			}
+			return $keys;
+		} else {
+			$key = str_replace('.', '_', $key);
 
-		if (isset($_REQUEST[$key]))
-			return $_REQUEST[$key];
-		else
-			return '';
+			if (isset($_REQUEST[$key]))
+				return $_REQUEST[$key];
+			else
+				return '';
+		}
 	}
 
 	function inpath($url) {
@@ -43,50 +51,6 @@
 		$fh = @fopen($log_file, 'a');
 		@fwrite($fh, $data."\n");
 		@fclose($fh);
-	}
-
-	function form_cache($form_name, $default_values = array(), $options='N') {
-		// prevent admin access (configurable)
-		if (in_array($form_name, explode(',', PROTECTED_UNIT))) {
-			$form_name = '';
-		}
-
-		// set form array if not created
-		if (!isset($_SESSION[$form_name])) $_SESSION[$form_name] = array();
-
-		// set default values
-		foreach ($default_values as $key => $var) {
-			if ((!isset($_SESSION[$form_name][$key])) || $options == 'FORCE.CACHE') {
-				if (in_array($key, explode(',', PROTECTED_UNIT))) {
-					unset($_SESSION[$form_name][$key]);
-				}
-				$_SESSION[$form_name][$key] = $var;
-			}
-		}
-
-		// override previous values when form is posted
-		if ($options != 'FETCH.ONLY') {
-			foreach ($_REQUEST as $key => $var) {
-				if (strpos($key, '.') !== false) {
-					$key_explosion = explode('.', $key);
-					$forekey = array_shift($key_explosion);
-					if (in_array($forekey, explode(',', PROTECTED_UNIT))) {
-						unset($_SESSION[$forekey]);
-					} else {
-						$_SESSION[$forekey][implode('.', $key_explosion)] = $value;
-					}
-				} else {
-					if (in_array($key, explode(',', PROTECTED_UNIT))) {
-                                                unset($_SESSION[$form_name][$key]);
-                                        } else {
-						$_SESSION[$form_name][$key] = $var;
-                                        }
-				}
-			}
-		}
-		
-		// return form cache
-		return $_SESSION;
 	}
 
 	function validate_email($email) {

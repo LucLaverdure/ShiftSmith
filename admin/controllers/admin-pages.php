@@ -62,7 +62,7 @@ class view_page extends Controller {
 			}
 		}
 
-		$this->addModel('ids', $valid_ids);
+		$this->addModel('page', 'ids', $valid_ids);
 
 		if (count($valid_ids) > 0) {
 			return 1;

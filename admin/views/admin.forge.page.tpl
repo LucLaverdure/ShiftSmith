@@ -21,40 +21,40 @@
 	
 		<label>
 			<h2 class="header-block required"><span></span>Title</h2>
-			<input id="forge-title" class="forge-title" type="text" value="[content.title]" placeholder="I love cats" name="content.title" />
+			<input id="forge-title" class="forge-title" type="text" value="[page.content.title]" name="content.title" />
 		</label>
 
 		<label>
 			<h2 class="header-block required"><span></span>URL of page</h2>
-			<input id="forge-url" class="forge-url" type="text" value="[trigger.url]" placeholder="/love/all/the/cats" name="trigger.url" />
+			<input id="forge-url" class="forge-url" type="text" value="[page.trigger.url]" name="trigger.url" />
 		</label>
 
 		<label>
 			<h2 class="header-block required"><span></span>HTML Editor for content</h2>
 			<div class="body_type">
-					<textarea id="ckeditor" name="content.body" placeholder="Write your story here.">[content.body]</textarea>
+					<textarea id="ckeditor" name="content.body" >[page.content.body]</textarea>
 			</div>
 		</label>
 		
 
 		<label>
 			<h2 class="header-block required"><span></span>Tags</h2>
-			<select class="js-tags form-control" multiple="multiple" style="width:100%;" name="trigger.tags[]">
-				[for:tags]
-				<option selected="selected" value="[tags.name]">[tags.name]</option>
-				[end:tags]
+			<select class="js-tags form-control" multiple="multiple" style="width:100%;" name="tags[]">
+				[for:tag]
+				<option selected="selected" value="[tag.name]">[tag.name]</option>
+				[end:tag]
 			</select>
 		</label>
 	
 			
 		<label>
 			<h2 class="header-block required"><span></span>Privacy</h2>
-			<input id="forge-private" class="forge-private" type="checkbox" name="trigger.admin_only" value="Y" [trigger.admin_only] /> Make page private
+			<input id="forge-private" class="forge-private" type="checkbox" name="trigger.admin_only" value="Y" [page.trigger.admin_only] /> Make page private
 		</label>
 
 		<label class="field-head sub-header-block required">
 			<h2 class="header-block">Publish date</h2>
-			<input class="datepicker" type="text" value="[trigger.date]" name="trigger.date" />
+			<input class="datepicker" type="text" value="[page.trigger.date]" name="trigger.date" />
 		</label>
 							
 <script type="text/javascript">

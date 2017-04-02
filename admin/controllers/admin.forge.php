@@ -3,16 +3,13 @@
 class admin_forge_page extends Controller {
 
 	function validate() {
-		if (isset($_SESSION['login']) && (q('0')=='admin') && ( q(1)=='create' || q(1)=='edit' ) && (q(2)=='page'))
+		if (($this->user->isAdmin()) && (q('admin/create/page') || q('admin/edit/page')))
 			return 1;
 		else return false;
 	}
 	
 	function execute() {
 		$id = 0;
-		
-		$db = new Database();
-		$db::connect();
 		
 		if (q(1)=='edit') {
 			
@@ -24,13 +21,14 @@ class admin_forge_page extends Controller {
 			$id = 'new';
 			$this->cacheForm('page', array(
 				'item.id' => 'new',
-				'content.title' => '',
-				'trigger.date' => '',
-				'trigger.url' => '',
-				'trigger.admin_only' => '',
-				'content.body' => '',
-				'trigger.tags[]' => array(array('page', ''))
+				'content.title' => 'test',
+				'trigger.date' => 'b',
+				'trigger.url' => 'c',
+				'trigger.admin_only' => 'y',
+				'content.body' => 's'
 			));
+			
+			$this->cacheForm('tag.name', array('page', 'block'));
 		}
 		
 		$this->setModel('prompt', 'message', '');
