@@ -25,17 +25,45 @@
 		if ($key=='all') {
 			$keys = array();
 			foreach($_REQUEST as $mkey => $val) {
-				$keys[str_replace('_', '.', $mkey)] = $val;
+				if (!in_array($mkey, explode(',', PROTECTED_UNIT))) {
+					$this_key = str_replace('_', '.', $mkey);
+					$ex_key = explode('.', $this_key);
+					if (count($ex_key) > 1) {
+						$keys[$this_key] = array();
+						foreach ($ex_key as $k => $v) {
+							if (!in_array($k, explode(',', PROTECTED_UNIT))) {
+								if (is_numeric($k) && is_array($v)) {
+									$keys[$this_key.'[]'] = $val;
+								} elseif (is_numeric($k)) {
+									$keys[$this_key] = $val;
+								} elseif (is_array($v)) {
+									foreach ($v as $k1 => $v1) {
+										$keys[$this_key.'.'.$k.'.'.$k1] = $v1;
+									}
+								} else {
+									$keys[$this_key.'.'.$k] = $val;
+								}
+							}
+						}
+					} else {
+						$keys[$this_key] = $val;
+					}
+				}
 			}
+			
 			return $keys;
 		} else {
 			$key = str_replace('.', '_', $key);
 
-			if (isset($_REQUEST[$key]))
-				return $_REQUEST[$key];
-			else
+			if (isset($_REQUEST[$key])) {
+				if (!in_array($key, explode(',', PROTECTED_UNIT))) {
+					return $_REQUEST[$key];
+				}
+			} else {
 				return '';
+			}
 		}
+		return '';
 	}
 
 	function inpath($url) {

@@ -24,6 +24,7 @@
 	width:100%;
 	max-width:450px;
 	width:100%;
+	max-height:50px;
 }
 .chatbox .action {
 	border:5px solid #565758;
@@ -153,4 +154,10 @@ body .left-bar .chatbox-admin {
 }
 .chatbox-link {
 	float:left;
+}
+.plugin-box {
+	max-width:100%;
+}
+.plugin-box .del {
+	float:right;
 }

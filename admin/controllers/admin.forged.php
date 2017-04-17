@@ -21,24 +21,24 @@
 			
 			
 			$ret = $db::loadIdHas('page.trigger.url');
-			
 			$forged = array();
-			foreach($ret as $id) {
-				
-				$row = $db::loadById($id);
-				foreach ($row as $k => $v) {
-					if ($v['var']=='page.trigger.url') {
-						$row['id'] = $v['id'];
-						$row['url'] = $v['value'];
+			if ($ret) {
+				foreach($ret as $id) {
+					$row = $db::loadById($id);
+					foreach ($row as $k => $v) {
+						if ($v['var']=='page.trigger.url') {
+							$row['id'] = $v['id'];
+							$row['url'] = $v['value'];
+						}
+						if ($v['var']=='page.content.title') {
+							$row['title'] = $v['value'];
+						}
+						if ($v['var']=='page.tags') {
+							$row['tags'] = $v['value'];
+						}
 					}
-					if ($v['var']=='page.content.title') {
-						$row['title'] = $v['value'];
-					}
-					if ($v['var']=='page.tags') {
-						$row['tags'] = $v['value'];
-					}
+					$forged[] = $row;
 				}
-				$forged[] = $row;
 			}
 			$this->addModel('forged', $forged);
 

@@ -1,11 +1,54 @@
 <?php
 
+class admin_comments extends Controller {
+		
+	// Display function: validate urls to activate the controller
+	function validate() {
+		// Activate home controller for /home and /home/*
+		if (($this->user->isAdmin()) && (q('admin/comments')))
+			return 1;	// priority 1
+		else return false;
+	}
+	
+	function execute() {
+		$data = $this->db::queryResults("SELECT room_id
+								   FROM chatbox
+								   GROUP BY room_id
+								   ORDER BY room_id ASC");
+
+		$this->addModel('box', $data);
+		$this->addModel('prompt', 'message', '');
+		$this->addModel('prompt', 'error', '');
+
+		// chatbox
+		$this->loadView('../plugins/chatbox/admin.comments.tpl');
+	}
+}
+
+class admin_comment_del extends Controller {
+		
+	// Display function: validate urls to activate the controller
+	function validate() {
+		// Activate home controller for admin/comments/del
+		if (($this->user->isAdmin()) && (q('admin/comments/del/*')))
+			return 1;	// priority 2
+		else return false;
+	}
+
+	function execute() {
+		$commentid = (int) q(3);
+		$data = $this->db::query("DELETE FROM chatbox WHERE id=".$commentid.";");
+		echo "sucess";
+		die();
+	}
+}
+
 // Register email
 class chatbox_login extends Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// url pattern chatbox/register/username
-		if ((q('0')=="chatbox") && (q(1)=='register')) {
+		if (q('chatbox/register/*')) {
 			return 1;	// priority 1
 		}
 		else return false;
@@ -13,29 +56,23 @@ class chatbox_login extends Controller {
 
 	function execute() {
 		// cancel if chatuser is blank
-		if (trim(q(2))=='') return;
+		if (trim(q(2)) == '') return;
 		
 		// setter
-		if (trim(q(2)) != "")
+		if (trim(q(2)) != '')
 			$_SESSION['chatuser'] = q(2);
 	}
 }
 
 // display chatlog of chatroom
 class chat_log extends Controller {
-	//chatbox/register/username
+	//chatbox/chatlog/room/last-post-id
 	function validate() {
 		// url pattern chatbox/chatlog/room/last-post-id
-		if ((q('0')=="chatbox") && (q(1)=="chatlog"))
+		if (q('chatbox/chatlog/*/*'))
 			return 1;
 		else 
 			return false;
-	}
-	
-	// get latest views in asc order
-	function prioritySorterB($a, $b) {
-		if ($a == $b) return 0;
-		return ($a > $b) ? -1 : 1;
 	}
 
 	function execute() {
@@ -62,7 +99,7 @@ class chat_log extends Controller {
 			
 			// set to render with view
 			$this->addModel('posts', $data);
-			$this->loadView('default-theme/post.ajax.tpl');
+			$this->loadView('../plugins/chatbox/post.ajax.tpl');
 		}
 	}
 }
@@ -71,11 +108,11 @@ class chat_log extends Controller {
 class chatbox_post extends Controller {
 	// url pattern: chatbox/post/
 	function validate() {
-		// url pattern: post/chatbox/room/liner
-		if ((isset($_SESSION['chatuser']) &&
-		(trim($_SESSION['chatuser']) != '') &&
-		(q('0')=="chatbox") &&
-		(q(1)=="post"))
+		// url pattern: chatbox/post/{room}/{liner}
+		if (
+			(isset($_SESSION['chatuser'])) &&
+			(trim($_SESSION['chatuser']) != '') &&
+			(q('chatbox/post/*/*'))
 		) {
 			return 1;	// priority 1
 		}
@@ -89,13 +126,14 @@ class chatbox_post extends Controller {
 		
 		// vars input
 		$room_id = q(2);
-		if (trim($room_id)=='') return;
+		if (trim($room_id) == '') return;
 		$liner = q(3);
-		if (trim($liner)=='') return;
+		if (trim($liner) == '') return;
 		
 		// get all chat posts from main lobby
 		$data = $db::query("INSERT INTO chatbox (room_id, liner, user)
-							VALUES('".$db::param($room_id)."', '".$db::param($liner)."', '".$_SESSION['chatuser']."');");
+							VALUES('".$db::param($room_id)."', '".$db::param($liner)."', '".$db::param($_SESSION['chatuser'])."');");
+		
 	}
 }
 

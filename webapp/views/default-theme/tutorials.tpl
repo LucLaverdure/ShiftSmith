@@ -1,7 +1,7 @@
 [default-theme/header.tpl]
 
 <div class="parallax-window sub" data-parallax="scroll" data-image-src="/files/img/home-bg.jpg">
-	<h1 class="hero">ShiftSmith - Tutorials</h1>
+	<h1 class="hero">Tutorials</h1>
 </div>
 
 <div class="wrapper">

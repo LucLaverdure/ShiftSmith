@@ -12,14 +12,14 @@
 [endif]
 		</div>
 </div>
-<!-- [admin-panel.tpl] -->
+[admin-panel.tpl]
 <div class="wrapper">
 
 	<a href="/user">Administration</a> &gt; <a href="/admin/forge">Forge</a> &gt; Page
 
 	<form method="post" action="" enctype="multipart/form-data">
 	
-		<input type="hidden" name="item.id" value="[item.id]" />
+		<input type="hidden" name="item.id" value="[page.item.id]" />
 	
 		<label>
 			<h2 class="header-block required"><span></span>Title</h2>
@@ -41,10 +41,10 @@
 
 		<label>
 			<h2 class="header-block required"><span></span>Tags</h2>
-			<select class="js-tags form-control" multiple="multiple" style="width:100%;" name="tags[]">
-				[for:tag]
-				<option selected="selected" value="[tag.name]">[tag.name]</option>
-				[end:tag]
+			<select class="js-tags form-control" multiple="multiple" style="width:100%;" name="page.tags.name[]">
+				[for:page.tags]
+				<option selected="selected" value="[page.tags.name]">[page.tags.name]</option>
+				[end:page.tags]
 			</select>
 		</label>
 	
@@ -78,13 +78,13 @@
 </script>
 
 
-[for:custom]
+		<h2 class="header-block">Custom Fields</h2>
+[for:page.custom]
 		<label class="field-head sub-header-block">
-			<h2 class="header-block">Custom Fields</h2>
-			<input class="custom head" type="text" value="[custom.header]" name="custom.header[]" />
-			<input class="custom value" type="text" value="[custom.value]" name="custom.value[]" />
+			<input class="custom head" type="text" value="[page.custom.header]" name="custom.header[]" />
+			<input class="custom value" type="text" value="[page.custom.value]" name="custom.value[]" />
 		</label>
-[end:custom]
+[end:page.custom]
 
 		<div id="template-custom-field">
 			<label class="field-head sub-header-block" style="display:none;">

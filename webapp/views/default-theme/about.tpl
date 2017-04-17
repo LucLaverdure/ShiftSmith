@@ -1,14 +1,14 @@
 [default-theme/header.tpl]
 
 <div class="parallax-window sub" data-parallax="scroll" data-image-src="/files/img/home-bg.jpg">
-	<h1 class="hero">ShiftSmith - About</h1>
+	<h1 class="hero">About</h1>
 </div>
 
 <div class="wrapper about-page cf">
 
 		<div class="credit">
-			<img src="/files/img/round-me.png" alt="Luc Laverdure"/>
-			<h2>Luc Laverdure</h2>
+			<a href="http://LucLaverdure.com" target="_blank"><img src="/files/img/round-me.png" alt="Luc Laverdure"/></a>
+			<h2><a href="http://LucLaverdure.com" target="_blank">Luc Laverdure</a></h2>
 			<h3>Founder of ShiftSmith</h3>
 		</div>
 		<div class="credit large">

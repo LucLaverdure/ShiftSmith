@@ -51,6 +51,7 @@
 			$this->models[$namespace.'.'.$name] = $data;
 		}
 		
+		/* deprecated */
 		function setModel($namespace, $name, $data) {
 			$this->addModel($namespace, $name, $data);
 		}
@@ -90,11 +91,19 @@
 			
 		}
 
+		/* Sample data:
+			$this->cacheForm('page', array(
+				'content.body' => '',
+				'tags' => array(array('name'=>'page'), array('name'=>'block'))
+				//'custom[]' => array(array('header' => '', 'value'=>''), array('header' => 'a', 'value'=>'b'))
+			));
+		 */
+		
 		// Save & Load form data into cache
 		function cacheForm($form_name = 'page', $default_values = array(), $options = 'N') {
 			// prevent admin access (configurable)
 			if (in_array($form_name, explode(',', PROTECTED_UNIT))) {
-				$form_name = '';
+				return false;
 			}
 
 			// set form array if not created
@@ -102,11 +111,30 @@
 
 			// set default values
 			foreach ($default_values as $key => $var) {
-				if ((!isset($_SESSION[$form_name][$key])) || $options == 'FORCE.CACHE') {
+				if ((!isset($_SESSION[$form_name][$key])) || ($options == 'FORCE.CACHE')) {
 					if (in_array($key, explode(',', PROTECTED_UNIT))) {
 						unset($_SESSION[$form_name][$key]);
 					} else {
-						$_SESSION[$form_name][$key] = $var;
+						/* 'tags' => array() */
+						if (is_array($var)) {
+							/* array(0 => array('name' => 'xyz') )*/
+							foreach ($var as $arr_key => $arr_val) {
+								/* 0 => arr */
+								if (is_numeric($arr_key) && (is_array($arr_val))) {
+									// form key val
+									if (!isset($_SESSION[$form_name])) $_SESSION[$form_name] = array();
+									if (!isset($_SESSION[$form_name][$arr_key])) $_SESSION[$form_name][$arr_key] = array();
+									foreach ($arr_val as $kk => $vv) {
+//echo 'T'.$form_name."K:".$arr_key."KK:".$kk."VV:".$vv;
+										$_SESSION[$form_name.'.'.$key][$arr_key][$kk] = $vv;
+									}
+								} else {
+									$_SESSION[$form_name][$key] = $var;
+								}
+							}
+						} else {
+							$_SESSION[$form_name][$key] = $var;
+						}
 					}
 				}
 			}
@@ -133,12 +161,17 @@
 				}
 			}
 			
+			// save data to session
 			foreach ($_SESSION as $var => $value) {
-				if (is_numeric($var)) {
-					$this->addModel($form_name, $key, $value);
-				} else if (is_array($value)) {
+				if (is_array($value)) {
 					foreach ($value as $key => $val) {
-						$this->addModel($var, $key, $val);
+						if (is_array($val)) {
+							foreach ($val as $k => $v) {
+								$this->addModel($var, $k.'['.$key.']', $v, 'add');
+							}
+						} else {
+							$this->addModel($var, $key, $val);
+						}
 					}
 				} else {
 					$this->addModel($form_name, $var, $value);
@@ -151,7 +184,7 @@
 		}
 
 		// save form data to database
-		function saveForm($id='new', $acceptedNamespaces = array('content', 'trigger', 'page', 'item')) {
+		function saveForm($id='new', $acceptedNamespaces = array('content', 'trigger', 'page', 'item', 'tag', 'tags')) {
 			
 			// get database
 			$db = new Database();
@@ -196,6 +229,15 @@
 			}
 		}
 		
+		function clearcache($id='new', $eraseNamespaces = array('content', 'trigger', 'page', 'item', 'tag', 'tags')) {
+			foreach($eraseNamespaces as $name) {
+				if (isset($_SESSION[$name])) {
+					unset($_SESSION[$name]);
+				}
+				
+			}
+		}
+		
 		
 		/*
 		function clearCache() {
@@ -207,7 +249,7 @@
 		}
 		*/
 		
-		// loadById - load information from the db for a single item. // ignore protected values
+		// loadById - load information from the db for a single item.
 		function loadById($id) {
 			// ensure id is numeric
 			$id = (int) $id;
@@ -258,8 +300,9 @@
 		// Load view template from filename
 		function loadView($view_filename) {
 			if (is_array($view_filename)) {
-				foreach($view_filename as $filename)
+				foreach($view_filename as $filename) {
 					$this->views[$filename] = $filename;
+				}
 			} else {
 				$this->views[$view_filename] = $view_filename;
 			}
@@ -271,14 +314,14 @@
 			if (in_array($mode, array('prepend', 'append', 'replace', 'outer-replace'))) {
 				switch (substr($view_filename,-3, 4)) {
 					case '.js':
-						$this->injected_views[] = array($selector_destination, $mode, '<script src="'+$view_filename+'" type="text/javascript">', $selector_after_fetch);
+						$this->injected_views[] = array($selector_destination, $mode, '<script src="'.$view_filename.'" type="text/javascript">', $selector_after_fetch);
 						break;
 					case 'css':
-						$this->injected_views[] = array($selector_destination, $mode, '<link rel="stylesheet" type="text/css" href="'+$view_filename+'">', $selector_after_fetch);
+						$this->injected_views[] = array($selector_destination, $mode, '<link rel="stylesheet" type="text/css" href="'.$view_filename.'">', $selector_after_fetch);
 						break;
 					default:
-							$this->injected_views[] = array($selector_destination, $mode, $view_filename, $selector_after_fetch);
-					break;
+						$this->injected_views[] = array($selector_destination, $mode, $view_filename, $selector_after_fetch);
+						break;
 				}
 			}
 		}

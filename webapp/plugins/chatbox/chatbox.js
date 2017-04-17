@@ -2,7 +2,9 @@ var latest_post = [];
 
 function getchatslive() {
 	$('.chatbox').each(function() {
-		get_posts($(this).find('input[type="hidden"]').last().val(), $(this).find('.line').last().attr('data-id'));
+		var room = $(this).find('.room_id').last().val();
+		var last_line = $(this).find('.line').last().attr('data-id');
+		get_posts(room, last_line);
 	});
 }
 // register chat usernameregister chat username
@@ -46,8 +48,8 @@ function get_posts(room, last_post_id) {
 		cache: false,
 		context: document.body
 	}).done(function(data) {
-		$('.chatbox').find("input[value='"+room+"']").parents('.chatbox').append(data);
-		last_post_id = $(this).parents('.chatbox').find('line').attr('data-id');
+		$('.chatbox').find('input[value="'+room+'"]').parents('.chatbox').append(data);
+		last_post_id = $('.chatbox').find('input[value="'+room+'"]').parents('.chatbox').find('line').attr('data-id');
 	});
 }
 
@@ -63,7 +65,7 @@ function get_posts(room, last_post_id) {
 	$(document).on('keypress', '.hasid', function(e) {
 		$this = $(this);
 		if ((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey) {
-			var room = $this.parents('.chatbox').find('input[type="hidden"]').val();
+			var room = $this.parents('.chatbox').find('.room_id').val();
 			write_post(room, $this.val());
 			$(this).val('');
 			return false;
@@ -75,10 +77,12 @@ function get_posts(room, last_post_id) {
 		if ($(this).parents('.chatbox').find('.noid').is(':visible')) {
 			register_chat_user($(this).parents('.chatbox').find('.noid').val());
 		} else {
-			var room = $(this).parents('.chatbox').find('input[type="hidden"]').val();
-			write_post(room, $this.parents('.chatbox').find('input[type="hidden"]').val());
+			var room = $this.parents('.chatbox').find('.room_id').val();
+			write_post(room, $(this).parents('.chatbox').find('.hasid').val());
+			$(this).parents('.chatbox').find('.hasid').val('')
+			return false;
 		}
-		$(this).parents('.chatbox').find('input,textarea').val('');
+		$(this).parents('.chatbox').find('.noid,textarea').val('');
 		return false;
 	});
 	

@@ -4,22 +4,20 @@
 	
 			<div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 
-					<div class="wrapper-login cf">
-						<h1>Forged - Database entries</h1>
-			[if:'[prompt.message]' != '']
-						<div class="message">[prompt.message]</div>
-			[endif]
+						<div class="wrapper">
+							<h2>Forged - Database entries</h2>
+				[if:'[prompt.message]' != '']
+							<div class="message">[prompt.message]</div>
+				[endif]
 
-			[if:'[prompt.error]' != '']
-						<div class="error">[prompt.error]</div>
-			[endif]
-					</div>
+				[if:'[prompt.error]' != '']
+							<div class="error">[prompt.error]</div>
+				[endif]
+						</div>
 			</div>
-
-			<div class="wrapper">
-					
+				[admin-panel.tpl]
+			<div class="t80">
 					<div class="breadcrumbs"><a href="/user" class="breadcrumbs">Administration</a> &gt; <a href="/admin/forged">Forged</a> &gt; Database entries</div>
-					
 					<div class="forged">
 						<div class="head cf">
 							<div class="cell">URL Trigger</div>
@@ -42,13 +40,16 @@
 						</div>
 					[end:forged]
 					</div>
-			</div>	
+			</div>					
 			<div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 					<div class="wrapper-login cf">
 						<h2>Forged - File entries</h2>
 					</div>
 			</div>
-			<div class="wrapper">
+			<div class="left-col">
+				<br>
+			</div>
+			<div class="t80">
 					<div class="breadcrumbs"><a href="/user">Administration</a> &gt; <a href="/admin/forged">Forged</a> &gt; File entries</div>
 			
 					<div class="forged">
@@ -73,7 +74,7 @@
 						</div>
 					</div>
 			</div>
-				
+
 </form>
 
 [admin-footer.tpl]

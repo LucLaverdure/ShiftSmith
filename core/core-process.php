@@ -1,7 +1,7 @@
 <?php
 	if (!IN_SHIFTSMITH) die();
 
-	global $global_models,$main_path;
+	global $global_models, $main_path;
 	$global_models = array();
 
 	include_once($main_path.'core/phpQuery/phpQuery-onefile.php');
@@ -114,7 +114,36 @@
 				[blocks.t]
 			[end:blocks]
 			*/
-			// process shared models (variables)
+
+			foreach ($global_models as $var => $data) {
+
+				if ((strpos($var, '[') !== false) && (strpos($var, ']') !== false)) {
+					$tmp_var = explode('[', $var);
+					$new_var = array_shift($tmp_var);
+
+					$var_ex = explode('.', $new_var);
+					$var_prefix = '';
+					$var_sufix = '';
+					if (count($var_ex) == 3) {
+						$var_prefix = $var_ex[0].'.'.$var_ex[1];
+						$var_sufix = $var_ex[2];
+					} elseif (count($var_ex) == 2) {
+						$var_prefix = $var_ex[0];
+						$var_sufix = $var_ex[1];
+					} elseif (count($var_ex) == 1) {
+						$var_prefix = $var_ex[0];
+					}
+					
+					
+					if (!isset($global_models[$var_prefix]) || !is_array($global_models[$var_prefix])) {
+						$global_models[$var_prefix] = array();
+					}
+					$global_models[$var_prefix][$var_sufix][] = $data;
+					unset($global_models[$var]);
+				}
+			}
+
+// process shared models (variables)
 			foreach ($global_models as $var => $data) {
 				// when model data is an array
 				if (is_array($data)) {
@@ -123,28 +152,60 @@
 					preg_match_all('/(?<block>\[for:'.$var.'\](?<content>[\s\S]+)\[end:'.$var.'\])/ix', $view_output, $forblocks, PREG_SET_ORDER);
 					if (count($forblocks)) {
 						foreach ($forblocks as $foundForBlock) {
-							$foreach_data = '';
-							foreach ($data as $row) {
+							$block_content = array();
+							foreach ($data as $mykey => $row) {
+							//$foreach_data = '';
 								// set model values within the loop, ex: blocks.x value
-								$block_content = $foundForBlock['content'];
 								foreach ($row as $subvar => $value) {
+									if (!isset($block_content[$subvar])) $block_content[$subvar] = $foundForBlock['content'];
 									if (!is_array($value)) {
-										$block_content = str_replace('['.$var.'.'.$subvar.']', $value, $block_content);
+										if (is_numeric($subvar)) {
+											$block_content[$subvar] = str_replace('['.$var.'.'.$mykey.']', $value, $block_content[$subvar]);
+										
+										} 
 									}
 								}
 								// append the parsed new block (of for loop) as processed view to render (ifs and setters for example)
-								$foreach_data .=  $this->process_view($controller, $block_content, $recursion_level + 1);
 							}
-							$view_output = str_replace($foundForBlock['block'], $foreach_data, $view_output);
+							$block_content = implode("\n", $block_content);
+							$view_output = str_replace($foundForBlock['block'], $block_content, $view_output);
 						}
 					}
-
 				} else {
 					// simple model, replace model with value ex: "[stats.x]" by "18"
 					$view_output = str_replace('['.$var.']', $data, $view_output);
 				}
 			}
 
+/*
+
+<?php
+
+function getQuery($items) {
+        $sql = "select
+            id,\n";
+
+        foreach ($items as $item) {
+            $sql = $sql . "max(if(concat(namespace, '.', `key`) = '" . $item . "', `value`, null)) as `" . $item . "`,\n";
+        }
+        $sql = $sql . "from
+            `data`
+        group by
+            id;";
+
+        return $sql;
+}
+
+echo getQuery([
+        "page.item.id",
+        "page.content.title",
+        "trigger.tag",
+        "oddball.num"
+]);
+
+?>
+
+*/
 			/* process model setters, ex: [set:stats.x]18[endset] */
 			$setvars = array();
 			preg_match_all('~(?<block>\[set:(?<set_body>[^\[]+)\](?<set_content>[^\[.]+)\[endset\])~i', $view_output, $setvars, PREG_SET_ORDER);
@@ -208,7 +269,8 @@
 			
 			// process subview paths, syntax: [filename]
 			$matches = array();
-			preg_match_all('/\[[^\[]*[^\\\]\]/i', $view_output, $matches);
+			/*                 /\[[^\[]*[^\\\]\]		*/
+			preg_match_all('/\[\S*\]/i', $view_output, $matches);
 			foreach ($matches as $found_a) {
 				foreach ($found_a as $found) {
 					$filename = trim(substr($found, 1, -1));

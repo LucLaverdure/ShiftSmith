@@ -10,50 +10,66 @@ class admin_forge_page extends Controller {
 	
 	function execute() {
 		$id = 0;
-		
+
+		// when not posting form
+		if (input('item.id') == '') {
+			// on page land, clear cache
+			$this->clearcache();
+		}
+ 		
+		// when editing
 		if (q(1)=='edit') {
-			
+			// load values into form
 			$id = (int) q(3);
 			$this->loadById($id);
-			
-		} else {
-			$id = 'new';
 			$this->cacheForm('page', array(
-				'item.id' => 'new',
+				'item.id' => $id
+			));
+		} else {
+			// when creating
+			$id = 'new';
+			
+			// page form initial values
+			$this->cacheForm('page', array(
+				'item.id' => $id,
 				'content.title' => '',
 				'trigger.date' => '',
 				'trigger.url' => '',
 				'trigger.admin_only' => 'N',
-				'content.body' => ''
+				'content.body' => '',
+				'tags' => array(array('name'=>'xx'), array('name'=>'yy')),
+				'custom' => array(array('header' => 'head1', 'value'=>'head2'), array('header' => 'aaa', 'value'=>'bbbb'))
 			));
-			
-			$this->addModel('tag', array(array('name'=>'page')));
 		}
 		
+		// set initial prompts
 		$this->setModel('prompt', 'message', '');
 		$this->setModel('prompt', 'error', '');
 				
+		// if posting value
 		if (input('item.id') != '') {
 			
+			// save current input data
 			$this->saveForm(input('item.id'));
-				
+			
+			// set prompt saved form success
 			$this->setModel('prompt', 'message', 'Page saved to database.');
 		
+			// go to edit page once page created.
 			if (is_numeric(input('item.id'))) {
 				redirect('/admin/edit/page/'.input('item.id'));
 			}
 		}
-
 		
+		// load page template
 		$this->loadView('admin.forge.page.tpl');
 	}
 }
 
 class admin_forge_post extends Controller {
 
-	
 	function validate() {
-		if (isset($_SESSION['login']) && (q('0')=='admin') && ( q(1)=='create' || q(1)=='edit' ) && (q(2)=='post'))
+		if (($this->user->isAdmin()) && (q('admin/create/post') || q('admin/edit/post')))
 			return 1;
 		else return false;
 	}
