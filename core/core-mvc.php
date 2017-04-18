@@ -210,8 +210,14 @@
 				$key_explosion = explode('.', $key);
 				$forekey = array_shift($key_explosion);
 				if (!in_array($forekey, explode(',', PROTECTED_UNIT)) && in_array($forekey, $acceptedNamespaces)) {
-					if ($db::param($forekey) != '' && $db::param(implode('.', $key_explosion)) != '' && (trim($value) != ''))
-					$sql[] = "(".$init_shift.", '".$db::param($forekey)."' , '".$db::param(implode('.', $key_explosion))."', '".$db::param($value)."')";
+					if ($db::param($forekey) != '' && $db::param(implode('.', $key_explosion)) != '' && (trim($value) != '')) {
+						$new_key = array();
+						foreach ($key_explosion as $k) {
+							$k = preg_replace('/\[[^\]]*\]/', '', $k); 
+							$new_key[] = $k;
+						}
+						$sql[] = "(".$init_shift.", '".$db::param($forekey)."' , '".$db::param(implode('.', $new_key))."', '".$db::param($value)."')";
+					}
 				}
 			
 			}

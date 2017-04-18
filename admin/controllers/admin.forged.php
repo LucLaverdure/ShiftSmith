@@ -19,27 +19,21 @@
 			$this->setModel('prompt', 'message', '');
 			$this->setModel('prompt', 'error', '');
 			
-			
-			$ret = $db::loadIdHas('page.trigger.url');
+
+			$res = $db::querykvp();
+
 			$forged = array();
-			if ($ret) {
-				foreach($ret as $id) {
-					$row = $db::loadById($id);
-					foreach ($row as $k => $v) {
-						if ($v['var']=='page.trigger.url') {
-							$row['id'] = $v['id'];
-							$row['url'] = $v['value'];
-						}
-						if ($v['var']=='page.content.title') {
-							$row['title'] = $v['value'];
-						}
-						if ($v['var']=='page.tags') {
-							$row['tags'] = $v['value'];
-						}
-					}
-					$forged[] = $row;
-				}
+			foreach ($res as $key => $val) {
+				$row = array(
+					'content.id' => $val['id'],
+					'content.url' => $val['page.trigger.url'],
+					'content.title' => $val['page.content.title'],
+					'tags' => implode(', ',$val['page.tags.name'])
+				);
+
+				$forged[] = $row;
 			}
+
 			$this->addModel('forged', $forged);
 
 			/*************************************************/

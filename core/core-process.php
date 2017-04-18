@@ -143,7 +143,7 @@
 				}
 			}
 
-// process shared models (variables)
+			// process shared models (variables)
 			foreach ($global_models as $var => $data) {
 				// when model data is an array
 				if (is_array($data)) {
@@ -154,15 +154,18 @@
 						foreach ($forblocks as $foundForBlock) {
 							$block_content = array();
 							foreach ($data as $mykey => $row) {
-							//$foreach_data = '';
 								// set model values within the loop, ex: blocks.x value
 								foreach ($row as $subvar => $value) {
-									if (!isset($block_content[$subvar])) $block_content[$subvar] = $foundForBlock['content'];
-									if (!is_array($value)) {
-										if (is_numeric($subvar)) {
+									if (is_numeric($subvar)) {
+										if (!isset($block_content[$subvar])) $block_content[$subvar] = $foundForBlock['content'];
+										if (!is_array($value)) {
 											$block_content[$subvar] = str_replace('['.$var.'.'.$mykey.']', $value, $block_content[$subvar]);
-										
-										} 
+										}
+									} else {
+										if (!is_array($value)) {
+											if (!isset($block_content[$mykey])) $block_content[$mykey] = $foundForBlock['content'];
+											$block_content[$mykey] = str_replace('['.$var.'.'.$subvar.']', $value, $block_content[$mykey]);
+										}
 									}
 								}
 								// append the parsed new block (of for loop) as processed view to render (ifs and setters for example)
