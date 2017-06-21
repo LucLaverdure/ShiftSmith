@@ -12,72 +12,153 @@
 [endif]
 		</div>
 </div>
-<!-- [admin-panel.tpl] -->
+[admin-panel.tpl]
 <div class="wrapper">
 
 	<a href="/user">Administration</a> &gt; <a href="/admin/forge">Forge</a> &gt; Form
 
 	<form method="post" action="" enctype="multipart/form-data">
 	
+		<input type="hidden" name="item.id" value="[form.item.id]" />
+	
 		<label>
-			<h2 class="header-block required"><span></span>URL of item</h2>
-			<input id="forge-url" class="forge-url" type="text" value="[page.url]" placeholder="/giants" name="url" />
+			<h2 class="header-block required"><span></span>Title</h2>
+			<input id="forge-title" class="forge-title required" type="text" value="[form.content.title]" name="content.title" title="Title"/>
 		</label>
 
 		<label>
-			<h2 class="header-block required"><span></span>Tags</h2>
-			<select class="js-tags form-control" multiple="multiple" style="width:100%;" name="tagsDisplay[]">
-				[for:tags]
-				<option selected="selected" value="[tags.name]">[tags.name]</option>
-				[end:tags]
-			</select>
+			<h2 class="header-block required"><span></span>URL of form</h2>
+			<input id="forge-url" class="forge-url required" type="text" value="[form.trigger.url]" name="trigger.url" title="Url" />
 		</label>
-	
-		<label class="privacy-wrap">
-			<h2 class="header-block required"><span></span>Privacy</h2>
-			<input id="forge-private" class="forge-private" type="checkbox" name="private" value="Y" [page.privatecheck] /> Make form private
+
+		<label>
+			<h2 class="header-block required"><span></span>Shortcode Trigger</h2>
+			<input id="forge-url" class="forge-url required" type="text" value="[form.trigger.shortcode]" name="trigger.shortcode" title="Shortcode" />
+		</label>
+		
+		<label>
+			<h2 class="header-block required"><span></span>HTML Editor for content</h2>
+			<div class="body_type">
+					<textarea id="ckeditor" name="content.body" >[form.content.body]</textarea>
+			</div>
+		</label>
+		
+
+		<label>
+			<h2 class="header-block required"><span></span>Tags</h2>
+			<select class="js-tags required form-control" multiple="multiple" style="width:100%;" name="tags.name[ ]" title="Tags">
+			</select>
+			<div class="form-tags" style="display:none;">
+			[for:form.tags]
+				<div>[form.tags.name]</div>
+			[end:form.tags]
+			</div>
+		</label>
+			
+		<label>
+			<h2 class="header-block"><span></span>Privacy</h2>
+			<input id="forge-private" class="forge-private" type="checkbox" name="trigger.admin_only" value="Y" [form.trigger.admin_only] /> Make form private
 		</label>
 
 		<label class="field-head sub-header-block required">
 			<h2 class="header-block">Publish date</h2>
-			<input class="datepicker" type="text" value="[page.date]" name="date" />
+			<input class="datepicker" type="text" value="[form.trigger.date]" name="trigger.date" />
 		</label>
+
+		<div id="template-custom-field">
+			<label class="field-head sub-header-block" style="display:none;">
+				<input class="custom head" type="text" value="" name="custom.header[ ]" />
+				<a href="#" class="del-button">Delete</a>
+				<input class="custom value" type="text" value="" name="custom.value[ ]" />
+			</label>
+		</div>
+
+		<div id="template-placeholder">
+		</div>
+
+		<h2 class="header-block">Form Fields</h2>
+[for:sale.formfields]
+		<label class="field-head sub-header-block">
+			<input class="custom head" type="text" value="[sale.formfields.header]" name="formfields.header[ ]" />
+			<a href="#" class="del-button">Delete</a>
+			<select name="formfields.value[ ]" class="custom value">
+				<option value="textbox">textbox</option>
+				<option value="textarea">textarea</option>
+				<option value="checkbox">checkbox</option>
+			</select>
+		</label>
+[end:sale.formfields]
+
+		<div id="template-custom-field">
+			<label class="field-head sub-header-block" style="display:none;">
+				<input name="formfields.header[ ]" class="custom head" type="text" value="" />
+				<a href="#" class="del-button">Delete</a>
+				<select name="formfields.value[ ]" class="custom value">
+					<option value="textbox">textbox</option>
+					<option value="textarea">textarea</option>
+					<option value="checkbox">checkbox</option>
+				</select>
+			</label>
+		</div>
+
+		<a href="#" class="button add-button-custom">Add Form Field</a>
+
+		
+		<h2 class="header-block">Custom Fields</h2>
+[for:sale.custom]
+		<label class="field-head sub-header-block">
+			<input class="custom head" type="text" value="[sale.custom.header]" name="custom.header[ ]" />
+			<a href="#" class="del-button">Delete</a>
+			<input class="custom value" type="text" value="[sale.custom.value]" name="custom.value[ ]" />
+		</label>
+[end:sale.custom]
+
+		<div id="template-custom-field">
+			<label class="field-head sub-header-block" style="display:none;">
+				<input class="custom head" type="text" value="" name="custom.header[ ]" />
+				<a href="#" class="del-button">Delete</a>
+				<input class="custom value" type="text" value="" name="custom.value[ ]" />
+			</label>
+		</div>
+
+		
+		<a href="#" class="button add-button-custom">Add Custom Field</a>
+
+		<a href="#" class="button save-button">Save Changes</a>
 	
-		<div class="field-sample" style="display:none;">
-			<div class="input-col">
-				<div class="field-head">
-					<label class="field-head sub-header-block required">
-						<h2 class="header-block">Field Name</h2>
-						<input class="fieldname" type="text" value="[page.fieldname]" name="fieldname[]" />
-					</label>
-				</div>
-			</div>
-			<div class="input-col2">
-				<div class="field-val">
-					<label class="field-head sub-header-block required">
-						<h2 class="header-block">Value Type</h2>
-						<select name="field_type[]" class="field_type">
-							<option value="textbox">textbox</option>
-							<option value="textarea">textarea</option>
-							<option value="checkbox">checkbox</option>
-						</select>
-					</label>
-				</div>
-			</div>
-		</div>
-		
-		<div class="rowoutput">
-		</div>
-		
-		<a href="#" class="button add-new">Add new Form Field</a>
-		
+	</form>
+	
+</div>
+
 <script type="text/javascript">
 
-$(document).on('click', '.add-new', function() {
-	$('.rowoutput').append($('.field-sample').clone().fadeIn().attr('class',''));
-	return false;
-});
+	$(document).on('click', '.add-new', function() {
+		$('.rowoutput').append($('.field-sample').clone().fadeIn().attr('class',''));
+		return false;
+	});
 
+	var tags = [ ];
+	var ids = [ ];
+
+	$(document).on('click', '.del-button', function() {
+		$(this).parent().remove();
+		return false;
+	});
+
+	$('.form-tags div').each(function() {
+		var $this = $(this);
+		tags.push({id: $this.html(), text: $this.html()});
+		ids.push($this.html());
+	});
+
+	$('.js-tags').select2({
+		tags: true,
+		tokenSeparators: [',', ' ', ';'],
+		data: tags
+	});
+
+	$('.js-tags').val(ids);
+	
 	var today = new Date();
 	var dd = today.getDate();
 	var mm = today.getMonth()+1; //January is 0!
@@ -92,14 +173,9 @@ $(document).on('click', '.add-new', function() {
 	} 
 
 	today = mm+'/'+dd+'/'+yyyy;
-	$('.datepicker').val(today);
+	if ($('.datepicker').val()=='') {
+		$('.datepicker').val(today);
+	}
 </script>
-
-
-		<a href="#" class="button save-button">Save Changes</a>
-	
-	</form>
-	
-</div>
 
 [admin-footer.tpl]

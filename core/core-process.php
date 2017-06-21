@@ -114,7 +114,6 @@
 				[blocks.t]
 			[end:blocks]
 			*/
-
 			foreach ($global_models as $var => $data) {
 
 				if ((strpos($var, '[') !== false) && (strpos($var, ']') !== false)) {

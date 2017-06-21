@@ -50,7 +50,7 @@
 					}
 				}
 			}
-			
+
 			return $keys;
 		} else {
 			$key = str_replace('.', '_', $key);

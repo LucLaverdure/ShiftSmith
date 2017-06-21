@@ -32,10 +32,10 @@
 							<div class="cell">[forged.content.title]&nbsp;</div>
 							<div class="cell">[forged.tags]&nbsp;</div>
 							<div class="cell operations">
-								[forged.content.edits]
-								<a href="[page.content.url]" class="hvr-wobble-skew hvr-grow">View</a>
+								[forged.content.edit]
+								<a href="[forged.content.url]" class="hvr-wobble-skew hvr-grow">View</a>
 								|
-								<a href="/admin/del/db/[forged.id]" class="delete hvr-wobble-skew hvr-grow">Delete</a>
+								<a href="/admin/del/db/[forged.content.id]" class="delete hvr-wobble-skew hvr-grow">Delete</a>
 							</div>
 						</div>
 					[end:forged]

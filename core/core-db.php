@@ -137,22 +137,27 @@ group by
 			return CMS_DB_PREFIX.$table_name;
 		}
 
-		static public function querykvp($query_string = "SELECT id, namespace, `key`, value FROM shiftsmith") {
-			$sql = $query_string;
+		static public function querykvp($sql = "SELECT id, namespace, `key`, value FROM shiftsmith;") {
 			$results = self::queryResults($sql);
 			$pivot_results = array();
-			foreach ($results as $row) {
-			  if (!array_key_exists($row['id'], $pivot_results)) {
-				$pivot_results[$row['id']] = ['id' => $row['id']];
-			  }
-			  $field = sprintf("%s.%s", $row['namespace'], $row['key']);
-			  if (!isset($pivot_results[$row['id']][$field])) {
-					$pivot_results[$row['id']][$field] = $row['value'];
-			  } else {
-					$pivot_results[$row['id']][$field] = array($pivot_results[$row['id']][$field], $row['value']);
-			  }
+			if ($results) {
+				foreach ($results as $row) {
+				  if (!array_key_exists($row['id'], $pivot_results)) {
+					$pivot_results[$row['id']] = ['id' => $row['id']];
+				  }
+				  $field = sprintf("%s.%s", $row['namespace'], $row['key']);
+				  if (!isset($pivot_results[$row['id']][$field])) {
+						$pivot_results[$row['id']][$field] = $row['value'];
+				  } else {
+						$this_arr = array($row['value']);
+						$prev_arr = $pivot_results[$row['id']][$field];
+						if (!is_array($prev_arr)) $prev_arr = array($pivot_results[$row['id']][$field]);
+						$pivot_results[$row['id']][$field] = array_merge($this_arr, $prev_arr);
+				  }
+				}
+				return $pivot_results;
 			}
-			return $pivot_results;
+			return false;
 		}
 		
 		static public function queryResults($query_string, $add_styles=false) {

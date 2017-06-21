@@ -18,20 +18,49 @@
 
 			$this->setModel('prompt', 'message', '');
 			$this->setModel('prompt', 'error', '');
-			
 
 			$res = $db::querykvp();
+			
+			if ($res) {
+				$forged = array();
+				foreach ($res as $data) {
+					$row = array();
+					$tags = array();
+					$edit = '';
+					foreach ($data as $key => $val) {
+						if (strrpos ($key, 'tags.name') !== false) {
+							$tags[] = $val;
+							if (in_array($val, array('page','block','post','sale','form','image','audio','video','poc','wp','db'))) {
+								$edit .= '<a href="/admin/edit/'.$val.'/'.$data['id'].'">Edit as '.$val.'</a> ';
+							}
+						}
+						if (strrpos ($key, 'trigger.url') !== false) {
+							$trigger_url = $val;
+						}
+						if (strrpos ($key, 'content.title') !== false) {
+							$content_title = $val;
+						}
+						
+					}
+					
+					if ($edit == '') $edit .= '<a href="/admin/edit/page/'.$data['id'].'">Edit as page</a> ';
+					
+					if (count($tags) > 0) {
+						$tags = implode(', ', $tags);
+					} else {
+						$tags = '';
+					}
+					
+					$row = array(
+						'content.id' => $data['id'],
+						'content.url' => $trigger_url,
+						'content.title' => $content_title,
+						'content.edit' => $edit,
+						'tags' => $tags
+					);
 
-			$forged = array();
-			foreach ($res as $key => $val) {
-				$row = array(
-					'content.id' => $val['id'],
-					'content.url' => $val['page.trigger.url'],
-					'content.title' => $val['page.content.title'],
-					'tags' => implode(', ',$val['page.tags.name'])
-				);
-
-				$forged[] = $row;
+					$forged[] = $row;
+				}
 			}
 
 			$this->addModel('forged', $forged);

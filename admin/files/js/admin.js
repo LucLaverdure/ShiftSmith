@@ -173,11 +173,6 @@ $(document).on('change', '#forge-title', function() {
 	$('#forge-url').val(cleanurl($this.val()));
 });
 
-$(document).on('click', '.save-button', function() {
-	$(this).parents('form').submit();
-	return false;
-});
-
 $(document).on('click', '.add-button-custom', function() {
 	$('#template-placeholder').append($('#template-custom-field').html());
 	$('#template-placeholder').find('.field-head').last().fadeIn();
@@ -219,3 +214,54 @@ $(function() {
 		});
 	}
 });
+
+function validateForm(form_sent) {
+	var flag = true;
+	form_sent.find("input.required").each(function() {
+		if ($.trim($(this).val()) == '') {
+			flag = false;
+			alert("Please fill in all required fields. ("+$(this).attr("title")+")");
+			return false;
+		}
+	});
+	if (flag != false) {
+		form_sent.find("textarea.required").each(function() {
+			if ($.trim($(this).val()) == '') {
+				flag = false;			
+				alert("Please fill in all required fields. ("+$(this).attr("title")+")");
+				return false;
+			}
+		});
+	}
+	if (flag != false) {
+		form_sent.find("select.required").each(function() {
+			if ($.trim($(this).val()) == '') {
+				flag = false;			
+				alert("Please fill in all required fields. ("+$(this).attr("title")+")");
+				return false;
+			}
+		});
+	}
+	if (flag != false) {
+		if ($("#cke_ckeditor").length > 0) {
+			if ($.trim($("#cke_ckeditor iframe").contents().find("body").text())=="") {
+				flag = false;			
+				alert("Please fill in all required fields. (HTML Editor)");
+				return false;
+			}
+		}
+	}
+	
+	return flag;
+}
+
+$(document).on('submit', 'form', function() {
+	return validateForm($(this).parents('form'));
+});
+
+$(document).on('click', '.save-button', function() {
+	if (validateForm($(this).parents('form')))
+		$(this).parents('form').submit();
+	return false;
+});
+

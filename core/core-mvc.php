@@ -25,6 +25,10 @@
 			$this->db::connect();
 		}
 
+		function clearModels() {
+			$this->models = array();
+		}
+		
 		function addModel($namespace, $name, $data='') {
 			if (!is_array($namespace) && is_array($name) && $data=='') {
 				$this->models[$namespace] = $name;
@@ -50,11 +54,50 @@
 			}
 			$this->models[$namespace.'.'.$name] = $data;
 		}
+
+		function stackModel($namespace, $name, $data='') {
+			$path = $this->getModel($namespace, $name);
+			if ($path != '') {
+					if (!is_array($path)) {
+						$this->addModel($namespace, array($name => $data));
+					} else {
+						$this->addModel($namespace, array_merge(array($name => $data), $path));
+					}
+			} else {
+				$this->addModel($namespace, $name, $data);
+			}
+			return true;
+		}
 		
 		/* deprecated */
 		function setModel($namespace, $name, $data) {
 			$this->addModel($namespace, $name, $data);
 		}
+		
+		/* add models from kvp query */
+		public function loadkvp($res) {
+				if (count($res) > 0) {
+				foreach ($res as $id => $array) {
+					if (is_array($array)) {
+						foreach ($array as $k => $v) {
+							$k = explode('.', $k);
+							$main_k = array_shift($k);
+							$more_k = implode('.', $k);
+							if (is_array($v)) {
+								$main_main_k = array_shift($k);
+								$more_k = implode('.', $k);
+								foreach ($v as $kk => $vv) {
+									$this->addModel($main_k.'.'.$main_main_k, $kk."[".$more_k."]", $vv);
+								}
+							} else {
+								$this->addModel($main_k, $more_k, $v);
+							}
+						}
+					}
+				}
+			}
+		}
+		
 		
 		function modResultsModel(&$results, $keys, $function, $new_col=null) {
 			if ($new_col==null) $newcol=$keys;
@@ -73,7 +116,10 @@
 			usage: getModel('form1', 'title') // with namespace
 		*/
 		function getModel($namespace, $name) {
-			return $this->models[$namespace.'.'.$name];
+			if (isset($this->models[$namespace.'.'.$name])) {
+				return $this->models[$namespace.'.'.$name];
+			}
+			return '';
 		}
 		
 		// Load model from a controller
@@ -125,7 +171,6 @@
 									if (!isset($_SESSION[$form_name])) $_SESSION[$form_name] = array();
 									if (!isset($_SESSION[$form_name][$arr_key])) $_SESSION[$form_name][$arr_key] = array();
 									foreach ($arr_val as $kk => $vv) {
-//echo 'T'.$form_name."K:".$arr_key."KK:".$kk."VV:".$vv;
 										$_SESSION[$form_name.'.'.$key][$arr_key][$kk] = $vv;
 									}
 								} else {
@@ -167,7 +212,7 @@
 					foreach ($value as $key => $val) {
 						if (is_array($val)) {
 							foreach ($val as $k => $v) {
-								$this->addModel($var, $k.'['.$key.']', $v, 'add');
+								$this->addModel($var, $key.'['.$k.']', $v, 'add');
 							}
 						} else {
 							$this->addModel($var, $key, $val);
@@ -184,28 +229,32 @@
 		}
 
 		// save form data to database
-		function saveForm($id='new', $acceptedNamespaces = array('content', 'trigger', 'page', 'item', 'tag', 'tags')) {
-			
+		function saveForm($id='new', $acceptedNamespaces = array('content', 'trigger', 'post', 'page', 'tag', 'tags', 'custom')) {
 			// get database
 			$db = new Database();
 			$db::connect();
 
 			// initialize db structure and get new id
-			$init_shift = $db::getShift();
+			$init_shift = $id;
+			if ($id=='new') {
+				$init_shift = $db::getShift();
+			}
+				
+			// clear all model data
+			$this->clearModels();
 			
 			// cache info 
 			$this->cacheForm();
 
 			// delete previous data
-			if (is_numeric($init_shift) & isset($init_shift)) {
+			if (is_numeric($init_shift)) {
 				$id = (int) $init_shift;
 				$del_sql = "DELETE FROM `shiftsmith` WHERE `id`=".$id;
 				$shiftroot = $db::query($del_sql);
 			}
-			
+
 			
 			$sql = array();
-			
 			foreach ($this->models as $key => $value) {
 				$key_explosion = explode('.', $key);
 				$forekey = array_shift($key_explosion);
@@ -213,15 +262,19 @@
 					if ($db::param($forekey) != '' && $db::param(implode('.', $key_explosion)) != '' && (trim($value) != '')) {
 						$new_key = array();
 						foreach ($key_explosion as $k) {
+							// remove array square brackets
 							$k = preg_replace('/\[[^\]]*\]/', '', $k); 
-							$new_key[] = $k;
+							if (!in_array($k, explode(',', PROTECTED_UNIT))) {
+								$new_key[] = $k;
+							}
 						}
-						$sql[] = "(".$init_shift.", '".$db::param($forekey)."' , '".$db::param(implode('.', $new_key))."', '".$db::param($value)."')";
+						// id, 						namespace, 					key, 										value
+						$row_sql = "(".$init_shift.", '".$db::param($forekey)."' , '".$db::param(implode('.', $key_explosion))."', '".$db::param($value)."')";
+						$sql[] = $row_sql;
 					}
 				}
 			
 			}
-			
 			//save new data
 
 			$fullQuery = "INSERT INTO shiftsmith (`id`, `namespace`, `key`, `value`) VALUES ".implode(', ', $sql);
@@ -235,7 +288,7 @@
 			}
 		}
 		
-		function clearcache($id='new', $eraseNamespaces = array('content', 'trigger', 'page', 'item', 'tag', 'tags')) {
+		function clearcache($eraseNamespaces = array('content', 'trigger', 'page', 'item', 'tag', 'tags')) {
 			foreach($eraseNamespaces as $name) {
 				if (isset($_SESSION[$name])) {
 					unset($_SESSION[$name]);
