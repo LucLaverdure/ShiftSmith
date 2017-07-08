@@ -367,6 +367,7 @@ class admin_forge_form extends Controller {
 				'trigger.shortcode' => '',
 				'trigger.admin_only' => 'N',
 				'item.date' => '',
+				'fields.value[0]' => '',
 				'custom.header[0]' => '',
 				'custom.header[1]' => '',
 				'custom.value[0]' => '',
@@ -394,5 +395,30 @@ class admin_forge_form extends Controller {
 		
 		// load form template
 		$this->loadView('admin.forge.form.tpl');
+	}
+}
+
+class admin_wizard_upload extends Controller {
+
+	function validate() {
+		if (($this->user->isAdmin()) && (q('admin/wizard/upload') || q('admin/upload/wizard')))
+			return 1;
+		else return false;
+	}
+	
+	function execute() {
+		$uploads_dir = 'webapp/files/upload';
+		if (isset($_FILES) && isset($_FILES['file'])) {
+			foreach ($_FILES["file"]["error"] as $key => $error) {
+				if ($error == UPLOAD_ERR_OK) {
+					$tmp_name = $_FILES["file"]["tmp_name"][$key];
+					// basename() may prevent filesystem traversal attacks;
+					// further validation/sanitation of the filename may be appropriate
+					$name = basename($_FILES["file"]["name"][$key]);
+					move_uploaded_file($tmp_name, "$uploads_dir/$name");
+				}
+			}
+		}
+		$this->loadView('admin.forge.tpl');
 	}
 }

@@ -1,7 +1,7 @@
 [admin-header.tpl]
 <div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 
-		<div class="wrapper-login cf">
+		<div class="wrapper cf">
 			<h1>Forge - Form</h1>
 [if:'[prompt.message]' != '']
 			<div class="message">[prompt.message]</div>
@@ -65,53 +65,52 @@
 			<input class="datepicker" type="text" value="[form.trigger.date]" name="trigger.date" />
 		</label>
 
-		<div id="template-custom-field">
-			<label class="field-head sub-header-block" style="display:none;">
-				<input class="custom head" type="text" value="" name="custom.header[ ]" />
-				<a href="#" class="del-button">Delete</a>
-				<input class="custom value" type="text" value="" name="custom.value[ ]" />
-			</label>
-		</div>
-
-		<div id="template-placeholder">
-		</div>
-
+<!-- FORM STARTS HERE -->
 		<h2 class="header-block">Form Fields</h2>
-[for:sale.formfields]
+[for:form.fields]
 		<label class="field-head sub-header-block">
-			<input class="custom head" type="text" value="[sale.formfields.header]" name="formfields.header[ ]" />
-			<a href="#" class="del-button">Delete</a>
-			<select name="formfields.value[ ]" class="custom value">
+			<select name="form.fields.header[ ]" class="custom head">
+				<option value="label">label</option>
 				<option value="textbox">textbox</option>
 				<option value="textarea">textarea</option>
 				<option value="checkbox">checkbox</option>
 			</select>
+			<a href="#" class="del-button">Delete</a>
+			<input class="custom value required" type="text" value="[form.fields.value]" name="fields.value[ ]" title="Form Fields" />
 		</label>
-[end:sale.formfields]
+[end:form.fields]
 
-		<div id="template-custom-field">
+		<div id="template-placeholder-form">
+		</div>
+
+		<div id="template-form-field">
 			<label class="field-head sub-header-block" style="display:none;">
-				<input name="formfields.header[ ]" class="custom head" type="text" value="" />
-				<a href="#" class="del-button">Delete</a>
-				<select name="formfields.value[ ]" class="custom value">
+				<select name="formfields.header[ ]" class="custom head">
+					<option value="label">label</option>
 					<option value="textbox">textbox</option>
 					<option value="textarea">textarea</option>
 					<option value="checkbox">checkbox</option>
 				</select>
+				<a href="#" class="del-button">Delete</a>
+				<input name="formfields.value[ ]" class="custom value" type="text" value="" />
 			</label>
 		</div>
 
-		<a href="#" class="button add-button-custom">Add Form Field</a>
-
+		<div class="add-button-wrapper">
+			<a href="#" class="button add-button-form">Add Form Field</a>
+		</div>
 		
+<!-- FORM ENDS HERE -->
+		
+<!-- CUSTOM STARTS HERE -->
 		<h2 class="header-block">Custom Fields</h2>
-[for:sale.custom]
+[for:form.custom]
 		<label class="field-head sub-header-block">
-			<input class="custom head" type="text" value="[sale.custom.header]" name="custom.header[ ]" />
+			<input class="custom head" type="text" value="[form.custom.header]" name="custom.header[ ]" />
 			<a href="#" class="del-button">Delete</a>
-			<input class="custom value" type="text" value="[sale.custom.value]" name="custom.value[ ]" />
+			<input class="custom value" type="text" value="[form.custom.value]" name="custom.value[ ]" />
 		</label>
-[end:sale.custom]
+[end:form.custom]
 
 		<div id="template-custom-field">
 			<label class="field-head sub-header-block" style="display:none;">
@@ -121,8 +120,12 @@
 			</label>
 		</div>
 
-		
+		<div id="template-placeholder-custom">
+		</div>
+	
 		<a href="#" class="button add-button-custom">Add Custom Field</a>
+
+<!-- CUSTOM ENDS HERE -->
 
 		<a href="#" class="button save-button">Save Changes</a>
 	
@@ -132,11 +135,16 @@
 
 <script type="text/javascript">
 
-	$(document).on('click', '.add-new', function() {
-		$('.rowoutput').append($('.field-sample').clone().fadeIn().attr('class',''));
+	$(document).on('click', '.add-button-custom', function() {
+		$('#template-placeholder-custom').append($('#template-custom-field label').clone().fadeIn());
 		return false;
 	});
 
+	$(document).on('click', '.add-button-form', function() {
+		$('#template-placeholder-form').append($('#template-form-field label').clone().fadeIn());
+		return false;
+	});
+	
 	var tags = [ ];
 	var ids = [ ];
 

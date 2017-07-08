@@ -21,8 +21,8 @@
 
 			$res = $db::querykvp();
 			
+			$forged = array();
 			if ($res) {
-				$forged = array();
 				foreach ($res as $data) {
 					$row = array();
 					$tags = array();

@@ -3,8 +3,8 @@
 
 <div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 
-		<div class="wrapper-login cf">
-			<h2>[prompt.title]</h2>
+		<div class="wrapper cf">
+			<h1 class="hero">[prompt.title]</h1>
 [if:'[prompt.message]' != '']
 			<div class="message">[prompt.message]</div>
 [endif]
@@ -17,8 +17,10 @@
 
 [admin-panel.tpl]
 
+<div class="content docs-list">
 	<div id="pie">
 	</div>
+</div>
 
 <script type="text/javascript">
 var pie = new d3pie("pie", {

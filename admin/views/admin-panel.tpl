@@ -5,9 +5,10 @@
 			<li class="branch"><a href="/user">Dashboard</a></li>
 			<li class="branch"><a href="/admin/forge">Forge</a></li>
 			<li><a href="/admin/forged">&gt; Forged</a></li>
-			<li><a href="/admin/media">&gt; Image Gallery</a></li>
-			<li><a href="/admin/media">&gt; Audio Gallery</a></li>
-			<li><a href="/admin/media">&gt; Video Gallery</a></li>
+			<li><a href="/admin/images">&gt; Image Gallery</a></li>
+			<li><a href="/admin/audio">&gt; Audio Gallery</a></li>
+			<li><a href="/admin/videos">&gt; Video Gallery</a></li>
+			<li><a href="/admin/uploads">&gt; Misc Uploads</a></li>
 			<li class="branch"><a href="/admin/comments">Comments</a></li>
 			<li class="branch"><a href="/admin/plugins">Plugins</a></li>
 			<li class="branch"><a href="/admin/themes">Themes</a></li>

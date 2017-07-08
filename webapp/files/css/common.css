@@ -272,20 +272,30 @@ a.button.download-theme {
 	margin-left:0;
 }
 .left-col {
-	background: #585f8c url(/admin/files/img/admin-bg.png) top left;
 	max-width:250px;
 	width:100%;
 	float:left;
 	padding:20px;
 	box-sizing:border-box;
+	position:fixed;
+	top:300px;
+	left:0;
+	height:0;
+	z-index:9999;
+    background: #fff;
+    border: 1px solid #fff;
+    box-shadow: #d4d4d4 0px 0px 26px 0px;	
+	margin-left:20px;
+	overflow-y:scroll;
+	overflow-x:hidden;
 }
 .left-col .letspa {
-	color:#fff;
+	color:#343536;
 }
 .left-col a {
 	display:block;
 	text-decoration:none;
-	color:#fff;
+	color:#565758;
 	margin-bottom:5px;
 	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 }
@@ -302,9 +312,10 @@ a.button.download-theme {
 	max-width: 750px;
 }
 .docs-list.content {
-	max-width: 1050px;
 	width:100%;
-	margin:0 auto;
+	padding-left:300px;
+	box-sizing:border-box;
+	max-width:none;
 }
 .docs-list .head {
 	text-align:left;
@@ -407,4 +418,14 @@ a.button.download-theme {
 	padding:20px 10px;
 	color:#fff;
 	margin-left:10px;
+}
+.search-wrapper {
+	float:right;
+}
+.search-wrapper .search-box {
+	font-size:20px;
+	padding:5px 20px 5px 5px;
+	box-sizing:border-box;
+	background: #fff url(/files/img/search.png) right center no-repeat;
+	border:none;
 }

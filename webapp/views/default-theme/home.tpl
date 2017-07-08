@@ -8,6 +8,7 @@
 <div class="download-hero">
 	<div class="wrapper">
 		<span class="letspa">Build your Website: Free, Fast, Friendly!</span>
+		<span class="search-wrapper"><input type="text" class="search-box" placeholder="Search..." /></span>
 	</div>
 </div>
 <div class="wrapper features-area cf">

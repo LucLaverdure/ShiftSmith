@@ -1,7 +1,7 @@
 [admin-header.tpl]
 <form id="thisform" action="/user" method="post">
 <div class="parallax-window" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
-	<h1 class="hero">ShiftSmith</h1>
+	<h1 class="hero">Admin</h1>
 	<h2>User Login</h2>
 
 		<div class="wrapper-login">
@@ -15,7 +15,7 @@
 [endif]
 		
 		
-			<p class="login-input"><label><span>Email:</span> <input type="text" name="trigger.email" class="input-email-login" placeholder="admin@luclaverdure.com" /></label></p>
+			<p class="login-input"><label><span>Email:</span> <input type="text" name="trigger.email" class="input-email-login" /></label></p>
 			<p class="login-input"><label><span>Password:</span> <input type="password" name="trigger.password" class="input-email-login" /></label></p>
 		
 			<input type="hidden" name="trigger.entry" value="true" />

@@ -93,8 +93,7 @@ h1 a {
 	color:#000;
 	text-decoration:none;
 }
-h1 span {
-	color:#ccc;
+h1 a span {
 }
 h1.hero {
 	color:#fff;
@@ -102,6 +101,9 @@ h1.hero {
 	text-align:center;
 	font-size:72px;
 	font-weight:bold;
+}
+a:hover, a:focus {
+    color: #565758;
 }
 @media all and (max-width: 700px) {
 	body h1.hero {
@@ -127,6 +129,7 @@ h2 {
 	text-align:center;
 	font-family: 'Questrial', sans-serif;
 	letter-spacing:6px;
+	clear:both;
 }
 h2 {
 	letter-spacing:2px;
@@ -148,7 +151,7 @@ body .wrapper-login h1 {
 	text-align:center;
 	color: #fff;
 }
-body .wrapper-login .message{
+body .wrapper .message{
 	background:#00aa00;
 	color:#fff;
 	padding:10px;
@@ -308,14 +311,22 @@ a.button.download-theme {
 	margin-left:0;
 }
 .left-col {
-	background: #585f8c url(/admin/files/img/admin-bg.png) top left;
-	min-width:200px;
-	max-width:20%;
-	width:100%;
-	float:left;
-	padding:20px;
-	box-sizing:border-box;
-	margin-right:10px;
+    max-width: 250px;
+    width: 100%;
+    float: left;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 300px;
+    left: 0;
+    height: 0;
+    z-index: 9999;
+    background: #fff;
+    border: 1px solid #fff;
+    box-shadow: #d4d4d4 0px 0px 26px 0px;
+    margin-left: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 .t80 {
 	width:100%;
@@ -323,12 +334,12 @@ a.button.download-theme {
 	float:left;
 }
 .left-col .letspa {
-	color:#fff;
+	color:#565758;
 }
 .left-col a {
 	display:block;
 	text-decoration:none;
-	color:#fff;
+	color:#565758;
 	margin-bottom:5px;
 	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 }
@@ -343,6 +354,7 @@ a.button.download-theme {
 	box-sizing:border-box;
 	padding:20px;
 	max-width: 750px;
+	margin:0 auto;
 }
 .docs-list .head {
 	text-align:left;
@@ -353,7 +365,12 @@ a.button.download-theme {
 	padding:20px;
 	box-sizing:border-box;
 }
-
+.docs-list.content {
+	width:100%;
+	padding-left:300px;
+	box-sizing:border-box;
+	max-width:none;
+}
 .videoWrapper {
 	position: relative;
 	padding-bottom: 56.25%; /* 16:9 */
@@ -504,7 +521,7 @@ a.button.download-theme {
 	display:block;
 }
 .panel-container p {
-	padding-left:280px;
+	padding-left:60px;
 	padding-top:30px;
 }
 body .wrapper h2 {
@@ -557,7 +574,7 @@ body .wrapper h2 {
 }
 .row .operations, .head .operations {
 	width:100%;
-	max-width: 230px;
+	max-width: 330px;
 	float:right;
 }
 .row .cell.filename {
@@ -637,4 +654,114 @@ body .wrapper h2 {
 .del-button:hover {
 	color:#fff;
 	background: #ff0000;
+}
+.add-button-wrapper {
+	clear:both;
+	float:left;
+}
+#media-gallery {
+	width:100%;
+}
+#media-gallery img {
+	float:left;
+	max-width:300px;
+	width:100%;
+	max-height:300px;
+}
+#media-gallery figure {
+	margin-right:50px;
+	box-sizing:border-box;
+	min-height:150px;
+}
+#media-gallery figcaption {
+	padding:60px 10px 0 10px;
+	box-sizing:border-box;
+}
+#media-gallery figcaption input {
+	padding:5px;
+	width:100%;
+	box-sizing:border-box;
+}
+audio, video {
+	max-width:500px;
+	width:100%;
+	border-left:1px solid #565758;
+	margin-bottom:20xp;
+}
+.wrap-shadow{
+	box-shadow:5px 5px 5px #565758;
+	max-width:501px;
+	width:100%;	
+	box-sizing:border-box;
+	margin-bottom:30px;
+}
+#audio-gallery .title, #video-gallery .title {
+	max-width:500px;
+	width:100%;	
+	border-top:1px solid #565758;
+	border-left:1px solid #565758;
+	box-sizing:border-box;
+}
+#audio-gallery .title input, #video-gallery .title input {
+	width:100%;
+	padding:10px;
+	box-sizing:border-box;
+	border:none;
+}
+.docs-list h2 {
+	text-align:left;
+}
+.forge-page-drop {
+	padding:50px;
+	min-height:250px;
+	width:100%;
+	background: #ddd url(/admin/files/img/drop-here.png) center center no-repeat;
+	box-sizing:border-box;
+	margin-bottom:40px;
+	border: 2px dashed #000;
+}
+.forge-page-drop {
+	padding:20px;
+	min-height:550px;
+	max-width:400px;
+	width:100%;
+	background: #ddd url(/admin/files/img/drop-here.png) center center no-repeat;
+	box-sizing:border-box;
+	border: 2px dashed #000;
+	float:left;
+	display:block;
+}
+.dz-message {
+	font-size:14px;
+}
+.video-host {
+	font-size:22px;
+}
+
+.video-host li {
+	margin-bottom:30px;
+	box-shadow:5px 5px 5px #565758;
+	max-width:200px;
+	width:100%;
+}
+.video-host li img {
+	max-width:200px;
+	width:100%;
+}
+#video-gallery p {
+	background:#fff;
+	padding: 0px 0 20px 10px;
+	margin:0;
+}
+
+.dz-error-mark, .dz-success-mark {	
+	display:none;
+}
+
+.dz-preview {
+	max-width:150px;
+	width:100%;
+	min-height:100px;
+	float:left;
+	margin: 0 20px 20px 0;
 }

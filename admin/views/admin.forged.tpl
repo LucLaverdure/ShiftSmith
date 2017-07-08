@@ -5,7 +5,7 @@
 			<div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 
 						<div class="wrapper">
-							<h2>Forged - Database entries</h2>
+							<h1 class="hero">Forged</h1>
 				[if:'[prompt.message]' != '']
 							<div class="message">[prompt.message]</div>
 				[endif]
@@ -15,9 +15,14 @@
 				[endif]
 						</div>
 			</div>
-				[admin-panel.tpl]
-			<div class="t80">
+
+			[admin-panel.tpl]
+				
+			<div class="content docs-list">
 					<div class="breadcrumbs"><a href="/user" class="breadcrumbs">Administration</a> &gt; <a href="/admin/forged">Forged</a> &gt; Database entries</div>
+					
+					<h2>Database Entries</h2>
+					
 					<div class="forged">
 						<div class="head cf">
 							<div class="cell">URL Trigger</div>
@@ -40,22 +45,13 @@
 						</div>
 					[end:forged]
 					</div>
-			</div>					
-			<div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
-					<div class="wrapper-login cf">
-						<h2>Forged - File entries</h2>
-					</div>
-			</div>
-			<div class="left-col">
-				<br>
-			</div>
-			<div class="t80">
-					<div class="breadcrumbs"><a href="/user">Administration</a> &gt; <a href="/admin/forged">Forged</a> &gt; File entries</div>
-			
+
+					<h2>File Entries</h2>
+					
 					<div class="forged">
 						<div class="head cf">
-							<div class="cell">Filename</div>
 							<div class="cell">Controller</div>
+							<div class="cell">Filename</div>
 							<div class="cell operations">Actions</div>
 						</div>
 						

@@ -15,6 +15,8 @@
 <link rel="stylesheet" type="text/css" href="/admin/files/lib/select2/select2.min.css" />
 <link rel="stylesheet" type="text/css" href="/admin/files/lib/jquery-ui/jquery-ui.structure.min.css" />
 <link rel="stylesheet" type="text/css" href="/admin/files/lib/jquery-ui/jquery-ui.theme.min.css" />
+<link rel="stylesheet" type="text/css" href="/admin/files/lib/aos/aos.css" />
+<link rel="stylesheet" type="text/css" href="/admin/files/lib/imghvr/imagehover.min.css" />
 <link rel="stylesheet" type="text/css" href="/admin/files/css/admin.css" />
 
 <script src="/admin/files/lib/jquery/jquery-1.12.3.min.js" type="text/javascript"></script>
@@ -33,11 +35,11 @@
 <meta property="og:site_name" content="ShiftSmith"/>
 
 </head>
-
+	
 <body>
 
 <div class="wrapper cf">
-	<h1><a href="/">ShiftSmith</a> <span>alpha</span></h1>
+	<h1><a href="/">Shift<span>Smith</span></a> <span>alpha</span></h1>
 	<ul class="nav">
 		<li><a href="/docs">Documentation</a></li>
 		<li><a href="/tutorials">Tutorials</a></li>

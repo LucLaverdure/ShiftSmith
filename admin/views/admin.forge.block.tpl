@@ -1,7 +1,7 @@
 [admin-header.tpl]
 <div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 
-		<div class="wrapper-login cf">
+		<div class="wrapper cf">
 			<h1>Forge - Block</h1>
 [if:'[prompt.message]' != '']
 			<div class="message">[prompt.message]</div>

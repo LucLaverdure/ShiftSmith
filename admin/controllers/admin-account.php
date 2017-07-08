@@ -123,8 +123,7 @@
 			// custom visualization
 			$d3data = $this->db::queryResults("SELECT COUNT(value) valcount, value
 									   FROM `shiftsmith`
-									   WHERE `key`='tag'
-									   AND `namespace`='trigger'
+									   WHERE `key` LIKE '%tags.name%'
 									   GROUP BY `value`
 									   ORDER BY id DESC");
 
