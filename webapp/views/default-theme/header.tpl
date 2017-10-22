@@ -12,6 +12,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="/files/lib/prism/prism.css" />
+<link rel="stylesheet" type="text/css" href="/files/lib/hover/hover-min.css" />
 <link rel="stylesheet" type="text/css" href="/files/css/common.css" />
 
 <script src="/files/lib/jquery/jquery-1.12.3.min.js" type="text/javascript"></script>
@@ -35,6 +36,6 @@
 		<li><a href="/plugins">Plugins</a></li>
 		<li><a href="/themes">Themes</a></li>
 		<li><a href="/about">About</a></li>
-		<li><a href="https://github.com/LucLaverdure/ShiftSmith/archive/master.zip" class="button">Download</a></li>
+		<li><a href="/download" class="button">Download</a></li>
 	</ul>
 </div>

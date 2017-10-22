@@ -45,7 +45,7 @@ class admin_forge_page extends Controller {
 				'content.title' => '',
 				'trigger.date' => '',
 				'trigger.url' => '',
-				'trigger.admin_only' => 'N',
+				'trigger.private' => 'N',
 				'content.body' => '',
 				'tags.name[0]' => 'page',
 				'custom.header[0]' => '',
@@ -123,7 +123,7 @@ class admin_forge_post extends Controller {
 				'content.title' => '',
 				'trigger.date' => '',
 				'trigger.url' => '',
-				'trigger.admin_only' => 'N',
+				'trigger.private' => 'N',
 				'content.body' => '',
 				'tags.name[0]' => 'post',
 				'custom.header[0]' => '',
@@ -202,7 +202,7 @@ class admin_forge_block extends Controller {
 				'trigger.date' => '',
 				'trigger.url' => '',
 				'trigger.shortcode' => '',
-				'trigger.admin_only' => 'N',
+				'trigger.private' => 'N',
 				'content.body' => '',
 				'tags.name[0]' => 'block',
 				'custom.header[0]' => '',
@@ -281,7 +281,7 @@ class admin_forge_sale extends Controller {
 				'trigger.url' => "",
 				'content.body' => "",
 				'tags.name[0]' => 'sale',
-				'trigger.admin_only' => 'N',
+				'trigger.private' => 'N',
 				'item.date' => '',
 				'item.onsaleuntil' => '',
 				'item.inventory' => '1',
@@ -340,7 +340,13 @@ class admin_forge_form extends Controller {
 				'custom.header[0]' => '',
 				'custom.header[1]' => '',
 				'custom.value[0]' => '',
-				'custom.value[1]' => ''
+				'custom.value[1]' => '',
+				'fields.head[0]' => '',
+				'fields.head[1]' => '',
+				'fields.ctype[0]' => '',
+				'fields.ctype[1]' => '',
+				'fields.value[0]' => '',
+				'fields.value[1]' => ''
 			));
 
 			// load values into form
@@ -365,13 +371,19 @@ class admin_forge_form extends Controller {
 				'tags.name[0]' => 'form',
 				'trigger.date' => '',
 				'trigger.shortcode' => '',
-				'trigger.admin_only' => 'N',
+				'trigger.private' => 'N',
 				'item.date' => '',
 				'fields.value[0]' => '',
 				'custom.header[0]' => '',
 				'custom.header[1]' => '',
 				'custom.value[0]' => '',
-				'custom.value[1]' => ''
+				'custom.value[1]' => '',
+				'fields.head[0]' => '',
+				'fields.head[1]' => '',
+				'fields.ctype[0]' => '',
+				'fields.ctype[1]' => '',
+				'fields.value[0]' => '',
+				'fields.value[1]' => ''
 			));
 		}
 		

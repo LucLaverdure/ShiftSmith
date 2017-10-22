@@ -67,10 +67,23 @@
 	}
 
 	function inpath($url) {
+		
+//		echo "key:".$url.':'.q()."\n";
+		
+		if (substr($url, 0, 1) == "/") $url = substr($url, 1);
+		if (substr($url, -1) == "/") $url = substr($url, 0, -1);
 		$url = preg_quote($url, '/');
 		$url = str_replace('\*', '(.*)',$url);
-		$url = preg_match('/^'.$url.'$/', q());
-		return $url;
+		
+		$q = trim(q());
+		
+		if (substr($q, 0, 1) == "/") $q = substr($q, 1);
+		if (substr($q, -1) == "/") $q = substr($q, 0, -1);
+
+//		echo "key2:".$url.':'.$q."\n";
+		
+		$ret = trim(preg_match('/^'.$url.'$/', $q));
+		return $ret;
 	}
 
 	function elog($data) {

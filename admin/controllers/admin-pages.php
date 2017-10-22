@@ -4,7 +4,7 @@ class view_page extends Controller {
 		
 	// Display function: validate urls to activate the controller
 	function validate() {
-		// Activate home controller for /home and /home/*
+		// Activate custom page controller for db entries forged
 		
 		$db = new Database();
 		$db::connect();
@@ -12,7 +12,9 @@ class view_page extends Controller {
 		// get all triggers
 		$data = $db::queryResults("SELECT `namespace`, `id`, `key`, `value`
 								   FROM shiftsmith
-								   WHERE namespace = 'trigger'
+								   WHERE `key` = 'trigger.url'
+								   OR `key` = 'trigger.date'
+								   OR `key` = 'trigger.admin_only'
 								   ORDER BY id DESC;");
 		
 		// when no triggers are found, cancel render
@@ -25,46 +27,45 @@ class view_page extends Controller {
 		
 
 		foreach ($data as $row) {
+			$id = $row['id'];
 			
-			if (!isset($verified[$row['id']])) {
-				$verified[$row['id']] = 0;
+			if (!isset($verified[$id])) {
+				$verified[$id] = 0;
 			}
 
 			// verify if date trigger is good
-			if ( ($row['key'] == 'date') && (strtotime($row['value']) <= strtotime('now'))) {
-				$verified[$row['id']]++;
-			}
-
-			// verify page type 
-			if ( ($row['key'] == 'tag') && (($row['value'] == 'page') || ($row['value'] == 'post') || ($row['value'] == 'block'))) {
-				$verified[$row['id']]++;
+			if ( ($row['key'] == 'trigger.date') && (strtotime($row['value']) <= strtotime('now'))) {
+				$verified[$id] = $verified[$id] + 1;
 			}
 			
 			// verify if url pattern is good
-			if (($row['key'] == 'url') && ("/".q() == $row['value']) && (trim($row['value']) != '') ) {
-				$verified[$row['id']]++;
+			if ((trim($row['key']) == 'trigger.url') && (inpath($row['value'])) && (trim($row['value']) != '') ) {
+				$verified[$id] = $verified[$id] + 1;
 			}
 			
-			// requires admin logged in or 
-			if (($row['key']=='admin_only') && ($row['value']=='Y') && (isset($_SESSION['login']))) {
-				$verified[$row['id']]++;
-			} else if (($row['key']=='admin_only') && ($row['value']=='N')) {
-				$verified[$row['id']]++;
-			}
-
 		}
 
-		$valid_ids = array();
+		$valid_id = 0;
 
-		foreach ($verified as $id => $count) {
-			if ($count >= 4) {
-				$valid_ids[$id] = $id;
+		foreach ($verified as $id => $counted) {
+			if ($counted >= 2) {
+				$admin_check = $db::queryResults("SELECT `namespace`, `id`, `key`, `value`
+										   FROM shiftsmith
+										   WHERE `key` = 'trigger.admin.only'
+										   AND `id` IN (".$db::param($id).")
+										   ORDER BY id DESC;");
+
+			if (((count($admin_check) > 0) && $admin_check[0]['value'] == 'Y' && $this->user->isAdmin()) ||
+					((count($admin_check) > 0) && $admin_check[0]['value'] == 'N') || 
+					($admin_check == false)) {
+						$valid_id = $id;
+					}
 			}
 		}
 
-		$this->addModel('page', 'ids', $valid_ids);
 
-		if (count($valid_ids) > 0) {
+		if ($valid_id > 0) {
+			$this->addModel('page', 'ids', $valid_id);
 			return 1;
 		}
 		
@@ -76,44 +77,20 @@ class view_page extends Controller {
 		$db = new Database();
 		$db::connect();
 
-		$shiftsmith_ids = $this->getModel('ids');
-
+		$shiftsmith_ids = $this->getModel('page', 'ids');
 		$sql = "SELECT `id`, `namespace`, `key`, `value`
 				FROM shiftsmith
-				WHERE id IN(".$db::param(implode(',', $shiftsmith_ids)).");";
+				WHERE id IN(".$db::param($shiftsmith_ids).");";
 
 		// pages
 		$pages = $db::queryResults($sql);
 
 		if ($pages != false) {
 			foreach ($pages as $page) {
-				$this->addModel('page', $page['key'], $page['value']);
+				$this->addModel("page", $page['key'], $page['value']);
 			}
 		} else {
 			$this->addModel('page', array());
-		}
-		
-		// posts
-		$posts = $db::queryResults("SELECT `id`, `namespace`, `key`, `value`
-										FROM shiftsmith
-										WHERE id IN(".$db::param(implode(',', $shiftsmith_ids)).")
-										AND id IN (SELECT id FROM shiftsmith WHERE `key`='tag' AND value='post');");
-
-		if ($posts != false) {
-			$this->addModel('posts', $posts);
-		} else {
-			$this->addModel('posts', array());
-		}
-		
-		// blocks
-		$blocks = $db::queryResults("SELECT `id`, `namespace`, `key`, `value`
-										FROM shiftsmith
-										WHERE id IN(".$db::param(implode(',', $shiftsmith_ids)).")
-										AND id IN (SELECT id FROM shiftsmith WHERE `key`='tag' AND value='block');");
-		if ($blocks != false) {
-			foreach ($blocks as $shift) {
-				$this->addModel('blocks', $shift['key'], $shift['value']);
-			}
 		}
 
 		// load global template

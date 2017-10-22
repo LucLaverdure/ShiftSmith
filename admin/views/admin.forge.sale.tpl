@@ -52,8 +52,16 @@
 			
 		<label>
 			<h2 class="header-block"><span></span>Privacy</h2>
-			<input id="forge-private" class="forge-private" type="checkbox" name="trigger.admin_only" value="Y" [sale.trigger.admin_only] /> Make sale private
+			<input id="forge-private" class="chktype forge-private" type="checkbox" name="trigger.private" value="Y" data-val="[sale.trigger.private]" /> Make sale private
 		</label>
+		<script type="text/javascript">
+			$('.chktype:visible').each(function() {
+				$this = $(this);
+				if ($this.val() == $this.attr('data-val')) {
+					$this.prop('checked', true);
+				};
+			});
+		</script>
 
 	<div class="cf">
 		<div class="input-col">

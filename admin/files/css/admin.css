@@ -102,7 +102,7 @@ h1.hero {
 	font-size:72px;
 	font-weight:bold;
 }
-a:hover, a:focus {
+a:hover {
     color: #565758;
 }
 @media all and (max-width: 700px) {
@@ -263,6 +263,8 @@ ul.nav li a{
 	display:block;
 	float:right;
 	clear:both;
+	cursor:pointer;
+	font-size:20px;
 }
 
 .nav .button {
@@ -272,7 +274,7 @@ ul.nav li a.button {
 	color:#fff;
 }
 .button:hover, ul.nav li a.button:hover {
-	border: 1px solid #fff;
+	border: 1px solid #484f6c;
 	color:#484f6c;
 	background: #fff;
 }
@@ -537,10 +539,10 @@ body .wrapper h2 {
 	margin-right:20px;
 	float:left;
 	display:block;
-	height:20px;
-	width:20px;
+	height:30px;
+	width:30px;
 	background: transparent url(/admin/files/img/required.png) top left;
-	background-size:20px 20px;
+	background-size:30px 30px;
 }
 .select2 {
 	line-height:40px;
@@ -564,6 +566,9 @@ body .wrapper h2 {
 }
 .head {
 	border-bottom:1px solid #565758;
+}
+input.head {
+	border:1px solid #565758;
 }
 .head .cell{
 	font-weight:bold;
@@ -764,4 +769,93 @@ audio, video {
 	min-height:100px;
 	float:left;
 	margin: 0 20px 20px 0;
+}
+
+#media-gallery .del-media {
+	top:auto !important;
+	left:auto !important;
+	position:absolute !important;
+	bottom:10px !important;
+	right:10px !important;
+	display:block;
+	height:32px !important;
+	width: 32px !important;
+}
+#media-gallery .del-media img, #media-gallery .open-media img {
+	height:32px !important;
+	width: 32px !important;
+}
+#media-gallery .open-media {
+	top:auto !important;
+	left:10px !important;
+	position:absolute !important;
+	bottom:10px !important;
+	right:auto !important;
+	display:block;
+	height:32px !important;
+	width: 32px !important;
+}
+
+.forged .delete {
+	color:#ff0000;
+	text-decoration:none;
+}
+.forged .delete:hover {
+	color:#ff5555;
+	text-decoration:underline;
+}
+.operations.cell a{
+	text-decoration:none;
+}
+.operations.cell a:hover{
+	text-decoration:underline;
+}
+.left-col
+{
+	margin-left: 30px;
+	float: left;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	margin-bottom: 25px;
+}
+
+
+.left-col::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+.left-col::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+.left-col::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,	
+									   left top,
+									   color-stop(0.44, #484f6c),
+									   color-stop(0.72, rgb(73,125,189)),
+									   color-stop(0.86, rgb(28,58,148)));
+}
+
+[class*=" imghvr-"] figcaption, [class^=imghvr-] figcaption, [class*=" imghvr-"], [class^=imghvr-] {
+	background-color: #484f6c;
+}
+
+body .wrapper label .frmhead, body .wrapper label .frmtype, body .wrapper label .frmval {
+	display:inline-block;
+	float:left !important;
+	width:25% !important;
+	padding:10px;
+	margin-right:30px;
+	font-size:20px;
+}
+body .forge-private {
+	font-size:20px;
 }

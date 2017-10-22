@@ -38,8 +38,9 @@
 							<div class="cell">[forged.tags]&nbsp;</div>
 							<div class="cell operations">
 								[forged.content.edit]
+								&mdash;
 								<a href="[forged.content.url]" class="hvr-wobble-skew hvr-grow">View</a>
-								|
+								&mdash;
 								<a href="/admin/del/db/[forged.content.id]" class="delete hvr-wobble-skew hvr-grow">Delete</a>
 							</div>
 						</div>
@@ -62,7 +63,7 @@
 								<div class="cell filename">[forgedfile.filename]&nbsp;</div>
 								<div class="cell operations">
 									<a href="/admin/file/editor?filename=[forgedfile.filename]" class="hvr-wobble-skew hvr-grow">Edit Controller</a>
-									|
+								&mdash;
 									<a href="/admin/shiftsmith/delete/[forged.id]" class="delete hvr-wobble-skew hvr-grow">Delete</a>
 								</div>
 							</div>

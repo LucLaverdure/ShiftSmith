@@ -90,3 +90,33 @@ class aboutpage extends Controller {
 		$this->loadView('default-theme/about.tpl');
 	}
 }
+
+class downloadpage extends Controller {
+	// Display function: validate urls to activate the controller
+	function validate() {
+		// Activate home controller for /home and /home/*
+		if (q()=="download") {
+			return 1;	// priority 1
+		}
+		else return false;
+	}
+
+	function execute() {
+		$this->loadView('default-theme/download.tpl');
+	}
+}
+
+class thankyoupage extends Controller {
+	// Display function: validate urls to activate the controller
+	function validate() {
+		// Activate home controller for /home and /home/*
+		if (q()=="thank-you") {
+			return 1;	// priority 1
+		}
+		else return false;
+	}
+
+	function execute() {
+		$this->loadView('default-theme/thank-you.tpl');
+	}
+}

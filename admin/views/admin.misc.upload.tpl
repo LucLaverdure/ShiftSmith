@@ -2,7 +2,7 @@
 <div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
 
 		<div class="wrapper cf">
-			<h1 class="hero">Video Gallery</h1>
+			<h1 class="hero">Misc Uploads</h1>
 		</div>
 </div>
 
@@ -10,7 +10,7 @@
 
 <div class="content docs-list">
 
-	<div class="breadcrumbs"><a href="/user">Administration</a> &gt; Video Gallery</div>
+	<div class="breadcrumbs"><a href="/user">Administration</a> &gt; Misc Uploads</div>
 
 	<p>The following downloadable files were found:</p>
 	

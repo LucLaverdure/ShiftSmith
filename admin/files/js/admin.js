@@ -245,7 +245,7 @@ $(function() {
 
 function validateForm(form_sent) {
 	var flag = true;
-	form_sent.find("input.required").each(function() {
+	form_sent.find("input.required:visible").each(function() {
 		if ($.trim($(this).val()) == '') {
 			flag = false;
 			alert("Please fill in all required fields. ("+$(this).attr("title")+")");
@@ -253,7 +253,7 @@ function validateForm(form_sent) {
 		}
 	});
 	if (flag != false) {
-		form_sent.find("textarea.required").each(function() {
+		form_sent.find("textarea.required:visible").each(function() {
 			if ($.trim($(this).val()) == '') {
 				flag = false;			
 				alert("Please fill in all required fields. ("+$(this).attr("title")+")");
@@ -262,7 +262,7 @@ function validateForm(form_sent) {
 		});
 	}
 	if (flag != false) {
-		form_sent.find("select.required").each(function() {
+		form_sent.find("select.required:visible").each(function() {
 			if ($.trim($(this).val()) == '') {
 				flag = false;			
 				alert("Please fill in all required fields. ("+$(this).attr("title")+")");
@@ -271,7 +271,7 @@ function validateForm(form_sent) {
 		});
 	}
 	if (flag != false) {
-		if ($("#cke_ckeditor").length > 0) {
+		if ($("#cke_ckeditor:visible").length > 0) {
 			if ($.trim($("#cke_ckeditor iframe").contents().find("body").text())=="") {
 				flag = false;			
 				alert("Please fill in all required fields. (HTML Editor)");

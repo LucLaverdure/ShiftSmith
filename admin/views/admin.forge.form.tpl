@@ -57,8 +57,17 @@
 			
 		<label>
 			<h2 class="header-block"><span></span>Privacy</h2>
-			<input id="forge-private" class="forge-private" type="checkbox" name="trigger.admin_only" value="Y" [form.trigger.admin_only] /> Make form private
+			<input id="forge-private" class="chktype forge-private" type="checkbox" name="trigger.private" value="Y" data-val="[form.trigger.private]" /> Make form private
 		</label>
+		<script type="text/javascript">
+			$('.chktype:visible').each(function() {
+				$this = $(this);
+				if ($this.val() == $this.attr('data-val')) {
+					$this.prop('checked', true);
+				};
+			});
+		</script>
+
 
 		<label class="field-head sub-header-block required">
 			<h2 class="header-block">Publish date</h2>
@@ -69,33 +78,29 @@
 		<h2 class="header-block">Form Fields</h2>
 [for:form.fields]
 		<label class="field-head sub-header-block">
-			<select name="form.fields.header[ ]" class="custom head">
+			<input class="frmhead value required" type="text" value="[form.fields.head]" name="fields.head[ ]" title="Form Fields" />
+
+			<select name="fields.ctype[ ]" class="frmtype custom head field-type" data-val="[form.fields.ctype]">
 				<option value="label">label</option>
 				<option value="textbox">textbox</option>
 				<option value="textarea">textarea</option>
 				<option value="checkbox">checkbox</option>
 			</select>
+
 			<a href="#" class="del-button">Delete</a>
-			<input class="custom value required" type="text" value="[form.fields.value]" name="fields.value[ ]" title="Form Fields" />
+			<input class="frmval custom value required" type="text" value="[form.fields.value]" name="fields.value[ ]" title="Form Fields" />
 		</label>
 [end:form.fields]
 
 		<div id="template-placeholder-form">
 		</div>
 
-		<div id="template-form-field">
-			<label class="field-head sub-header-block" style="display:none;">
-				<select name="formfields.header[ ]" class="custom head">
-					<option value="label">label</option>
-					<option value="textbox">textbox</option>
-					<option value="textarea">textarea</option>
-					<option value="checkbox">checkbox</option>
-				</select>
-				<a href="#" class="del-button">Delete</a>
-				<input name="formfields.value[ ]" class="custom value" type="text" value="" />
-			</label>
-		</div>
-
+		<script type="text/javascript">
+			$('.frmtype:visible').each(function() {
+				$this = $(this);
+				$this.val($this.attr('data-val'));
+			});
+		</script>
 		<div class="add-button-wrapper">
 			<a href="#" class="button add-button-form">Add Form Field</a>
 		</div>
@@ -112,17 +117,10 @@
 		</label>
 [end:form.custom]
 
-		<div id="template-custom-field">
-			<label class="field-head sub-header-block" style="display:none;">
-				<input class="custom head" type="text" value="" name="custom.header[ ]" />
-				<a href="#" class="del-button">Delete</a>
-				<input class="custom value" type="text" value="" name="custom.value[ ]" />
-			</label>
-		</div>
-
+	
 		<div id="template-placeholder-custom">
 		</div>
-	
+
 		<a href="#" class="button add-button-custom">Add Custom Field</a>
 
 <!-- CUSTOM ENDS HERE -->
@@ -131,6 +129,32 @@
 	
 	</form>
 	
+
+		<div id="template-form-field">
+			<label class="field-head sub-header-block" style="display:none;">
+				<input class="frmhead value required" type="text" value="" name="fields.head[ ]" title="Form Fields" />
+
+				<select name="fields.ctype[ ]" class="frmtype custom head field-type">
+					<option value="label">label</option>
+					<option value="textbox">textbox</option>
+					<option value="textarea">textarea</option>
+					<option value="checkbox">checkbox</option>
+				</select>
+
+				<a href="#" class="del-button">Delete</a>
+				<input class="frmval custom value required" type="text" value="" name="fields.value[ ]" title="Form Fields" />
+			</label>
+
+		</div>
+
+		<div id="template-custom-field">
+			<label class="field-head sub-header-block" style="display:none;">
+				<input class="custom head" type="text" value="" name="custom.header[ ]" />
+				<a href="#" class="del-button">Delete</a>
+				<input class="custom value" type="text" value="" name="custom.value[ ]" />
+			</label>
+		</div>
+
 </div>
 
 <script type="text/javascript">

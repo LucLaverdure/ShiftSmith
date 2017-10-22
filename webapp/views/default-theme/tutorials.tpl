@@ -7,7 +7,7 @@
 <div class="wrapper">
 	<h2>Prerequisites</h2>
 	<div class="videoWrapper">
-		<iframe width="100%" height="auto" src="https://www.youtube.com/embed/2bgShhVAXFQ" frameborder="0" allowfullscreen></iframe>
+		<iframe width="100%" height="auto" src="https://www.youtube.com/embed/JVGqf44h9ig" frameborder="0" allowfullscreen></iframe>
 	</div>
 </div>
 

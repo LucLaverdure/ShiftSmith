@@ -57,8 +57,16 @@
 			
 		<label>
 			<h2 class="header-block"><span></span>Privacy</h2>
-			<input id="forge-private" class="forge-private" type="checkbox" name="trigger.admin_only" value="Y" [block.trigger.admin_only] /> Make block private
+			<input id="forge-private" class="chktype forge-private" type="checkbox" name="trigger.private" value="Y" data-val="[block.trigger.private]" /> Make block private
 		</label>
+		<script type="text/javascript">
+			$('.chktype:visible').each(function() {
+				$this = $(this);
+				if ($this.val() == $this.attr('data-val')) {
+					$this.prop('checked', true);
+				};
+			});
+		</script>
 
 		<label class="field-head sub-header-block required">
 			<h2 class="header-block">Publish date</h2>

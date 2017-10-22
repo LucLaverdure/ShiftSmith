@@ -161,3 +161,8 @@ body .left-bar .chatbox-admin {
 .plugin-box .del {
 	float:right;
 }
+.admin-listed .a-del{
+	float:right;
+	padding-top:8px;
+	display:block !important;
+}

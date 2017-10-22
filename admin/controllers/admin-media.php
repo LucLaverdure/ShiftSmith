@@ -203,7 +203,7 @@ class admin_media_del extends Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
-		if (isset($_SESSION['login']) && (q('0')=='admin') && (q(1)=='del') && (q(2)=='files') )
+		if (q('admin/del/files') && $this->user->isAdmin())
 			return 1;	// priority 2
 		else return false;
 	}
@@ -211,7 +211,7 @@ class admin_media_del extends Controller {
 	function execute() {
 		global $main_path;
 		
-		$file = q();
+		$file = $_GET['f'];
 		$file = str_replace('admin/del/files/upload/', '', $file);
 		$file = $main_path.'webapp/files/upload/'.$file;
 
@@ -222,6 +222,6 @@ class admin_media_del extends Controller {
 		}
 
 		// media gallery
-		redirect('/media');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }

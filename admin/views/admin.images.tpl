@@ -11,13 +11,6 @@
 <div class="content docs-list">
 
 	<div class="breadcrumbs"><a href="/user">Administration</a> &gt; Image Gallery</div>
-
-	<form action="/file-upload" class="dropzone">
-		<div class="fallback">
-			<input name="file" type="file" multiple />
-		</div>
-	</form>
-
 	
 	<div id="media-gallery">
 	[for:media]
@@ -26,6 +19,8 @@
 			<figcaption>
 				URL:<br/>
 				<input type="text" value="[web.url]/files/upload/[media.file]" onclick="select_all(this);" />
+				<a class="open-media"data-lightbox="gallery" href="[web.url]/files/upload/[media.file]"><img src="/admin/files/img/open-ico.png" alt="open" title="open"></a>
+				<a class="del-media" href="/admin/del/files?f=[media.file]"><img src="/admin/files/img/trash.png" alt="delete" title="delete"></a>
 			</figcaption>
 		</figure>
 	[end:media]
@@ -34,16 +29,11 @@
 
 <script src="/admin/files/lib/lightbox2/dist/js/lightbox.min.js"></script>
 
-	<script src="/admin/files/lib/aos/aos.js"></script>
-	
-</body>
-
 <script>
-		$(".dropzone").dropzone({ url: "" });
 		function select_all(obj) {
 			$(obj).select();
 			return false;
         }
 </script>
-<script src="/admin/files/lib/dropzonejs/dropzone.js" type="text/javascript"></script>
+</body>
 [admin-footer.tpl]

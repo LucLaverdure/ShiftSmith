@@ -38,8 +38,7 @@ class admin_comment_del extends Controller {
 	function execute() {
 		$commentid = (int) q(3);
 		$data = $this->db::query("DELETE FROM chatbox WHERE id=".$commentid.";");
-		echo "sucess";
-		die();
+		redirect('/admin/comments');
 	}
 }
 

@@ -23,16 +23,23 @@ $(document).on('resize', window, function() {
 	adjustLeftCol();
 });
 
+
 $(function() {
 
 	adjustLeftCol();
+	
+	$(".feature").mouseenter(function() {
+		var r = $(this).attr('data-row');
+		$(".feature").css('background', '#fff');
+		$(".feature[data-row="+r+"]").css('background', '#dfd');
+	});
 	
 	$('.expand a').click(function() {
 		$('.box').slideUp('fsat');
 		$('.expand a').css('color', '#4286f4');
 		$(this).css('color', '#005500').parent().next(':hidden').slideDown('fast');
 		return false;
-	});
+	});		
 	
 	if ($('.slider').length > 0) {
 		$('.slider').unslider({

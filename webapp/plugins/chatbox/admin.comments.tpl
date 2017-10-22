@@ -5,8 +5,10 @@
 			}
 		</style>
 <div class="parallax-window sub" data-parallax="scroll" data-image-src="/admin/files/img/login-bg.png">
-		<div class="wrapper-login cf">
-			<h1>Comments</h1>
+	<div class="wrapper-login cf">
+		<h1>Comments</h1>
+	</div>
+</div>
 [if:'[prompt.message]' != '']
 			<div class="message">[prompt.message]</div>
 [endif]
@@ -16,11 +18,10 @@
 [endif]
 		</div>
 		[admin-panel.tpl]
-		<div class="wrapper">
+		<div class="content docs-list">
 			<div class="plugin-box">
-				<div class="chatterbox"></div>
+				<div class="chatterbox admin-listed"></div>
 			</div>
 		</div>
-</div>
 
 [admin-footer.tpl]
