@@ -3,7 +3,7 @@
 	class admin_file_editor extends Controller {
 		
 		function validate() {
-			if (q('admin/file/editor'  && $this->user->isAdmin()) && isset($_REQUEST['filename']))
+			if ((q('admin/file/editor')  && $this->user->isAdmin()) && isset($_REQUEST['filename']))
 				return 1;
 			else
 				return false;
