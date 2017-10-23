@@ -115,8 +115,7 @@
 			[end:blocks]
 			*/
 			foreach ($global_models as $var => $data) {
-
-				if ((strpos($var, '[') !== false) && (strpos($var, ']') !== false)) {
+				if ((strpos($var, '[') !== false) && (strpos($var, ']') !== false) && (strlen($var) >= 3) ) {
 					$tmp_var = explode('[', $var);
 					$new_var = array_shift($tmp_var);
 
@@ -275,16 +274,18 @@ echo getQuery([
 			preg_match_all('/\[\S*\]/i', $view_output, $matches);
 			foreach ($matches as $found_a) {
 				foreach ($found_a as $found) {
-					$filename = trim(substr($found, 1, -1));
-					if (substr($filename, 0, 4)=='http') {
-						// file is a web fetch
-						$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
-					} else if (file_exists("admin/views/".$filename)) {
-						// file is an admin file
-						$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
-					} else if (file_exists("webapp/views/".$filename)) {
-						// file is an webapp file
-						$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
+					if (strlen($found)>=3) {
+						$filename = trim(substr($found, 1, -1));
+						if (substr($filename, 0, 4)=='http') {
+							// file is a web fetch
+							$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
+						} else if (file_exists("admin/views/".$filename)) {
+							// file is an admin file
+							$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
+						} else if (file_exists("webapp/views/".$filename)) {
+							// file is an webapp file
+							$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
+						}
 					}
 				}
 			}
