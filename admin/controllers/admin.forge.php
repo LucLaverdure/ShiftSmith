@@ -78,6 +78,119 @@ class admin_forge_page extends Controller {
 	}
 }
 
+class admin_forge_csv extends Controller {
+
+	function validate() {
+		if (($this->user->isAdmin()) && q('admin/create/import-csv'))
+			return 1;
+		else return false;
+	}
+	
+	function execute() {
+		$id = 0;
+
+		// when not posting form
+		if (input('item.posted') == '') {
+			// on page land, clear cache
+			$this->clearcache(array('page'));
+		}
+ 		
+		$this->cacheForm('csv', array(
+			'params.rowdelimiter' => '\n|\r\n',
+			'params.coldelimiter' => ';',
+			'params.arraydelimiter' => ',',
+			'params.datamode' => 'update'
+		));
+
+		$param_del_row = $this->getModel('csv', 'params.rowdelimiter');
+		$param_del_row = "/$param_del_row/";
+
+		$param_del_col = $this->getModel('csv', 'params.coldelimiter');
+		$param_del_col = "/$param_del_col/";
+
+		$param_del_arr = $this->getModel('csv', 'params.arraydelimiter');
+		$param_del_arr = "/$param_del_arr/";
+
+		$param_data_mode = $this->getModel('csv', 'params.datamode');
+
+		// set initial prompts
+		$this->setModel('prompt', 'message', '');
+		$this->setModel('prompt', 'error', '');
+
+		// if posting value
+		if ((input('item.posted') == 'Y') && ($_FILES['csvfile'])) {
+			
+			// load CSV
+			$data = @file_get_contents($_FILES['csvfile']['tmp_name']);
+		
+			// Get header row
+			$rows = preg_split($param_del_row, $data);
+			$headers = preg_split($param_del_col, $rows[0]);
+			$header_with_id = -1;
+			
+			foreach ($headers as $index => $head) {
+				if (trim($head)=='id') {
+					$header_with_id = $index;
+				}
+			}
+			
+			// Parse CSV
+			$sql_query = 'INSERT INTO shiftsmith (`id`, `namespace`, `key`, `value`) VALUES ';
+			$sql_values_stack = array();
+			$sql_ids_to_delete = array();
+			$sql_ids_to_skip = array();
+			$ini_row = $this->db::getShift(); // get autoincrement number
+			array_shift($rows); // remove header row
+			
+			foreach ($rows as $key => $row) {
+				$id = $key + $ini_row + 1;
+				$cols = preg_split($param_del_col, $row);
+				if ($param_data_mode != 'append') {
+					if ($header_with_id > -1) {
+						$id = (int) $cols[$header_with_id];
+						if ($param_data_mode == 'skip') {
+							$sql_ids_to_skip[] = $id;
+						}
+					}
+				}
+				if ($param_data_mode == 'update') {
+					$sql_ids_to_delete[] = (int) $id;
+				}
+				foreach ($cols as $k => $col) {
+					$arr = preg_split($param_del_arr, $col);
+					if (count($arr) >= 2) {
+						foreach ($arr as $kk => $arr) {
+							$id = (int) $id;
+							$sql_values_stack[]= "(".$id.", 'csv', '".$headers[$k]."[".$kk."]', '".$arr."')";
+						}
+					} else {
+						$id = (int) $id;
+						$sql_values_stack[]= "(".$id.", 'csv', '".$headers[$k]."', '".$col."')";
+					}
+					
+				}
+			}
+			
+			if (count($sql_ids_to_delete) > 0) {
+				$del_query = "DELETE FROM shiftsmith WHERE `id` IN (".implode(',', $sql_ids_to_delete).");";
+				$this->db::query($del_query);
+			}
+			
+			$sql_query .= implode(',', $sql_values_stack)."";
+			if ((count($sql_ids_to_skip) > 0) && ($param_data_mode == 'skip')) {
+				$sql_query .= " WHERE id NOT IN (".implode(',', $sql_ids_to_skip).")";
+			}
+			$sql_query .= ";";
+			$this->db::query($sql_query);
+			
+			// Reload page with success message
+			$this->setModel('prompt', 'message', 'Successfully imported CSV file');
+		}
+		
+		// load page template
+		$this->loadView('admin.forge.csv.tpl');
+	}
+}
 class admin_forge_post extends Controller {
 
 	function validate() {
@@ -428,9 +541,17 @@ class admin_wizard_upload extends Controller {
 					// further validation/sanitation of the filename may be appropriate
 					$name = basename($_FILES["file"]["name"][$key]);
 					move_uploaded_file($tmp_name, "$uploads_dir/$name");
+					switch (end(explode(".", $name))) {
+						case "csv":
+							//redirect('admin/wizard/options/csv');
+							break;
+						case "sql":
+							//redirect('admin/wizard/options/sql');
+							break;
+					}
 				}
 			}
 		}
-		$this->loadView('admin.forge.tpl');
+		//$this->loadView('admin.forge.tpl');
 	}
 }

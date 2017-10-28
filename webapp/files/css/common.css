@@ -78,11 +78,14 @@ table {
 
 /* Main */
 body {
+	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	background:#f5f5f5;
 	font-family: 'Raleway', sans-serif;
 	font-size:17px;
 }
-
+body a {
+	text-shadow: rgba(0,0,0,.01) 0 0 1px;
+}
 h1 {
 	float:left;
 	margin:30px 0;

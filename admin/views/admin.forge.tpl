@@ -51,17 +51,17 @@
 		<a href="/admin/create/form">Web Form</h3>
 	</div>
 
-	<div class="forge-option-block">
+	<div class="forge-option-block wiz">
 		<div class="ico"><img src="/admin/files/img/ico/forge/images.png" alt="block"></div>
 		<a href="/admin/images">Add Image(s)</h3>
 	</div>
 
-	<div class="forge-option-block">
+	<div class="forge-option-block wiz">
 		<div class="ico"><img src="/admin/files/img/ico/forge/music.png" alt="block"></div>
 		<a href="/admin/audio">Add Audio</h3>
 	</div>
 
-	<div class="forge-option-block">
+	<div class="forge-option-block wiz">
 		<div class="ico"><img src="/admin/files/img/ico/forge/video.png" alt="block"></div>
 		<a href="/admin/videos">Add Video</h3>
 	</div>
@@ -77,11 +77,16 @@
 		<a href="/admin/create/migration-wp">Migrate Wordpress to ShiftSmith</h3>
 	</div>
 
-	<div class="forge-option-block">
+	<div class="forge-option-block wiz">
 		<div class="ico"><img src="/admin/files/img/ico/forge/db.png" alt="Database"></div>
-		<a href="/admin/create/migration-db">Migrate Database to ShiftSmith</h3>
+		<a href="/admin/create/import-db">Import Database (SQL)</h3>
 	</div>
-		
+
+	<div class="forge-option-block csv">
+		<div class="ico"><img src="/admin/files/img/ico/forge/csv.png" alt="Database"></div>
+		<a href="/admin/create/import-csv">Import Delimited File (CSV)</h3>
+	</div>
+	
 	<script type="text/javascript">
 		function cleanurl(url) {
 			url = url.replace(/ /g, '+').replace(/%20/g, '+');
@@ -95,6 +100,12 @@
 
 		// url generator
 		$(function() {
+			
+			$('.forge-option-block.wiz, .forge-option-block.wiz a').click(function() {
+				$('.forge-page-drop').click();
+				return false;
+			});
+			
 			$(document).on('change', '#page-title', function() {
 				if ($("input[name='action']:checked").val()=='page') {
 					$('.forge-url-trigger[name=url]').val(cleanurl($(this).val()));
