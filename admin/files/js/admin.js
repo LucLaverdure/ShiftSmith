@@ -293,3 +293,12 @@ $(document).on('click', '.save-button', function() {
 	return false;
 });
 
+$(document).on('click', '.forged .row', function() {
+	var $selItem = $(this).find('.itemSel');
+	if ($selItem.is(':checked')) {
+		$selItem.prop('checked', false);
+	} else {
+		$selItem.prop('checked', true);
+	}
+});
+

@@ -550,6 +550,7 @@ body .wrapper h2 {
 }
 
 .row {
+	cursor:pointer;
 	clear:both;
 	padding:5px 10px 5px 10px;
 }
@@ -804,6 +805,9 @@ audio, video {
 	color:#ff5555;
 	text-decoration:underline;
 }
+.chk.cell {
+	max-width:30px;
+}
 .operations.cell a{
 	text-decoration:none;
 }
@@ -858,4 +862,7 @@ body .wrapper label .frmhead, body .wrapper label .frmtype, body .wrapper label 
 }
 body .forge-private {
 	font-size:20px;
+}
+.action-box {
+	margin:10px 0;
 }

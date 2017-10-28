@@ -16,6 +16,22 @@
 			$db = new Database();
 			$db::connect();
 
+			switch (input("action")) {
+				case "del":
+					$items = input("chkItem");
+					$todel = array();
+					if ($items != "") {
+						foreach ($items as $item) {
+							$todel[] = (int) $item;
+						}
+						if (count($todel) > 0) {
+							$del_query = "DELETE FROM shiftsmith WHERE `id` IN (".implode(',', $todel).");";
+							$this->db::query($del_query);
+						}
+					}
+					break;
+			}
+
 			$this->setModel('prompt', 'message', '');
 			$this->setModel('prompt', 'error', '');
 

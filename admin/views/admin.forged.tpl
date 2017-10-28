@@ -22,7 +22,7 @@
 					<div class="breadcrumbs"><a href="/user" class="breadcrumbs">Administration</a> &gt; <a href="/admin/forged">Forged</a> &gt; Database entries</div>
 					
 					<h2>Database Entries</h2>
-					
+				<form action="" method="post">
 					<div class="forged">
 						<div class="head cf">
 							<div class="cell">URL Trigger</div>
@@ -30,9 +30,16 @@
 							<div class="cell">Tags</div>
 							<div class="cell operations">Actions</div>
 						</div>
-						
+						<div class="action-box">
+							With Selected:
+							<select name="action">
+								<option value="del">Delete</option>
+							</select>
+							<input type="submit" value="Process" />
+						</div>
 					[for:forged]
 						<div class="row cf">
+							<div class="cell chk"><input type="checkbox" name="chkItem[]" class="itemSel" value="[forged.content.id]" /></div>
 							<div class="cell">[forged.content.url]&nbsp;</div>
 							<div class="cell">[forged.content.title]&nbsp;</div>
 							<div class="cell">[forged.tags]&nbsp;</div>
@@ -45,8 +52,15 @@
 							</div>
 						</div>
 					[end:forged]
+						<div class="action-box">
+							With Selected:
+							<select name="action">
+								<option value="del">Delete</option>
+							</select>
+							<input type="submit" value="Process" />
+						</div>
 					</div>
-
+				</form>
 					<h2>File Entries</h2>
 					
 					<div class="forged">
