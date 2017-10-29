@@ -190,16 +190,16 @@ group by
 		
 		static public function getShift() {
 			$db = new Database();
-			$db::connect();
+			$db->connect();
 
 			$init_shift = 1;
-			$shiftroot = $db::queryResults("SELECT id
+			$shiftroot = $db->queryResults("SELECT id
 											FROM shiftsmith
 											ORDER BY id DESC
 											LIMIT 1;");
 
 			if ($shiftroot == false) {
-				$query = $db::query("CREATE TABLE IF NOT EXISTS `shiftsmith` (
+				$query = $db->query("CREATE TABLE IF NOT EXISTS `shiftsmith` (
 									  `id` int(11) NOT NULL,
 									  `namespace` varchar(255) COLLATE latin1_general_ci NOT NULL,
 									  `key` varchar(255) COLLATE latin1_general_ci NOT NULL,

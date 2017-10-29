@@ -10,9 +10,9 @@
 		public function counted() {
 			
 			$db = new Database();
-			$db::connect();
+			$db->connect();
 			
-			$sql = $db::queryResults("SELECT COUNT(id) counted FROM users;");
+			$sql = $db->queryResults("SELECT COUNT(id) counted FROM users;");
 			if ($sql) {
 				return $sql[0]['counted'];
 			} 
@@ -22,9 +22,9 @@
 		// returns count of all users activated by email in db
 		public function counted_active() {
 			$db = new Database();
-			$db::connect();
+			$db->connect();
 			
-			$sql = $db::queryResults("SELECT COUNT(id) counted FROM users WHERE active='Y';");
+			$sql = $db->queryResults("SELECT COUNT(id) counted FROM users WHERE active='Y';");
 			if ($sql) {
 				return $sql[0]['counted'];
 			} 
@@ -35,8 +35,8 @@
 		public function getEmail() {
 			if ($this->isLoggedIn()) {
 				$db = new Database();
-				$db::connect();
-				$sql = $db::queryResults("SELECT email FROM users WHERE active='Y' AND id='".$_SESSION['login']."' LIMIT 1;");
+				$db->connect();
+				$sql = $db->queryResults("SELECT email FROM users WHERE active='Y' AND id='".$_SESSION['login']."' LIMIT 1;");
 				if ($sql != false) {
 					return $sql[0]['email'];
 				}
@@ -50,7 +50,7 @@
 		// returns true if admin is logged on, false otherwise
 		public function isAdmin() {
 			$db = new Database();
-			$db::connect();
+			$db->connect();
 
 			if (isset($_SESSION['login'])) {
 				$sql = "SELECT id
@@ -60,7 +60,7 @@
 					   AND id = '".p($_SESSION['login'])."'
 					   LIMIT 1;";
 					   
-				$data = $db::queryResults($sql);
+				$data = $db->queryResults($sql);
 
 				if (($data != false) && ($data[0]['id']==$_SESSION['login'])) {
 					return true;
@@ -81,9 +81,9 @@
 		// login with email and password, returns true on logon, false otherwise
 		public function login($email, $password) {
 			$db = new Database();
-			$db::connect();
+			$db->connect();
 
-			$data = $db::queryResults("SELECT id, email, `password` pwd
+			$data = $db->queryResults("SELECT id, email, `password` pwd
 									   FROM users
 									   WHERE active='Y'
 									   AND email='".p($email)."'
@@ -107,7 +107,7 @@
 		public function add($email, $password, $password_confirm) {
 			// init db
 			$db = new Database();
-			$db::connect();
+			$db->connect();
 
 			// verify if passwords match
 			if ($password != $password_confirm) {
@@ -115,7 +115,7 @@
 				return 'Passwords mismatch';
 			}
 			
-			$listusers = $db::queryResults("SELECT COUNT(id)
+			$listusers = $db->queryResults("SELECT COUNT(id)
 										   FROM users
 										   LIMIT 1;");
 			// db table doesn't exist
@@ -128,17 +128,17 @@
 					  `active` varchar(1) COLLATE latin1_general_ci NOT NULL,
 					  `admin` varchar(1) COLLATE latin1_general_ci NOT NULL
 					) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;";
-					$ret = $db::query($sql);
+					$ret = $db->query($sql);
 					$sql = "ALTER TABLE `users`
 					  ADD PRIMARY KEY (`id`);";
-					$ret = $db::query($sql);
+					$ret = $db->query($sql);
 					$sql = "ALTER TABLE `users`
 					  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;";
-					$ret = $db::query($sql);
+					$ret = $db->query($sql);
 			}
 			
 			// verify if email exists
-			$email_exists = $db::queryResults("SELECT id, email
+			$email_exists = $db->queryResults("SELECT id, email
 									   ORDER BY id DESC
 									   FROM users
 									   WHERE email='".p($email)."'
@@ -169,7 +169,7 @@
 										'".$isAdmin."'
 										);";
 
-			$data = $db::query($sql);
+			$data = $db->query($sql);
 
 			email($email, 'Account Confirmation', 'Please <a href="http://'.$_SERVER['SERVER_NAME'].'/confirm/admin/'.p($rnd).'/'.p($email).'">click here</a> to activate your account at '.$_SERVER['SERVER_NAME']);
 
@@ -180,10 +180,10 @@
 		public function confirm ($email, $key) {
 
 			$db = new Database();
-			$db::connect();
+			$db->connect();
 
 			// verify if user exists
-			$data = $db::queryResults("SELECT id, email
+			$data = $db->queryResults("SELECT id, email
 									   FROM users
 									   WHERE active='N'
 									   AND keygen='".p($key)."'
@@ -192,7 +192,7 @@
 									   LIMIT 1;");
 			if ($data != false) {
 				// on found user, update to active user (user must still login)
-				$data = $db::query("UPDATE users
+				$data = $db->query("UPDATE users
 									SET active='Y'
 									WHERE
 									keygen='".p($key)."'

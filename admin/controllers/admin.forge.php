@@ -29,7 +29,7 @@ class admin_forge_page extends Controller {
 
 			$id = (int) q(3);
 			
-			$res = $this->db::querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
+			$res = $this->db->querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
 			
 			$this->loadkvp($res);
 
@@ -139,7 +139,7 @@ class admin_forge_csv extends Controller {
 			$sql_values_stack = array();
 			$sql_ids_to_delete = array();
 			$sql_ids_to_skip = array();
-			$ini_row = $this->db::getShift(); // get autoincrement number
+			$ini_row = $this->db->getShift(); // get autoincrement number
 			array_shift($rows); // remove header row
 			
 			foreach ($rows as $key => $row) {
@@ -173,7 +173,7 @@ class admin_forge_csv extends Controller {
 			
 			if (count($sql_ids_to_delete) > 0) {
 				$del_query = "DELETE FROM shiftsmith WHERE `id` IN (".implode(',', $sql_ids_to_delete).");";
-				$this->db::query($del_query);
+				$this->db->query($del_query);
 			}
 			
 			$sql_query .= implode(',', $sql_values_stack)."";
@@ -181,7 +181,7 @@ class admin_forge_csv extends Controller {
 				$sql_query .= " WHERE id NOT IN (".implode(',', $sql_ids_to_skip).")";
 			}
 			$sql_query .= ";";
-			$this->db::query($sql_query);
+			$this->db->query($sql_query);
 			
 			// Reload page with success message
 			$this->setModel('prompt', 'message', 'Successfully imported CSV file');
@@ -220,7 +220,7 @@ class admin_forge_post extends Controller {
 
 			$id = (int) q(3);
 			
-			$res = $this->db::querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
+			$res = $this->db->querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
 			
 			$this->loadkvp($res);
 
@@ -298,7 +298,7 @@ class admin_forge_block extends Controller {
 			// load values into form
 			$id = (int) q(3);
 			
-			$res = $this->db::querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
+			$res = $this->db->querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
 			
 			$this->loadkvp($res);
 
@@ -377,7 +377,7 @@ class admin_forge_sale extends Controller {
 			// load values into form
 			$id = (int) q(3);
 			
-			$res = $this->db::querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
+			$res = $this->db->querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
 			
 			$this->loadkvp($res);
 
@@ -465,7 +465,7 @@ class admin_forge_form extends Controller {
 			// load values into form
 			$id = (int) q(3);
 			
-			$res = $this->db::querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
+			$res = $this->db->querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
 			
 			$this->loadkvp($res);
 

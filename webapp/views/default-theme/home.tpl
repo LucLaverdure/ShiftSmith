@@ -1,16 +1,36 @@
 [default-theme/header.tpl]
 
-<div class="parallax-window" data-parallax="scroll" data-image-src="/files/img/home-bg.jpg">
-	<h1 class="hero">ShiftSmith</h1>
-	<h2>The Blacksmith of Websites.</h2>
-	<a href="/tutorials" class="button">Get Started!</a>
+<div class="homesteps">
+	<ul>
+		<li style="background: #000;" class="step0">
+				<h1 class="hero">ShiftSmith</h1>
+				<h2>The Blacksmith of Websites.</h2>
+				<a href="/tutorials" class="button">Get Started!</a>
+		</li>
+		<li style="background: #444;" class="step1">
+				<h1 class="hero">Step 1</h1>
+				<h2>Choose a domain and host</h2>
+				<p><span>My Website URL:</span> <input type="text" placeholder="mywebsite.com" value="" /></p>
+				<a href="https://www.1and1.ca/web-hosting" class="button" target="_blank">Register with 1and1</a>
+				<a href="https://ca.godaddy.com/offers/web-hosting" class="button" target="_blank">Register with Go Daddy</a>
+		</li>
+		<li style="background: #222;" class="step2">
+				<h1 class="hero">Step 2</h1>
+				<h2>Install ShiftSmith</h2>
+				<p><span>Host:</span> <input type="text" placeholder="mywebsite.com" value="" /></p>
+				<p><span>FTP Username:</span> <input type="text" placeholder="user" value="" /></p>
+				<p><span>FTP Password:</span> <input type="text" placeholder="password" value="" /></p>
+				<p><span>Remote Directory:</span> <input type="text" placeholder="/" value="" /></p>
+				<a href="#" class="button">Install</a><p><span>or</span></p><a href="/download" class="button">Download</a>
+		</li>
+		<li style="background: #444;" class="step3">
+				<h1 class="hero">Step 3</h1>
+				<h2>Personalize your website</h2>
+				<a href="#" class="button">Login as administrator</a>
+		</li>
+	</ul>
 </div>
-<div class="download-hero">
-	<div class="wrapper">
-		<span class="letspa">Build your Website: Free, Fast, Friendly!</span>
-		<span class="search-wrapper"><input type="text" class="search-box" placeholder="Search..." /></span>
-	</div>
-</div>
+
 <div class="wrapper features-area cf">
 
 	<div class="feature-box">

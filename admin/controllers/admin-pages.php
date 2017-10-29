@@ -7,10 +7,10 @@ class view_page extends Controller {
 		// Activate custom page controller for db entries forged
 		
 		$db = new Database();
-		$db::connect();
+		$db->connect();
 
 		// get all triggers
-		$data = $db::queryResults("SELECT `namespace`, `id`, `key`, `value`
+		$data = $db->queryResults("SELECT `namespace`, `id`, `key`, `value`
 								   FROM shiftsmith
 								   WHERE `key` = 'trigger.url'
 								   OR `key` = 'trigger.date'
@@ -49,10 +49,10 @@ class view_page extends Controller {
 
 		foreach ($verified as $id => $counted) {
 			if ($counted >= 2) {
-				$admin_check = $db::queryResults("SELECT `namespace`, `id`, `key`, `value`
+				$admin_check = $db->queryResults("SELECT `namespace`, `id`, `key`, `value`
 										   FROM shiftsmith
 										   WHERE `key` = 'trigger.admin.only'
-										   AND `id` IN (".$db::param($id).")
+										   AND `id` IN (".$db->param($id).")
 										   ORDER BY id DESC;");
 
 			if (((count($admin_check) > 0) && $admin_check[0]['value'] == 'Y' && $this->user->isAdmin()) ||
@@ -75,15 +75,15 @@ class view_page extends Controller {
 	function execute() {
 		
 		$db = new Database();
-		$db::connect();
+		$db->connect();
 
 		$shiftsmith_ids = $this->getModel('page', 'ids');
 		$sql = "SELECT `id`, `namespace`, `key`, `value`
 				FROM shiftsmith
-				WHERE id IN(".$db::param($shiftsmith_ids).");";
+				WHERE id IN(".$db->param($shiftsmith_ids).");";
 
 		// pages
-		$pages = $db::queryResults($sql);
+		$pages = $db->queryResults($sql);
 
 		if ($pages != false) {
 			foreach ($pages as $page) {
@@ -112,9 +112,9 @@ class admin_delete_page extends Controller {
 		$db_to_del = (int) q(3);
 
 		$db = new Database();
-		$db::connect();
+		$db->connect();
 		
-		$db::query('DELETE FROM `shiftsmith` WHERE `id` = '.$db_to_del.';');
+		$db->query('DELETE FROM `shiftsmith` WHERE `id` = '.$db_to_del.';');
 
 		redirect('/admin/forged');
 		die();

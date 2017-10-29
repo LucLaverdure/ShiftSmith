@@ -13,11 +13,14 @@
 
 <link rel="stylesheet" type="text/css" href="/files/lib/prism/prism.css" />
 <link rel="stylesheet" type="text/css" href="/files/lib/hover/hover-min.css" />
+<link rel="stylesheet" type="text/css" href="/files/lib/unslider/unslider.css" />
+<link rel="stylesheet" type="text/css" href="/files/lib/unslider/unslider-dots.css" />
 <link rel="stylesheet" type="text/css" href="/files/css/common.css" />
 
 <script src="/files/lib/jquery/jquery-1.12.3.min.js" type="text/javascript"></script>
 <script src="/files/lib/parallax/parallax.min.js" type="text/javascript"></script>
 <script src="/files/lib/prism/prism.js" type="text/javascript"></script>
+<script src="/files/lib/unslider/unslider-min.js" type="text/javascript"></script>
 <script src="/files/js/main.js" type="text/javascript"></script>
 
 <meta property="og:image" content="http://www.ShiftSmith.com/files/img/logo-black.gif" />

@@ -22,7 +22,7 @@
 			
 			// setup database helper class
 			$this->db = new Database();
-			$this->db::connect();
+			$this->db->connect();
 		}
 
 		function clearModels() {
@@ -232,12 +232,12 @@
 		function saveForm($id='new', $acceptedNamespaces = array('content', 'trigger', 'post', 'page', 'tag', 'tags', 'custom')) {
 			// get database
 			$db = new Database();
-			$db::connect();
+			$db->connect();
 
 			// initialize db structure and get new id
 			$init_shift = $id;
 			if ($id=='new') {
-				$init_shift = $db::getShift();
+				$init_shift = $db->getShift();
 			}
 				
 			// clear all model data
@@ -250,7 +250,7 @@
 			if (is_numeric($init_shift)) {
 				$id = (int) $init_shift;
 				$del_sql = "DELETE FROM `shiftsmith` WHERE `id`=".$id;
-				$shiftroot = $db::query($del_sql);
+				$shiftroot = $db->query($del_sql);
 			}
 
 			
@@ -259,7 +259,7 @@
 				$key_explosion = explode('.', $key);
 				$forekey = array_shift($key_explosion);
 				if (!in_array($forekey, explode(',', PROTECTED_UNIT)) && in_array($forekey, $acceptedNamespaces)) {
-					if ($db::param($forekey) != '' && $db::param(implode('.', $key_explosion)) != '' && (trim($value) != '')) {
+					if ($db->param($forekey) != '' && $db->param(implode('.', $key_explosion)) != '' && (trim($value) != '')) {
 						$new_key = array();
 						foreach ($key_explosion as $k) {
 							// remove array square brackets
@@ -269,7 +269,7 @@
 							}
 						}
 						// id, 						namespace, 					key, 										value
-						$row_sql = "(".$init_shift.", '".$db::param($forekey)."' , '".$db::param(implode('.', $key_explosion))."', '".$db::param($value)."')";
+						$row_sql = "(".$init_shift.", '".$db->param($forekey)."' , '".$db->param(implode('.', $key_explosion))."', '".$db->param($value)."')";
 						$sql[] = $row_sql;
 					}
 				}
@@ -279,7 +279,7 @@
 
 			$fullQuery = "INSERT INTO shiftsmith (`id`, `namespace`, `key`, `value`) VALUES ".implode(', ', $sql);
 
-			$shiftroot = $db::query($fullQuery);
+			$shiftroot = $db->query($fullQuery);
 			if ($shiftroot != false) {
 				foreach ($acceptedNamespaces as $namespace) {
 					unset($_SESSION[$namespace]);
@@ -314,10 +314,10 @@
 			$id = (int) $id;
 			
 			$db = new Database();
-			$db::connect();
+			$db->connect();
 			
 			// fetch all id related models
-			$data = $db::queryResults("SELECT `namespace`, `key`, `value`
+			$data = $db->queryResults("SELECT `namespace`, `key`, `value`
 										FROM shiftsmith
 										WHERE id=".$id."
 										ORDER BY `namespace`, `key`;");

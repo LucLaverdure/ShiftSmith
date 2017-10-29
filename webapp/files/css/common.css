@@ -609,3 +609,61 @@ a.button.download-theme {
 	padding:30px;
 	box-sizing:border-box;
 }
+.main-bg {
+	min-height:600px;
+}
+.tri {
+	min-height:600px;
+}
+.unslider-wrap, .unslider-wrap li {
+	min-height:600px;
+}
+
+.homesteps h1.hero {
+	color: #fff;
+}
+.homesteps h2 {
+	color: #fff;
+}
+.homesteps p {
+	color: #fff;
+	text-align:left;
+	margin:0 auto;
+	max-width:700px;
+	width:100%;
+	font-size:24px;
+	margin-bottom:10px;
+}
+.homesteps a {
+	color: #fff;
+	max-width:276px;
+	width:100%;
+}
+.homesteps p span {
+	min-width:250px;
+	display:inline-block;
+	background: rgba(0, 0, 0, 0.6);
+	padding:5px;
+}
+.homesteps input {
+	font-size:24px;
+	padding: 5px 10px;
+}
+.homesteps li {
+	padding:100px 0;
+	margin: 0 auto;
+	text-align:center;
+	font-size:24px;
+}
+.step0 {
+	background: rgba(0, 0, 0, 0.6) url(/files/img/steps/step0.jpg) no-repeat center center !important;
+}
+.step1 {
+	background: rgba(0, 0, 0, 0.6) url(/files/img/steps/step1.jpg) no-repeat center center !important;
+}
+.step2 {
+	background: rgba(0, 0, 0, 0.6) url(/files/img/steps/step2.jpg) no-repeat center center !important;
+}
+.step3 {
+	background: rgba(0, 0, 0, 0.6) url(/files/img/steps/step3.jpg) no-repeat center center !important;
+}

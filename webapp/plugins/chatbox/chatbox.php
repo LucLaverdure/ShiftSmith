@@ -11,7 +11,7 @@ class admin_comments extends Controller {
 	}
 	
 	function execute() {
-		$data = $this->db::queryResults("SELECT room_id
+		$data = $this->db->queryResults("SELECT room_id
 								   FROM chatbox
 								   GROUP BY room_id
 								   ORDER BY room_id ASC");
@@ -37,7 +37,7 @@ class admin_comment_del extends Controller {
 
 	function execute() {
 		$commentid = (int) q(3);
-		$data = $this->db::query("DELETE FROM chatbox WHERE id=".$commentid.";");
+		$data = $this->db->query("DELETE FROM chatbox WHERE id=".$commentid.";");
 		redirect('/admin/comments');
 	}
 }
@@ -78,16 +78,16 @@ class chat_log extends Controller {
 		
 		// db prep
 		$db = new Database();
-		$db::connect();
+		$db->connect();
 		
 		// url pattern: chatbox/chatlog/room/last-post-id
 		$room_id = q(2);
 		$last_post_id = (int) q(3);
 		
 		// get all chat posts from main lobby
-		$data = $db::queryResults("SELECT id, liner, md5(user) picture, user email
+		$data = $db->queryResults("SELECT id, liner, md5(user) picture, user email
 								   FROM chatbox
-								   WHERE room_id='".$db::param($room_id)."'
+								   WHERE room_id='".$db->param($room_id)."'
 								   AND id > ".$last_post_id."
 								   ORDER BY id DESC
 								   LIMIT 50");
@@ -121,7 +121,7 @@ class chatbox_post extends Controller {
 	function execute() {
 		// db prep
 		$db = new Database();
-		$db::connect();
+		$db->connect();
 		
 		// vars input
 		$room_id = q(2);
@@ -130,8 +130,8 @@ class chatbox_post extends Controller {
 		if (trim($liner) == '') return;
 		
 		// get all chat posts from main lobby
-		$data = $db::query("INSERT INTO chatbox (room_id, liner, user)
-							VALUES('".$db::param($room_id)."', '".$db::param($liner)."', '".$db::param($_SESSION['chatuser'])."');");
+		$data = $db->query("INSERT INTO chatbox (room_id, liner, user)
+							VALUES('".$db->param($room_id)."', '".$db->param($liner)."', '".$db->param($_SESSION['chatuser'])."');");
 		
 	}
 }
@@ -147,23 +147,23 @@ class inject_chatbox extends Controller {
 			$chatbox = '';
 
 			$db = new Database();
-			$db::connect();
-			$data = $db::queryResults("SELECT liner, user
+			$db->connect();
+			$data = $db->queryResults("SELECT liner, user
 									   FROM chatbox
-									   WHERE room_id='".$db::param($room_id)."'
+									   WHERE room_id='".$db->param($room_id)."'
 									   ORDER BY id DESC
 									   LIMIT 50;");
 			if ($data == false) {
 				
 				// verify if database structure is complete.
-				$struct_test = $db::queryResults("SELECT liner, user
+				$struct_test = $db->queryResults("SELECT liner, user
 										   FROM chatbox
 										   LIMIT 1");
 
 				//if structure is incomplete
 				if ($struct_test == false) {
 					// create it
-					$obj = $db::query("CREATE TABLE IF NOT EXISTS `chatbox` (
+					$obj = $db->query("CREATE TABLE IF NOT EXISTS `chatbox` (
 											  `id` int(11) NOT NULL AUTO_INCREMENT,
 											  `room_id` varchar(255) COLLATE latin1_general_ci NOT NULL,
 											  `user` varchar(255) COLLATE latin1_general_ci NOT NULL,
@@ -178,7 +178,7 @@ class inject_chatbox extends Controller {
 			$chatbox .= '<div class="chatbox">';
 			$chatbox .= '<span class="title"><span style="color:#ffcccc;">@</span><span style="color:#ccccff;">chat</span><span style="color:#565758;">box</span></span>';
 
-			$chatbox .= '<input type="hidden" name="room_id" class="room_id" value="'.$db::param($room_id).'">';
+			$chatbox .= '<input type="hidden" name="room_id" class="room_id" value="'.$db->param($room_id).'">';
 
 			if (isset($_SESSION['chatuser']))
 				$append = 'style="display:none;"';
@@ -208,7 +208,7 @@ class inject_chatbox extends Controller {
 				else
 					$append = 'style="display:none;"';
 
-				$chatbox .= '<textarea class="hasid" '.$append.' placeholder="'.$db::param($chat_warmer[$keyin], true).'"></textarea><a href="#" class="action hvr-radial-in">+</a>';
+				$chatbox .= '<textarea class="hasid" '.$append.' placeholder="'.$db->param($chat_warmer[$keyin], true).'"></textarea><a href="#" class="action hvr-radial-in">+</a>';
 				
 			$chatbox .= '</div>';
 

@@ -121,7 +121,7 @@
 			$this->addModel('prompt', "error",'');
 			
 			// custom visualization
-			$d3data = $this->db::queryResults("SELECT COUNT(value) valcount, value
+			$d3data = $this->db->queryResults("SELECT COUNT(value) valcount, value
 									   FROM `shiftsmith`
 									   WHERE `key` LIKE '%tags.name%'
 									   GROUP BY `value`

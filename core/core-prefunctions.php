@@ -17,7 +17,7 @@
 
 	function p($param) {
 		$db = new Database();
-		$dblink = $db::connect();
+		$dblink = $db->connect();
 		return mysqli_real_escape_string($dblink, $param);
 	}
 	
