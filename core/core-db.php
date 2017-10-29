@@ -7,14 +7,20 @@
 
 		static public function connect($host=CMS_DB_HOST, $user=CMS_DB_USER, $password=CMS_DB_PASS, $database=CMS_DB_NAME, $dbtype='mysql') {
 			
-			self::$dbtype = $dbtype;
+			try {
+				self::$dbtype = $dbtype;
 
-			if (self::$dbtype=='mysql') {
-				self::$dblink = new mysqli($host, $user, $password, $database);
-			}
+				if (self::$dbtype=='mysql') {
+					self::$dblink = new mysqli($host, $user, $password, $database);
+				}
 
-			return self::$dblink;
+				return self::$dblink;
 			
+			} catch (Exception $e) {
+				
+				return false;
+				
+			}
 		}
 		
 /* optimization?
