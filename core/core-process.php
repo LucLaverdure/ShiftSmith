@@ -361,29 +361,56 @@ echo getQuery([
 			}
 			
 			$docX = phpQuery::newDocument($output_buffer);
-			
+/*			
+				"content" => "",			// content to inject
+				"file_contents" => "",		// ajax content to inject, overrides content
+				"placeholder" => "body",	// selector: #id.class
+				"display" => "html",		// or text
+				"filter" => "",				// selector: #id.class
+				"mode" => "append"			// or prepend, replace
+*/
 			foreach($injections as $injected_view) {
-				$selector = $injected_view[0];
-				$mode = $injected_view[1];
-				$view_filename = $injected_view[2];
-				$selector_after_fetch = $injected_view[3];
+				$content = $injected_view["content"];
+				$file_contents = $injected_view["file_contents"];
+				$placeholder = $injected_view["placeholder"];
+				$display = $injected_view["display"];
+				$mode = $injected_view["mode"];
+				$filter = $injected_view["filter"];
 				
-				$injected_html = '';
-				if ((trim($selector_after_fetch) != '') && (trim($selector_after_fetch) != "0")) {
-					$docZ = phpQuery::newDocument(@file_get_contents($view_filename));
-					$injected_html = $docZ[$selector_after_fetch]->html();
-				} else {
-					$injected_html = $view_filename;
+				$injected_output = '';
+				$docZ = '';
+				if (trim($file_contents) != '') {
+					// fetch ajax
+					$docZ = phpQuery::newDocument(@file_get_contents($file_contents));
+				} elseif (trim($content) != '') {
+					// fetch simple content
+					$docZ = phpQuery::newDocument($content);
 				}
+				
+				if (trim($filter) != '') {
+					// selector filter of response
+					$mydoc = $docZ[$filter];
+				} else {
+					// no filter
+					$mydoc = $docZ;
+				}
+				
+				if ($display == 'html') {
+					$injected_output = $mydoc->html();
+				} else {
+					$injected_output = $mydoc->text();
+				}
+				
+				// mode of output
 				switch ($mode) {
 					case 'append':
-						$docX[$selector]->append($injected_html);
+						$docX[$placeholder]->append($injected_output);
 						break;
 					case 'prepend':
-						$docX[$selector]->prepend($injected_html);
+						$docX[$placeholder]->prepend($injected_output);
 						break;
 					case 'replace':
-						$docX[$selector]->html($injected_html);
+						$docX[$placeholder]->html($injected_output);
 						break;
 				}
 

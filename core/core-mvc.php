@@ -369,20 +369,23 @@
 
 
 		// inject resource
-		function injectView($selector_destination, $mode, $view_filename, $selector_after_fetch) {
-			if (in_array($mode, array('prepend', 'append', 'replace', 'outer-replace'))) {
-				switch (substr($view_filename,-3, 4)) {
-					case '.js':
-						$this->injected_views[] = array($selector_destination, $mode, '<script src="'.$view_filename.'" type="text/javascript">', $selector_after_fetch);
-						break;
-					case 'css':
-						$this->injected_views[] = array($selector_destination, $mode, '<link rel="stylesheet" type="text/css" href="'.$view_filename.'">', $selector_after_fetch);
-						break;
-					default:
-						$this->injected_views[] = array($selector_destination, $mode, $view_filename, $selector_after_fetch);
-						break;
-				}
-			}
+		function inject($params) {
+
+			// set default values
+			$defaults = array(
+				"content" => "",			// content to inject
+				"file_contents" => "",		// ajax content to inject, overrides content
+				"placeholder" => "body",	// selector: #id.class
+				"display" => "html",		// or text
+				"filter" => "",				// selector: #id.class
+				"mode" => "append"			// or prepend, replace
+			);
+
+			// override default values with provided parameters
+			$params = array_merge($defaults, $params);
+			
+			$this->injected_views[] = $params;
+			
 		}
 			
 		
