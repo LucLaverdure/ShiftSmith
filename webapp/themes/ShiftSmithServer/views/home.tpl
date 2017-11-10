@@ -7,7 +7,7 @@
 				<h2>The Blacksmith of Websites.</h2>
 				<a href="/tutorials" class="button">Get Started!</a>
 		</li>
-		<li style="background: #444;" class="step1">
+		<li style="background: #444;" class="step1" id="select-url">
 				<h1 class="hero">Step 1</h1>
 				<h2>Choose a domain and host</h2>
 				<p><span>My Website URL:</span> <input type="text" placeholder="mywebsite.com" value="" /></p>

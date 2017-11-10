@@ -1,15 +1,12 @@
 [header.tpl]
 
-<div class="parallax-window sub" data-parallax="scroll" data-image-src="/files/img/home-bg.jpg">
-	<h1 class="hero">About</h1>
-</div>
+<div style="background: #fff url(/theme/files/img/sections/about-bg.jpg) center center;min-height:200px;"></div>
 
 <div class="cred-wrap cf">
 	<div class="credits-roll">
 
-	  <div class="main-title">ShiftSmith</div>
+	  <a href="http://LucLaverdure.com" target="_blank"><img src="/theme/files/img/round-me.png" alt="Luc Laverdure"/></a>
 	  <div class="role">Founded by</div>
-	  <a href="http://LucLaverdure.com" target="_blank"><img src="/files/img/round-me.png" alt="Luc Laverdure"/></a>
 	  <h2 class="name"><a href="http://LucLaverdure.com" target="_blank">Luc Laverdure</a></h2>
 
 	  <div class="role">Thanks to Font Awesome</div>

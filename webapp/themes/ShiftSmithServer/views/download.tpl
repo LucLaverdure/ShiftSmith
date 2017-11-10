@@ -1,8 +1,6 @@
 [header.tpl]
 
-<div class="parallax-window sub" data-parallax="scroll" data-image-src="/files/img/home-bg.jpg">
-	<h1 class="hero">Download</h1>
-</div>
+<div style="background: #fff url(/theme/files/img/sections/download-bg.jpg) center center;min-height:200px;"></div>
 
 <div class="wrapper about-page cf download-page">
 
