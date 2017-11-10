@@ -42,11 +42,22 @@ DirectoryIndex index.php
   RewriteEngine on
   RewriteBase /
 
-  # Rewrite current-style URLs of the form 'index.php?q=x'.
+  # Rewrite /theme to active theme directory
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^files/(.*)$ /webapp/files/$1 [L,QSA]
+  RewriteRule ^theme/(.*)$ /index.php?f=$1 [L,QSA]  
 
+  # Rewrite /files to public files
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^files/(.*)$ /webapp/files/public/$1 [L,QSA]
+
+  # Rewrite /files to public files
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^webapp/files/private/(.*)$ /webapp/files/public/$1 [L,QSA]
+  
+  # Rewrite current-style URLs of the form 'index.php?q=x'.
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^(.*)$ /index.php?q=$1 [L,QSA]

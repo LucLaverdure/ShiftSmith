@@ -9,13 +9,11 @@
 
 	// recursively search directory(ies) for Controllers  and functions used in application 
 	// (string delimited by comas without spaces)
-	define('SEARCH_DIRECTORY_CONTROLLERS', 'webapp,admin');
+	// search only active theme, no trailing slash
+	define('SEARCH_DIRECTORY_CONTROLLERS', 'core/admin,webapp/themes/'.ACTIVE_THEME);
 	
 	// filter file extensions for controllers and functions used in application
-	define('FILE_FILTER_CONTROLLERS', 'php,php5');
-
-	// cron job password
-	define('CRON_JOB_PASSWORD', 'eedad41f42660e5cb7a4');
+	define('FILE_FILTER_CONTROLLERS', 'php,php5,php6,php7');
 	
 	/* protected server side session namespaces (string delimited by comas without spaces)
 					 accessible via controller->setcache and controller->getcache

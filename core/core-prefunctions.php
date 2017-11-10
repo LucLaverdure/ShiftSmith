@@ -18,7 +18,7 @@
 	function p($param) {
 		$db = new Database();
 		$dblink = $db->connect();
-		return mysqli_real_escape_string($dblink, $param);
+		return $db->param($param);
 	}
 	
 	function input($key='all') {

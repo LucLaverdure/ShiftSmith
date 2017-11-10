@@ -1,0 +1,1 @@
+<?php define('ACTIVE_THEME', 'ShiftSmithServer'); ?>

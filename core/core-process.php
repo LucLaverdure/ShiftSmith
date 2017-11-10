@@ -84,6 +84,7 @@
 		public function process_view(&$controller, $view, $recursion_level = 0, $mode = 'append') {
 			// global models, shared across all controllers
 			global $global_models;
+			global $main_path;
 			
 			// prevent infinite recursions
 			if ($recursion_level > 999999)
@@ -97,10 +98,10 @@
 			$view_output = ""; 
 			if (substr($view, 0, 4 )=='http') {
 				$view_output = @file_get_contents($view);
-			} else if (file_exists("admin/views/".$view)) {
-				$view_output = @file_get_contents("admin/views/".$view);
-			} else if (file_exists("webapp/views/".$view)) {
-				$view_output = @file_get_contents("webapp/views/".$view);
+			} else if (file_exists("core/admin/views/".$view)) {
+				$view_output = @file_get_contents("core/admin/views/".$view);
+			} else if (file_exists("webapp/themes/".ACTIVE_THEME."/views/".$view)) {
+				$view_output = @file_get_contents("webapp/themes/".ACTIVE_THEME."/views/".$view);
 			} else {
 				// when view is a file, fetch content
 				$view_output = $view;
@@ -279,10 +280,10 @@ echo getQuery([
 						if (substr($filename, 0, 4)=='http') {
 							// file is a web fetch
 							$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
-						} else if (file_exists("admin/views/".$filename)) {
+						} else if (file_exists("core/admin/views/".$filename)) {
 							// file is an admin file
 							$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
-						} else if (file_exists("webapp/views/".$filename)) {
+						} else if (file_exists("webapp/themes/".ACTIVE_THEME."/views/".$filename)) {
 							// file is an webapp file
 							$view_output = str_replace($found, $this->process_view($controller, $filename, $recursion_level+1), $view_output);
 						}

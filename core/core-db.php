@@ -4,14 +4,18 @@
 	class Database {
 		static private $dbtype;
 		static private $dblink;
-
+		static private $isConnected;
+		
 		static public function connect($host=CMS_DB_HOST, $user=CMS_DB_USER, $password=CMS_DB_PASS, $database=CMS_DB_NAME, $dbtype='mysql') {
+			
+			self::$isConnected = false;
 			
 			try {
 				self::$dbtype = $dbtype;
 
 				if (self::$dbtype=='mysql') {
-					self::$dblink = new mysqli($host, $user, $password, $database);
+					self::$dblink = @new mysqli($host, $user, $password, $database);
+					if (!isset(self::$dblink->connect_error)) self::$isConnected = true;
 				}
 
 				return self::$dblink;
@@ -22,6 +26,10 @@
 				
 			}
 		}
+
+		static public function isConnected() {
+			return self::$isConnected;
+		}		
 		
 /* optimization?
 select
@@ -118,8 +126,8 @@ group by
 		
 		static public function query($query_string) {
 			if (self::$dbtype == 'mysql') {
-				$ret = self::$dblink->query($query_string);
-				if ($ret == false) elog(self::$dblink->error);
+				$ret = @self::$dblink->query($query_string);
+				if ($ret == false) elog(@self::$dblink->error);
 				return $ret;
 			}
 		}
@@ -131,6 +139,9 @@ group by
 		}
 
 		static public function param($param, $strip_tags = true) {
+			
+			if (!self::isConnected()) return false;
+			
 			if (self::$dbtype == 'mysql') {
 				if (in_array($param, explode(',', PROTECTED_UNIT)))
 					return '';
