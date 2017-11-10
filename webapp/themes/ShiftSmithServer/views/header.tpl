@@ -16,13 +16,14 @@
 <link rel="stylesheet" type="text/css" href="/theme/files/lib/unslider/unslider.css" />
 <link rel="stylesheet" type="text/css" href="/theme/files/lib/unslider/unslider-dots.css" />
 <link rel="stylesheet" type="text/css" href="/theme/files/lib/bootstrap/bootstrap-grid.min.css" />
+<link rel="stylesheet" type="text/css" href="/theme/files/lib/jstree/dist/themes/default/style.min.css" />
 <link rel="stylesheet" type="text/css" href="/theme/files/css/common.css" />
 
 <script src="/theme/files/lib/jquery/jquery-1.12.3.min.js" type="text/javascript"></script>
 <script src="/theme/files/lib/parallax/parallax.min.js" type="text/javascript"></script>
 <script src="/theme/files/lib/prism/prism.js" type="text/javascript"></script>
 <script src="/theme/files/lib/unslider/unslider-min.js" type="text/javascript"></script>
-<script src="/theme/files/lib/bootstrap/bootstrap.min.js" type="text/javascript"></script>
+<script src="/theme/files/lib/jstree/dist/jstree.min.js" type="text/javascript"></script>
 <script src="/theme/files/js/main.js" type="text/javascript"></script>
 
 <meta property="og:image" content="http://www.ShiftSmith.com/theme/files/img/logo-black.gif" />

@@ -649,3 +649,28 @@ a.button.download-theme {
 .step3 {
 	background: rgba(0, 0, 0, 0.6) url(/theme/files/img/steps/step3.jpg) no-repeat center center !important;
 }
+
+#data {
+	margin:30px 0;
+}
+#dirdescriptor {
+	box-shadow: rgb(212, 212, 212) 0px 0px 26px 0px;
+	background: #fff;
+	padding:10px;
+	box-sizing:border-box;
+	margin-top: 54px;
+	margin-bottom:30px;
+}
+#dirdescriptor .desc {
+	margin: 10px 0;
+	line-height:30px;
+}
+.info {
+	margin-bottom:20px;
+}
+#data .green, .info .green {
+	color: #00aa00;
+}
+#data .red, .info .red {
+	color: #aa0000;
+}
