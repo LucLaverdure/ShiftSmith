@@ -5,7 +5,9 @@
 		<li style="background: #000;" class="step0">
 				<h1 class="hero">ShiftSmith</h1>
 				<h2>The Blacksmith of Websites.</h2>
-				<a href="/tutorials" class="button">Get Started!</a>
+				<a href="#select-url" class="button">Get Started!</a>
+				<a href="/docs" class="button">Read about it!</a>
+				<a href="/tutorials" class="button">Watch how to do it!</a>
 		</li>
 		<li style="background: #444;" class="step1" id="select-url">
 				<h1 class="hero">Step 1</h1>

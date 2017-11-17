@@ -541,7 +541,7 @@ body .wrapper h2 {
 	display:block;
 	height:30px;
 	width:30px;
-	background: transparent url(/admin/files/img/required.png) top left;
+	background: transparent url(/core/admin/files/img/required.png) top left;
 	background-size:30px 30px;
 }
 .select2 {
@@ -721,7 +721,7 @@ audio, video {
 	padding:50px;
 	min-height:250px;
 	width:100%;
-	background: #ddd url(/admin/files/img/drop-here.png) center center no-repeat;
+	background: #ddd url(/core/admin/files/img/drop-here.png) center center no-repeat;
 	box-sizing:border-box;
 	margin-bottom:40px;
 	border: 2px dashed #000;
@@ -731,7 +731,7 @@ audio, video {
 	min-height:550px;
 	max-width:400px;
 	width:100%;
-	background: #ddd url(/admin/files/img/drop-here.png) center center no-repeat;
+	background: #ddd url(/core/admin/files/img/drop-here.png) center center no-repeat;
 	box-sizing:border-box;
 	border: 2px dashed #000;
 	float:left;

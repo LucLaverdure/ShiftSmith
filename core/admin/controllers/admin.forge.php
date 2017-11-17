@@ -1,5 +1,33 @@
 <?php
 
+class admin_forge_lang extends Controller {
+
+	function validate() {
+		if (($this->user->isAdmin()) && q('admin/create/lang'))
+			return 1;
+		else return false;
+	}
+	
+	function execute() {
+		$id = 0;
+
+		// set initial prompts
+		$this->setModel('prompt', 'message', '');
+		$this->setModel('prompt', 'error', '');
+
+		$del_query = "SELECT code, title, home_url FROM lang ORDER BY code";
+		$res = $this->db->queryResults($del_query);
+
+		// if posting value
+		if (input('item.id') != '') {
+		}
+		
+		// load page template
+		$this->loadView('admin.forge.lang.tpl');
+	}
+}
+
+
 class admin_forge_page extends Controller {
 
 	function validate() {

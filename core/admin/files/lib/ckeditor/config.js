@@ -11,5 +11,4 @@ CKEDITOR.editorConfig = function( config ) {
 	config.protectedSource.push( /<\?php[\s\S]*/g );   // PHP Code
 	config.protectedSource.push( /<%[\s\S]*?%>/g );   // ASP Code
 	config.protectedSource.push( /(]+>[\s|\S]*?<\/asp:[^\>]+>)|(]+\/>)/gi );   // ASP.Net Code
-	config.contentsCss = '/files/css/common.css';
 };

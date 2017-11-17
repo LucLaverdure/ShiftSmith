@@ -27,64 +27,74 @@
 	</form>
 	
 	<div class="forge-option-block">
+		<div class="ico"><img src="/core/admin/files/img/ico/forge/lang.png" alt="Page"></div>
+		<a href="/admin/create/lang">Languages</a>
+	</div>
+
+	<div class="forge-option-block">
+		<div class="ico"><img src="/core/admin/files/img/ico/forge/menu.png" alt="Page"></div>
+		<a href="/admin/create/menu">Navigation Menu</a>
+	</div>
+
+	<div class="forge-option-block">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/page.png" alt="Page"></div>
-		<a href="/core/admin/create/page">Page</a>
+		<a href="/admin/create/page">Page</a>
 	</div>
 
 	<div class="forge-option-block">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/blog.png" alt="blog"></div>
-		<a href="/core/admin/create/post">Blog Entry (Post)</h3>
+		<a href="/admin/create/post">Blog Entry (Post)</h3>
 	</div>
 
 	<div class="forge-option-block">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/block.png" alt="block"></div>
-		<a href="/core/admin/create/block">Custom Block</h3>
+		<a href="/admin/create/block">Custom Block</h3>
 	</div>
 
 	<div class="cl forge-option-block">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/sell.png" alt="block"></div>
-		<a href="/core/admin/create/sale">Item to Sell</h3>
+		<a href="/admin/create/sale">Item to Sell</h3>
 	</div>
 
 	<div class="forge-option-block">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/form.png" alt="block"></div>
-		<a href="/core/admin/create/form">Web Form</h3>
+		<a href="/admin/create/form">Web Form</h3>
 	</div>
 
 	<div class="forge-option-block wiz">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/images.png" alt="block"></div>
-		<a href="/core/admin/images">Add Image(s)</h3>
+		<a href="/admin/images">Add Image(s)</h3>
 	</div>
 
 	<div class="forge-option-block wiz">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/music.png" alt="block"></div>
-		<a href="/core/admin/audio">Add Audio</h3>
+		<a href="/admin/audio">Add Audio</h3>
 	</div>
 
 	<div class="forge-option-block wiz">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/video.png" alt="block"></div>
-		<a href="/core/admin/videos">Add Video</h3>
+		<a href="/admin/videos">Add Video</h3>
 	</div>
 
 	
 	<div class="cl forge-option-block">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/poc.png" alt="poc"></div>
-		<a href="/core/admin/create/poc">Build PoC (Proof of Concept)</h3>
+		<a href="/admin/create/poc">Build PoC (Proof of Concept)</h3>
 	</div>
 
 	<div class="forge-option-block">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/wp.png" alt="wp"></div>
-		<a href="/core/admin/create/migration-wp">Migrate Wordpress to ShiftSmith</h3>
+		<a href="/admin/create/migration-wp">Migrate Wordpress to ShiftSmith</h3>
 	</div>
 
 	<div class="forge-option-block wiz">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/db.png" alt="Database"></div>
-		<a href="/core/admin/create/import-db">Import Database (SQL)</h3>
+		<a href="/admin/create/import-db">Import Database (SQL)</h3>
 	</div>
 
 	<div class="forge-option-block csv">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/csv.png" alt="Database"></div>
-		<a href="/core/admin/create/import-csv">Import Delimited File (CSV)</h3>
+		<a href="/admin/create/import-csv">Import Delimited File (CSV)</h3>
 	</div>
 	
 	<script type="text/javascript">

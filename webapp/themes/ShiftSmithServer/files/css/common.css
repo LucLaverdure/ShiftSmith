@@ -665,6 +665,10 @@ a.button.download-theme {
 	margin: 10px 0;
 	line-height:30px;
 }
+#dirdescriptor .path {
+	padding:10px;
+	background: #cccc;
+}
 .info {
 	margin-bottom:20px;
 }
