@@ -18,24 +18,30 @@
 	<a href="/user">Administration</a> &gt; <a href="/core/admin/forge">Forge</a> &gt; Languages
 
 	<form method="post" action="" enctype="multipart/form-data">
+
+		<div class="descr">
+			<p>Please enter language <strong>code</strong>, <strong>title</strong> and <strong>home url</strong>.</p>
+		</div>
 	
-		<input type="hidden" name="item.id" value="[page.item.id]" />
+		<input type="hidden" value="true" name="posting" />
 	
 		<h2 class="header-block"></h2>
 [for:lang.custom]
-		<label class="field-head sub-header-block">
-			<input class="custom head" type="text" value="[lang.custom.header]" name="lang.title[ ]" />
+		<label class="field-head sub-header-block lang">
+			<input class="custom head" type="text" value="[lang.custom.code]" name="lang.code[ ]" />
+			<input class="custom mid" type="text" value="[lang.custom.title]" name="lang.title[ ]" />
 			<a href="#" class="del-button">Delete</a>
-			<input class="custom value" type="text" value="[lang.custom.value]" name="lang.homeurl[ ]" />
+			<input class="custom value" type="text" value="[lang.custom.url]" name="lang.url[ ]" />
 		</label>
 [end:lang.custom]
 
-		<div id="template-custom-field">
-			<label class="field-head sub-header-block" style="display:none;">
-				<input class="custom head" type="text" value="" name="custom.header[ ]" />
-				<a href="#" class="del-button">Delete</a>
-				<input class="custom value" type="text" value="" name="custom.value[ ]" />
-			</label>
+		<div id="template-custom-field" style="display:none;">
+		<label class="field-head sub-header-block lang">
+			<input class="custom head" type="text" value="" name="lang.code[ ]" />
+			<input class="custom mid" type="text" value="" name="lang.title[ ]" />
+			<a href="#" class="del-button">Delete</a>
+			<input class="custom value" type="text" value="" name="lang.url[ ]" />
+		</label>
 		</div>
 
 		<div id="template-placeholder">

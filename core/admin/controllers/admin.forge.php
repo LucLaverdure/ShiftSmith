@@ -15,11 +15,34 @@ class admin_forge_lang extends Controller {
 		$this->setModel('prompt', 'message', '');
 		$this->setModel('prompt', 'error', '');
 
-		$del_query = "SELECT code, title, home_url FROM lang ORDER BY code";
-		$res = $this->db->queryResults($del_query);
-
-		// if posting value
-		if (input('item.id') != '') {
+		if (input('posting') != '') {
+			// on page land, clear cache
+			$langs = array();
+			foreach (input('lang.code') as $k => $lang) {
+				if (isset(input('lang.code')[$k]) && input('lang.code')[$k] != "") {
+					$langs[] = "('".p(input('lang.code')[$k])."','".p(input('lang.title')[$k])."','".p(input('lang.url')[$k])."')";
+				}
+			}
+			
+			$sql = "DELETE FROM lang;";
+			$res = $this->db->query($sql);
+			
+			$sql = "INSERT INTO lang (code, title, home_url) VALUES ".implode(",", $langs).";";
+			$res = $this->db->query($sql);
+			
+		}
+		
+		$lang_query = "SELECT code, title, home_url FROM lang ORDER BY code";
+		$res = $this->db->queryResults($lang_query);
+		
+		$this->clearcache(array('lang'));
+		
+		foreach($res as $k => $row) {
+			$this->cacheForm('lang', array(
+				"custom.code[".$k."]" => $row["code"],
+				"custom.title[".$k."]" => $row["title"],
+				"custom.url[".$k."]" => $row["home_url"]
+			));
 		}
 		
 		// load page template

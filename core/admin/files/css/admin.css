@@ -866,3 +866,20 @@ body .forge-private {
 .action-box {
 	margin:10px 0;
 }
+
+.lang .head {
+	max-width:50px;
+	width:100%;
+}
+
+.lang .mid {
+	margin-left:30px;
+	max-width:300px;
+	width:100%;
+}
+.descr p {
+	margin-top:20px;
+}
+strong {
+	font-weight:bold;
+}
