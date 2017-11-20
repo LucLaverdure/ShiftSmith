@@ -201,11 +201,21 @@ $(document).on('change', '#forge-title', function() {
 	$('#forge-url').val(cleanurl($this.val()));
 });
 
+function incItems() {
+	var incR = 0;
+	$('.menu-wrapper .item').each(function() {
+		incR++;
+		$(this).find(".rad").attr('name', 'fields.opto['+incR.toString()+']');
+	});
+}
+
 $(document).on('click', '.add-button-custom', function() {
 	$('#template-placeholder').append($('#template-custom-field').html());
 	$('#template-placeholder').find('.field-head').last().fadeIn();
+	incItems();
 	return false;
 });
+
 
 $(document).on('click', '.forge-option-block', function() {
 	window.location = $(this).find('a').attr('href');

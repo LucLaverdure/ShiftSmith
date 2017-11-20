@@ -60,14 +60,8 @@ class admin_forge_menu extends Controller {
 	function execute() {
 		$id = 0;
 
-		// when not posting form
-		if (input('item.id') == '') {
-			// on page land, clear cache
-			$this->clearcache(array('menu'));
-			$this->clearcache(array('pages'));
-		}
-			$this->clearcache(array('menu'));
-			$this->clearcache(array('pages'));
+		$this->clearcache(array('menu'));
+		$this->clearcache(array('pages'));
  		
 		// when editing
 		if (q(1)=='edit') {

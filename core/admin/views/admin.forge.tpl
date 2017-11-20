@@ -82,11 +82,6 @@
 		<a href="/admin/create/poc">Build PoC (Proof of Concept)</h3>
 	</div>
 
-	<div class="forge-option-block">
-		<div class="ico"><img src="/core/admin/files/img/ico/forge/wp.png" alt="wp"></div>
-		<a href="/admin/create/migration-wp">Migrate Wordpress to ShiftSmith</h3>
-	</div>
-
 	<div class="forge-option-block wiz">
 		<div class="ico"><img src="/core/admin/files/img/ico/forge/db.png" alt="Database"></div>
 		<a href="/admin/create/import-db">Import Database (SQL)</h3>
