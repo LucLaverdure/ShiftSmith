@@ -19,7 +19,7 @@
 			[admin-panel.tpl]
 				
 			<div class="content docs-list">
-					<div class="breadcrumbs"><a href="/user" class="breadcrumbs">Administration</a> &gt; <a href="/core/admin/forged">Forged</a> &gt; Database entries</div>
+					<div class="breadcrumbs"><a href="/user" class="breadcrumbs">Administration</a> &gt; <a href="/admin/forged">Forged</a> &gt; Database entries</div>
 					
 					<h2>Database Entries</h2>
 				<form action="" method="post">
@@ -48,7 +48,7 @@
 								&mdash;
 								<a href="[forged.content.url]" class="hvr-wobble-skew hvr-grow">View</a>
 								&mdash;
-								<a href="/core/admin/del/db/[forged.content.id]" class="delete hvr-wobble-skew hvr-grow">Delete</a>
+								<a href="/admin/del/db/[forged.content.id]" class="delete hvr-wobble-skew hvr-grow">Delete</a>
 							</div>
 						</div>
 					[end:forged]
@@ -76,9 +76,9 @@
 								<div class="cell">[forgedfile.name]&nbsp;</div>
 								<div class="cell filename">[forgedfile.filename]&nbsp;</div>
 								<div class="cell operations">
-									<a href="/core/admin/file/editor?filename=[forgedfile.filename]" class="hvr-wobble-skew hvr-grow">Edit Controller</a>
+									<a href="/admin/file/editor?filename=[forgedfile.filename]" class="hvr-wobble-skew hvr-grow">Edit Controller</a>
 								&mdash;
-									<a href="/core/admin/shiftsmith/delete/[forged.id]" class="delete hvr-wobble-skew hvr-grow">Delete</a>
+									<a href="/admin/shiftsmith/delete/[forged.id]" class="delete hvr-wobble-skew hvr-grow">Delete</a>
 								</div>
 							</div>
 						[end:forgedfile]

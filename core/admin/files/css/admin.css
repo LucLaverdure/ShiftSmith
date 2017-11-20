@@ -883,3 +883,66 @@ body .forge-private {
 strong {
 	font-weight:bold;
 }
+
+/* Menu */
+.items {
+    list-style: none outside none;
+    margin-bottom: 20px;
+    padding: 0;
+}
+.item {
+    background: #fff;
+    border: 1px solid #ddd;
+    cursor: move;
+    height: 70px;
+    line-height: 70px;
+    padding: 0 10px;
+}
+.item img {
+	padding-top:20px;
+	float:left;
+	display:inline-block;
+	margin-right:10px;
+	width:30px;
+}
+.item .del-button {
+	margin-top:10px;
+}
+.second-level {
+    margin-left: 50px;
+}
+.dragHover {
+    border-color: blue;
+    color: blue;
+}
+.placeholder {
+    background: #fff;
+    border: 1px dashed #ccc;
+    height: 70px;
+}
+
+.placeholder-sub {
+    background: #fff;
+    border: 1px dashed #ccc;
+    height: 70px;
+    margin-left: 50px;
+}
+.items-container {
+	margin-top:30px;
+	padding: 0;
+	position:relative;
+}
+.url-opt {
+	padding-left:30px;
+}
+.page-opt {
+	padding-left:30px;
+}
+.optclick {
+	max-width:170px;
+	width:100%;
+}
+.menu-input {
+	padding:5px;
+	font-size:16px;
+}

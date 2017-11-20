@@ -46,7 +46,7 @@
 					foreach ($data as $key => $val) {
 						if (strrpos ($key, 'tags.name') !== false) {
 							$tags[] = $val;
-							if (in_array($val, array('page','block','post','sale','form','image','audio','video','poc','wp','db'))) {
+							if (in_array($val, array('page', 'block', 'post', 'sale', 'form', 'image', 'audio', 'video', 'poc','wp', 'db', 'menu'))) {
 								$edit .= '<a href="/admin/edit/'.$val.'/'.$data['id'].'">Edit as '.$val.'</a> ';
 							}
 						}

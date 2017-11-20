@@ -9,8 +9,6 @@ class admin_forge_lang extends Controller {
 	}
 	
 	function execute() {
-		$id = 0;
-
 		// set initial prompts
 		$this->setModel('prompt', 'message', '');
 		$this->setModel('prompt', 'error', '');
@@ -47,6 +45,96 @@ class admin_forge_lang extends Controller {
 		
 		// load page template
 		$this->loadView('admin.forge.lang.tpl');
+	}
+}
+
+
+class admin_forge_menu extends Controller {
+
+	function validate() {
+		if (($this->user->isAdmin()) && (q('admin/create/menu') || q('admin/edit/menu/*')))
+			return 1;
+		else return false;
+	}
+	
+	function execute() {
+		$id = 0;
+
+		// when not posting form
+		if (input('item.id') == '') {
+			// on page land, clear cache
+			$this->clearcache(array('menu'));
+			$this->clearcache(array('pages'));
+		}
+			$this->clearcache(array('menu'));
+			$this->clearcache(array('pages'));
+ 		
+		// when editing
+		if (q(1)=='edit') {
+			$id = (int) q(3);
+			
+			$this->cacheForm('menu', array());
+			
+			$res = $this->db->querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
+			
+			$this->loadkvp($res);
+
+			$this->addModel('menu','item.id', $id);
+		
+		} else {
+			// when creating
+			$id = 'new';
+			
+			// page form initial values
+			$this->cacheForm('menu', array(
+				//main
+				'item.id' => $id,
+				'content.title' => '',
+				'tags.name[0]' => 'menu',
+				
+				// menus
+				'fields.level[0]' => 'first-level',
+				'fields.title[0]' => 'Home',
+				'fields.opto[0]' => 'url',
+				'fields.url[0]' => '/',
+				'fields.page[0]' => '1',
+				'fields.index[0]' => '0',
+			));
+			
+		}
+
+		// save form on posted data
+		if (input('item.id') != '') {
+			// save current input data
+			$this->saveForm(input('item.id'), array('menu'));
+			
+			// set prompt saved form success
+			//$this->setModel('prompt', 'message', 'Menu saved to database.');
+		
+			// go to edit page once page created.
+			if (is_numeric(input('item.id'))) {
+				redirect('/admin/edit/menu/'.input('item.id'));
+			}
+		}
+
+		
+		$pages_sql = "SELECT * FROM shiftsmith WHERE `key`='content.title' AND `namespace` NOT LIKE 'menu';";
+		$res = $this->db->querykvp($pages_sql);
+		$myarr = array();
+		foreach ($res as $k => $ret) {
+			foreach ($ret as $i => $output) {
+				if ($i=='id') {
+					$myarr['item.id['.$k.']'] = $output;
+				} else {
+					$myarr['item.title['.$k.']'] = $output;
+				}
+			}
+		}
+
+		$this->cacheForm('pages', $myarr, 'FORCE.CACHE');
+
+		// load page template
+		$this->loadView('admin.forge.menu.tpl');
 	}
 }
 
