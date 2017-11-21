@@ -7,7 +7,7 @@
 		} elseif (is_numeric($arg_number)) {
 			$array = explode('/', q());
 			if (isset($array[$arg_number])) {
-				return $array[$arg_number+''];
+				return $array[$arg_number.''];
 			}
 		} elseif (!is_numeric($arg_number)) {
 			return inpath($arg_number);

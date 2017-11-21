@@ -203,9 +203,9 @@ $(document).on('change', '#forge-title', function() {
 
 function incItems() {
 	var incR = 0;
-	$('.menu-wrapper .item').each(function() {
-		incR++;
+	$('.menu-wrapper .item:visible').each(function() {
 		$(this).find(".rad").attr('name', 'fields.opto['+incR.toString()+']');
+		incR++;
 	});
 }
 

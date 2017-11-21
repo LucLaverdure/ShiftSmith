@@ -43,6 +43,7 @@
 					$row = array();
 					$tags = array();
 					$edit = '';
+					$trigger_url = "N/A";
 					foreach ($data as $key => $val) {
 						if (strrpos ($key, 'tags.name') !== false) {
 							$tags[] = $val;

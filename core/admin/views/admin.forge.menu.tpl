@@ -16,6 +16,15 @@
 		<input type="hidden" name="tags.name[]" value="menu" />
 		
 		<label>
+			<h2 class="header-block required"><span></span>Menu Language</h2>
+			<select class="lang-select chkopto" name="content.lang" data-val="[menu.content.lang]">
+[for:lang.custom]
+				<option value="[lang.custom.code]">[lang.custom.title]</option>
+[end:lang.custom]
+			</select>
+		</label>
+
+		<label>
 			<h2 class="header-block required"><span></span>Menu Title</h2>
 			<input id="forge-title" class="forge-title required" type="text" value="[menu.content.title]" name="content.title" title="Title" />
 		</label>
@@ -26,19 +35,19 @@
 [for:menu.fields]
 				<li class="item [menu.fields.level]"> <!-- second-level or first-level -->
 					
-					<input class="clevel" type="hidden" name="fields.level[]" value="[menu.fields.level]" />
+					<input class="clevel required" type="hidden" name="fields.level[]" value="[menu.fields.level]" />
 					
 					<img src="/core/admin/files/img/ico/move.png" alt="Move" />
 					
-					Title : <input type="text" name="fields.title[]" value="[menu.fields.title]" class="menu-input" />
+					Title : <input type="text" name="fields.title[]" value="[menu.fields.title]" class="menu-input required"title="Menu Link Title" />
 					<label class="url-opt">
 						<input type="radio" name="fields.opto[]" value="url" class="rad chktype" data-val="[menu.fields.opto]" />
-						URL : <input type="text" name="fields.url[]" value="[menu.fields.url]" class="optclick menu-input" />
+						URL : <input title="Menu Link URL" type="text" name="fields.url[]" value="[menu.fields.url]" class="optclick menu-input" />
 					</label>
 					
 					<label class="page-opt">
 						<input type="radio" name="fields.opto[]" value="page" class="rad chktype" data-val="[menu.fields.opto]" /> Page :
-						<select name="fields.page[]" class="optclick menu-input menu-pages chkopto" data-val="[menu.fields.page]">
+						<select name="fields.page[]" title="Menu Link Page" class="optclick menu-input menu-pages chkopto " data-val="[menu.fields.page]">
 						</select>
 					</label>
 					
@@ -47,14 +56,12 @@
 [end:menu.fields]
 			</ul>		
 		</div>
-		<script type="text/javascript">
-			incItems();
-		</script>
 		<a href="#" class="button add-button-custom">Add Menu Item</a>
 
 		<a href="#" class="button save-button">Save Changes</a>
 		
 </form>
+</div>
 
 		<ul id="template-custom-field" style="display:none;">
 				<li class="item first-level"> <!-- second-level or first-level -->
@@ -63,10 +70,10 @@
 					
 					<img src="/core/admin/files/img/ico/move.png" alt="Move" />
 					
-					Title : <input type="text" name="fields.title[]" value="" class="menu-input" />
+					Title : <input type="text" name="fields.title[]" value="Home" class="menu-input" />
 					<label class="url-opt">
 						<input type="radio" name="fields.opto[]" value="url" class="rad chktype" checked="checked" />
-						URL : <input type="text" name="fields.url[]" value="" class="optclick menu-input" />
+						URL : <input type="text" name="fields.url[]" value="/" class="optclick menu-input" />
 					</label>
 					
 					<label class="page-opt">
@@ -79,7 +86,9 @@
 				</li>
 		</ul>
 		<script type="text/javascript">
-		
+			
+			incItems();
+			
 			$('.menu-pages').each(function() {
 				[for:pages.item]
 					$(this).append('<option value="[pages.item.id]">[pages.item.title]</option>');
@@ -100,7 +109,7 @@
 			
 		</script>
 	
-</div>
+
 
 <script type="text/javascript">
 

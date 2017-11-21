@@ -84,6 +84,7 @@ class admin_forge_menu extends Controller {
 				//main
 				'item.id' => $id,
 				'content.title' => '',
+				'content.lang' => 'en',
 				'tags.name[0]' => 'menu',
 				
 				// menus
@@ -101,17 +102,14 @@ class admin_forge_menu extends Controller {
 		if (input('item.id') != '') {
 			// save current input data
 			$this->saveForm(input('item.id'), array('menu'));
-			
-			// set prompt saved form success
-			//$this->setModel('prompt', 'message', 'Menu saved to database.');
-		
+	
 			// go to edit page once page created.
 			if (is_numeric(input('item.id'))) {
 				redirect('/admin/edit/menu/'.input('item.id'));
 			}
 		}
 
-		
+		// load pages option
 		$pages_sql = "SELECT * FROM shiftsmith WHERE `key`='content.title' AND `namespace` NOT LIKE 'menu';";
 		$res = $this->db->querykvp($pages_sql);
 		$myarr = array();
@@ -127,6 +125,17 @@ class admin_forge_menu extends Controller {
 
 		$this->cacheForm('pages', $myarr, 'FORCE.CACHE');
 
+		// load languages
+		$lang_query = "SELECT code, title FROM lang ORDER BY code";
+		$res = $this->db->queryResults($lang_query);
+		$this->clearcache(array('lang'));
+		foreach($res as $k => $row) {
+			$this->cacheForm('lang', array(
+				"custom.code[".$k."]" => $row["code"],
+				"custom.title[".$k."]" => $row["title"]
+			));
+		}
+		
 		// load page template
 		$this->loadView('admin.forge.menu.tpl');
 	}
