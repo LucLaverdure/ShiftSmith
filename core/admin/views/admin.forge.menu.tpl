@@ -173,6 +173,10 @@
 	});
 		
 	$(document).on('click', '.del-button', function() {
+		if ($(".items .item").length <= 1) {
+			alert("Menu must have a minimum of 1 item.");
+			return false; // minimum of one item
+		}
 		$(this).parent('li').first().remove();
 		return false;
 	});

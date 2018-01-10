@@ -61,6 +61,10 @@
 	var ids = [ ];
 
 	$(document).on('click', '.del-button', function() {
+		if ($(".lang:visible").length <= 1) {
+			alert("Menu must have a minimum of 1 language.");
+			return false; // minimum of one item
+		}
 		$(this).parent().remove();
 		return false;
 	});

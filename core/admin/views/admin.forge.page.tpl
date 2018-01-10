@@ -20,6 +20,16 @@
 	<form method="post" action="" enctype="multipart/form-data">
 	
 		<input type="hidden" name="item.id" value="[page.item.id]" />
+
+		<label>
+			<h2 class="header-block required"><span></span>Page Language</h2>
+			<select class="lang-select chkopto" name="content.lang" data-val="[page.content.lang]">
+[for:lang.custom]
+				<option value="[lang.custom.code]">[lang.custom.title]</option>
+[end:lang.custom]
+			</select>
+		</label>
+		
 	
 		<label>
 			<h2 class="header-block required"><span></span>Title</h2>
@@ -61,6 +71,12 @@
 					$this.prop('checked', true);
 				};
 			});
+			
+			$('.chkopto:visible').each(function() {
+				$this = $(this);
+				$this.val($this.attr('data-val'));
+			});
+			
 		</script>
 		
 		<label class="field-head sub-header-block required">

@@ -59,15 +59,15 @@ class admin_forge_menu extends Controller {
 	
 	function execute() {
 		$id = 0;
-
-		$this->clearcache(array('menu'));
-		$this->clearcache(array('pages'));
  		
-		// when editing
+		// save form on posted data
 		if (q(1)=='edit') {
+			
+			// when editing
+			
 			$id = (int) q(3);
 			
-			$this->cacheForm('menu', array());
+			$this->cacheForm('menu');
 			
 			$res = $this->db->querykvp("SELECT id, namespace, `key`, value FROM shiftsmith WHERE id=".$id.";");
 			
@@ -76,7 +76,9 @@ class admin_forge_menu extends Controller {
 			$this->addModel('menu','item.id', $id);
 		
 		} else {
-			// when creating
+			$this->clearcache(array('menu'));
+
+			// when creating or posting data
 			$id = 'new';
 			
 			// page form initial values
@@ -97,8 +99,6 @@ class admin_forge_menu extends Controller {
 			));
 			
 		}
-
-		// save form on posted data
 		if (input('item.id') != '') {
 			// save current input data
 			$this->saveForm(input('item.id'), array('menu'));
@@ -113,27 +113,30 @@ class admin_forge_menu extends Controller {
 		$pages_sql = "SELECT * FROM shiftsmith WHERE `key`='content.title' AND `namespace` NOT LIKE 'menu';";
 		$res = $this->db->querykvp($pages_sql);
 		$myarr = array();
-		foreach ($res as $k => $ret) {
-			foreach ($ret as $i => $output) {
-				if ($i=='id') {
-					$myarr['item.id['.$k.']'] = $output;
-				} else {
-					$myarr['item.title['.$k.']'] = $output;
+		if ($res) {
+			foreach ($res as $k => $ret) {
+				foreach ($ret as $i => $output) {
+					if ($i=='id') {
+						$myarr['item.id['.$k.']'] = $output;
+					} else {
+						$myarr['item.title['.$k.']'] = $output;
+					}
 				}
 			}
+			foreach ($myarr as $key => $arr) {
+				$this->addModel("pages", $key, $arr);
+			}
+		} else {
+			$this->addModel("pages", "item.id[0]", "");
+			$this->addModel("pages", "item.title[0]", "");
 		}
-
-		$this->cacheForm('pages', $myarr, 'FORCE.CACHE');
-
+		
 		// load languages
 		$lang_query = "SELECT code, title FROM lang ORDER BY code";
 		$res = $this->db->queryResults($lang_query);
-		$this->clearcache(array('lang'));
 		foreach($res as $k => $row) {
-			$this->cacheForm('lang', array(
-				"custom.code[".$k."]" => $row["code"],
-				"custom.title[".$k."]" => $row["title"]
-			));
+			$this->addModel("lang", "custom.code[".$k."]", $row["code"]);
+			$this->addModel("lang", "custom.title[".$k."]", $row["title"]);
 		}
 		
 		// load page template
@@ -185,6 +188,7 @@ class admin_forge_page extends Controller {
 			$this->cacheForm('page', array(
 				'item.id' => $id,
 				'content.title' => '',
+				'content.lang' => 'en',
 				'trigger.date' => '',
 				'trigger.url' => '',
 				'trigger.private' => 'N',
@@ -213,6 +217,17 @@ class admin_forge_page extends Controller {
 			if (is_numeric(input('item.id'))) {
 				redirect('/admin/edit/page/'.input('item.id'));
 			}
+		}
+		
+		// load languages
+		$lang_query = "SELECT code, title FROM lang ORDER BY code";
+		$res = $this->db->queryResults($lang_query);
+		$this->clearcache(array('lang'));
+		foreach($res as $k => $row) {
+			$this->cacheForm('lang', array(
+				"custom.code[".$k."]" => $row["code"],
+				"custom.title[".$k."]" => $row["title"]
+			));
 		}
 		
 		// load page template
