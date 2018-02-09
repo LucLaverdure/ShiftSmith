@@ -1,1 +1,1 @@
-<?php define('ACTIVE_THEME', 'ShiftSmithServer'); ?>
+<?php define('ACTIVE_THEME', 'WizardHat'); ?>
