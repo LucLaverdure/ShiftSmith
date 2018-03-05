@@ -1,6 +1,6 @@
 <?php
 
-class admin_forge_lang extends Controller {
+class admin_forge_lang extends Wizard\Build\Controller {
 
 	function validate() {
 		if (($this->user->isAdmin()) && q('admin/create/lang'))
@@ -49,7 +49,7 @@ class admin_forge_lang extends Controller {
 }
 
 
-class admin_forge_menu extends Controller {
+class admin_forge_menu extends Wizard\Build\Controller {
 
 	function validate() {
 		if (($this->user->isAdmin()) && (q('admin/create/menu') || q('admin/edit/menu/*')))
@@ -145,7 +145,7 @@ class admin_forge_menu extends Controller {
 }
 
 
-class admin_forge_page extends Controller {
+class admin_forge_page extends Wizard\Build\Controller {
 
 	function validate() {
 		if (($this->user->isAdmin()) && (q('admin/create/page') || q('admin/edit/page/*')))
@@ -235,7 +235,7 @@ class admin_forge_page extends Controller {
 	}
 }
 
-class admin_forge_csv extends Controller {
+class admin_forge_csv extends Wizard\Build\Controller {
 
 	function validate() {
 		if (($this->user->isAdmin()) && q('admin/create/import-csv'))
@@ -348,7 +348,7 @@ class admin_forge_csv extends Controller {
 		$this->loadView('admin.forge.csv.tpl');
 	}
 }
-class admin_forge_post extends Controller {
+class admin_forge_post extends Wizard\Build\Controller {
 
 	function validate() {
 		if (($this->user->isAdmin()) && (q('admin/create/post') || q('admin/edit/post/*')))
@@ -426,7 +426,7 @@ class admin_forge_post extends Controller {
 	}
 }
 
-class admin_forge_block extends Controller {
+class admin_forge_block extends Wizard\Build\Controller {
 	
 	function validate() {
 		if (($this->user->isAdmin()) && (q('admin/create/block') || q('admin/edit/block/*')))
@@ -505,7 +505,7 @@ class admin_forge_block extends Controller {
 	}
 }
 
-class admin_forge_sale extends Controller {
+class admin_forge_sale extends Wizard\Build\Controller {
 
 	function validate() {
 		if (($this->user->isAdmin()) && (q('admin/create/sale') || q('admin/edit/sale/*')))
@@ -587,7 +587,7 @@ class admin_forge_sale extends Controller {
 	}
 }
 
-class admin_forge_form extends Controller {
+class admin_forge_form extends Wizard\Build\Controller {
 
 	function validate() {
 		if (($this->user->isAdmin()) && (q('admin/create/form') || q('admin/edit/form/*')))
@@ -680,7 +680,7 @@ class admin_forge_form extends Controller {
 	}
 }
 
-class admin_wizard_upload extends Controller {
+class admin_wizard_upload extends Wizard\Build\Controller {
 
 	function validate() {
 		if (($this->user->isAdmin()) && (q('admin/wizard/upload') || q('admin/upload/wizard')))

@@ -1,4 +1,6 @@
 <?php
+	namespace Wizard\Build;
+	
 	if (!IN_SHIFTSMITH) die();
 	
 	class Database {
@@ -14,7 +16,7 @@
 				self::$dbtype = $dbtype;
 
 				if (self::$dbtype=='mysql') {
-					self::$dblink = @new mysqli($host, $user, $password, $database);
+					self::$dblink = @new \mysqli($host, $user, $password, $database);
 					if (!isset(self::$dblink->connect_error)) self::$isConnected = true;
 				}
 

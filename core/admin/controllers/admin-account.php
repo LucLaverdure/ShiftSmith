@@ -1,6 +1,6 @@
 <?php
 	// Step 1: Create admin account
-	class create_user extends Controller {
+	class create_user extends Wizard\Build\Controller {
 		
 		function validate() {
 			// inpath /user
@@ -45,7 +45,7 @@
 	}
 
 	// Step 2: Confirm account creation by email.
-	class user_confirm_key extends Controller {
+	class user_confirm_key extends Wizard\Build\Controller {
 		// Display function: validate urls to activate the controller
 		function validate() {
 			if (q('confirm/admin/*/*') && (!$this->user->isLoggedIn())) {
@@ -78,7 +78,7 @@
 	}
 
 	// Step 3: Login.
-	class user_login extends Controller {
+	class user_login extends Wizard\Build\Controller {
 		// Display function: validate urls to activate the controller
 		function validate() {
 			if ((q('user')) && (!$this->user->isLoggedIn()) && ($this->user->counted() > 0) ) {
@@ -113,7 +113,7 @@
 	}
 
 	// Logged in panel
-	class user_logged_in extends Controller {
+	class user_logged_in extends Wizard\Build\Controller {
 		// Display function: validate urls to activate the controller
 		function validate() {
 			if ((q('user')) && ($this->user->isLoggedIn()) && ($this->user->isAdmin())) {
@@ -146,7 +146,7 @@
 
 
 	// Log out in panel
-	class user_logout extends Controller {
+	class user_logout extends Wizard\Build\Controller {
 		// Display function: validate urls to activate the controller
 		function validate() {
 			if (q('admin/logout') && ($this->user->isLoggedIn())) {

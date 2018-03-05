@@ -1,4 +1,7 @@
 <?php
+
+	namespace Wizard\Build;
+
 	if (!IN_SHIFTSMITH) die();
 
 	// Core Controller class for all controller objects to extend
@@ -369,7 +372,7 @@
 
 
 		// inject resource
-		function inject($params) {
+		function procure($params) {
 
 			// set default values
 			$defaults = array(
@@ -378,14 +381,54 @@
 				"placeholder" => "body",	// selector: #id.class
 				"display" => "html",		// or text
 				"filter" => "",				// selector: #id.class
-				"mode" => "append"			// or prepend, replace
+				"mode" => "append",			// or prepend, replace, return
+				"javascript" => "no"		// enable js render
 			);
 
 			// override default values with provided parameters
 			$params = array_merge($defaults, $params);
 			
-			$this->injected_views[] = $params;
-			
+			if ($params['mode'] == 'return') {
+				$docX = phpQuery::newDocument("");
+
+					$content = $params["content"];
+					$file_contents = $params["file_contents"];
+					$placeholder = $params["placeholder"];
+					$display = $params["display"];
+					$mode = $params["mode"];
+					$filter = $params["filter"];
+					$js = $params["javascript"];
+					
+					$injected_output = '';
+					$docZ = '';
+					if (trim($file_contents) != '') {
+						// fetch ajax
+						$docZ = phpQuery::newDocument(@file_get_contents($file_contents));
+					} elseif (trim($content) != '') {
+						// fetch simple content
+						$docZ = phpQuery::newDocument($content);
+					}
+					
+					if (trim($filter) != '') {
+						// selector filter of response
+						$mydoc = $docZ[$filter];
+					} else {
+						// no filter
+						$mydoc = $docZ;
+					}
+					
+					if ($display == 'html') {
+						$injected_output = $mydoc->html();
+					} else {
+						$injected_output = $mydoc->text();
+					}
+					
+					return $injected_output;
+				
+
+			} else {
+				$this->injected_views[] = $params;
+			}
 		}
 			
 		

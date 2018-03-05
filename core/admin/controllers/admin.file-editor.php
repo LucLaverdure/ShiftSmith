@@ -1,6 +1,6 @@
 <?php
 
-	class admin_file_editor extends Controller {
+	class admin_file_editor extends Wizard\Build\Controller {
 		
 		function validate() {
 			if ((q('admin/file/editor')  && $this->user->isAdmin()) && isset($_REQUEST['filename']))

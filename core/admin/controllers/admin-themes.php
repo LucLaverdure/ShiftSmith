@@ -1,6 +1,6 @@
 <?php
 
-class admin_themes extends Controller {
+class admin_themes extends Wizard\Build\Controller {
 	
 	function validate() {
 		if (q('admin/themes') && $this->user->isAdmin())

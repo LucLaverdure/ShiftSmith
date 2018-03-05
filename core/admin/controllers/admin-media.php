@@ -1,6 +1,6 @@
 <?php
 
-class admin_images extends Controller {
+class admin_images extends Wizard\Build\Controller {
 	
 	function validate() {
 		if (q('admin/images') && $this->user->isAdmin())
@@ -49,7 +49,7 @@ class admin_images extends Controller {
 	}
 }
 
-class admin_audio extends Controller {
+class admin_audio extends Wizard\Build\Controller {
 	
 	function validate() {
 		if (q('admin/audio') && $this->user->isAdmin())
@@ -97,7 +97,7 @@ array('.3gp','.aa','.aac','.aax','.act','.aiff','.amr','.ape','.au','.awb','.dct
 	}
 }
 
-class admin_video extends Controller {
+class admin_video extends Wizard\Build\Controller {
 	
 	function validate() {
 		if (q('admin/videos') && $this->user->isAdmin())
@@ -145,7 +145,7 @@ array('.webm','.mkv','.flv','.flv','.vob','.ogv','.ogg', '.drc','.gif','.gifv','
 		$this->loadView('admin.videos.tpl');
 	}
 }
-class admin_upload_misc extends Controller {
+class admin_upload_misc extends Wizard\Build\Controller {
 	
 	function validate() {
 		if (q('admin/uploads') && $this->user->isAdmin())
@@ -198,7 +198,7 @@ array('.3gp','.aa','.aac','.aax','.act','.aiff','.amr','.ape','.au','.awb','.dct
 		$this->loadView('admin.misc.upload.tpl');
 	}
 }
-class admin_media_del extends Controller {
+class admin_media_del extends Wizard\Build\Controller {
 		
 	// Display function: validate urls to activate the controller
 	function validate() {

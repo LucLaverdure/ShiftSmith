@@ -1,12 +1,11 @@
 <?php
 
-class view_page extends Controller {
+class view_page extends Wizard\Build\Controller {
 		
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate custom page controller for db entries forged
-		
-		$db = new Database();
+		$db = new Wizard\Build\Database();
 		$db->connect();
 
 		// get all triggers
@@ -98,7 +97,7 @@ class view_page extends Controller {
 	}
 }
 
-class admin_delete_page extends Controller {
+class admin_delete_page extends Wizard\Build\Controller {
 	
 	function validate() {
 		if ( (q('0')=='admin') && (q(1)=='del') && (q(2)=='db') && (isset($_SESSION['login'])) ) {
@@ -122,7 +121,7 @@ class admin_delete_page extends Controller {
 }
 
 
-class admin_forge extends Controller {
+class admin_forge extends Wizard\Build\Controller {
 		
 	// Display function: validate urls to activate the controller
 	function validate() {

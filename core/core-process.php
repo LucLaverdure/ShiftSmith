@@ -5,7 +5,9 @@
 	$global_models = array();
 
 	include_once($main_path.'core/phpQuery/phpQuery-onefile.php');
-	
+//	include_once($main_path.'core/composer/vendor/autoload.php');
+
+//	use JonnyW\PhantomJs\Client;
 	
 	class Core {
 
@@ -73,7 +75,7 @@
 
 			// Instantiate each controller found (identified by class extended of Controller)
 			foreach($custom_classes as $class) {
-				if (in_array('Controller', class_parents($class))) {
+				if (in_array('Wizard\Build\Controller', class_parents($class))) {
 					$this->obj_controllers[$class] = new $class;
 				}
 			}
@@ -297,6 +299,7 @@ echo getQuery([
 
 		/* Main process thread */
 		public function process() {
+			global $main_path;
 			global $docX;
 			global $global_models;
 			global $view_complete_output;
@@ -363,30 +366,60 @@ echo getQuery([
 			$docX = phpQuery::newDocument($output_buffer);
 /*			
 				"content" => "",			// content to inject
-				"file_contents" => "",		// ajax content to inject, overrides content
+				"file_contents" => "",		// ajax content to inject, overrides content (url/filename)
 				"placeholder" => "body",	// selector: #id.class
 				"display" => "html",		// or text
 				"filter" => "",				// selector: #id.class
 				"mode" => "append"			// or prepend, replace
+				"javascript" => "no"		// render js yes or no
 */
-			foreach($injections as $injected_view) {
+
+	foreach($injections as $injected_view) {
 				$content = $injected_view["content"];
 				$file_contents = $injected_view["file_contents"];
 				$placeholder = $injected_view["placeholder"];
 				$display = $injected_view["display"];
 				$mode = $injected_view["mode"];
 				$filter = $injected_view["filter"];
+				$js = $injected_view["javascript"];
 				
 				$injected_output = '';
 				$docZ = '';
 				if (trim($file_contents) != '') {
+					
+					if ($js == "yes") {
+						$client = Client::getInstance();
+						
+						$client->getEngine()->setPath($main_path.'core/composer/bin/phantomjs');
+						
+						$client->getEngine()->addOption('--ssl-protocol=any');
+						$client->getEngine()->addOption('--ignore-ssl-errors=true');
+						$client->getEngine()->addOption('--web-security=false');
+						$client->getEngine()->addOption('--debug=true');
+						$client->getEngine()->addOption('--local-to-remote-url-access=true');
+
+						$request = $client->getMessageFactory()->createRequest("http://perdu.com");
+						$response = $client->getMessageFactory()->createResponse();
+						 
+						$client->send($request, $response);
+						var_dump($response);
+						var_dump($response->getStatus());
+						if($response->getStatus() === 200) {
+							$resp = $response->getContent();
+							var_dump($resp);
+							$docZ = phpQuery::newDocument($resp);
+						}
+						
+					} else {
+						$docZ = phpQuery::newDocument(@file_get_contents($file_contents));
+					}				
 					// fetch ajax
-					$docZ = phpQuery::newDocument(@file_get_contents($file_contents));
 				} elseif (trim($content) != '') {
 					// fetch simple content
 					$docZ = phpQuery::newDocument($content);
 				}
 				
+				$mydoc = "";
 				if (trim($filter) != '') {
 					// selector filter of response
 					$mydoc = $docZ[$filter];
@@ -400,7 +433,7 @@ echo getQuery([
 				} else {
 					$injected_output = $mydoc->text();
 				}
-				
+				var_dump($injected_output);
 				// mode of output
 				switch ($mode) {
 					case 'append':

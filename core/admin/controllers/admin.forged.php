@@ -1,6 +1,6 @@
 <?php
 
-	class admin_forged extends Controller {
+	class admin_forged extends Wizard\Build\Controller {
 		
 		function validate() {
 			if (q('admin/forged') && $this->user->isAdmin())

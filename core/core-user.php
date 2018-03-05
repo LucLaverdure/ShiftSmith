@@ -1,4 +1,7 @@
 <?php
+
+	namespace Wizard\Build;
+	
 	if (!IN_SHIFTSMITH) die();
 	
 	/*

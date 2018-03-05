@@ -1,6 +1,6 @@
 <?php
 
-class admin_settings extends Controller {
+class admin_settings extends Wizard\Build\Controller {
 	
 	function validate() {
 		if (q('admin/settings') && $this->user->isAdmin())
