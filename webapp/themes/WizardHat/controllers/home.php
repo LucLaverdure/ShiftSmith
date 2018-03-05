@@ -1,6 +1,6 @@
 <?php
 // Dashboard
-class homepage extends Controller {
+class homepage extends Wizard\Build\Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
@@ -16,7 +16,7 @@ class homepage extends Controller {
 	}
 }
 
-class edocs extends Controller {
+class edocs extends Wizard\Build\Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
@@ -31,7 +31,7 @@ class edocs extends Controller {
 	}
 }
 
-class tutorials extends Controller {
+class tutorials extends Wizard\Build\Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
@@ -46,7 +46,7 @@ class tutorials extends Controller {
 	}
 }
 
-class pluginspage extends Controller {
+class pluginspage extends Wizard\Build\Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
@@ -61,7 +61,7 @@ class pluginspage extends Controller {
 	}
 }
 
-class themespage extends Controller {
+class themespage extends Wizard\Build\Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
@@ -76,7 +76,7 @@ class themespage extends Controller {
 	}
 }
 
-class aboutpage extends Controller {
+class aboutpage extends Wizard\Build\Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
@@ -91,7 +91,7 @@ class aboutpage extends Controller {
 	}
 }
 
-class downloadpage extends Controller {
+class downloadpage extends Wizard\Build\Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
@@ -106,7 +106,7 @@ class downloadpage extends Controller {
 	}
 }
 
-class thankyoupage extends Controller {
+class thankyoupage extends Wizard\Build\Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*

@@ -1,6 +1,6 @@
 <?php
 
-class admin_comments extends Controller {
+class admin_comments extends Wizard\Build\Controller {
 		
 	// Display function: validate urls to activate the controller
 	function validate() {
@@ -25,7 +25,7 @@ class admin_comments extends Controller {
 	}
 }
 
-class admin_comment_del extends Controller {
+class admin_comment_del extends Wizard\Build\Controller {
 		
 	// Display function: validate urls to activate the controller
 	function validate() {
@@ -43,7 +43,7 @@ class admin_comment_del extends Controller {
 }
 
 // Register email
-class chatbox_login extends Controller {
+class chatbox_login extends Wizard\Build\Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// url pattern chatbox/register/username
@@ -64,7 +64,7 @@ class chatbox_login extends Controller {
 }
 
 // display chatlog of chatroom
-class chat_log extends Controller {
+class chat_log extends Wizard\Build\Controller {
 	//chatbox/chatlog/room/last-post-id
 	function validate() {
 		// url pattern chatbox/chatlog/room/last-post-id
@@ -104,7 +104,7 @@ class chat_log extends Controller {
 }
 
 // post a new comment to a chatbox room
-class chatbox_post extends Controller {
+class chatbox_post extends Wizard\Build\Controller {
 	// url pattern: chatbox/post/
 	function validate() {
 		// url pattern: chatbox/post/{room}/{liner}
@@ -136,7 +136,7 @@ class chatbox_post extends Controller {
 	}
 }
 
-class inject_chatbox extends Controller {
+class inject_chatbox extends Wizard\Build\Controller {
 	
 	function validate() {
 		return 999;

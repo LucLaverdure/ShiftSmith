@@ -1,6 +1,6 @@
 <?php
 
-class page404 extends Controller {
+class page404 extends Wizard\Build\Controller {
 	// Display function: validate urls to activate the controller
 	function validate() {
 		// Activate home controller for /home and /home/*
