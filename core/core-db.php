@@ -2,7 +2,12 @@
 	namespace Wizard\Build;
 	
 	if (!IN_SHIFTSMITH) die();
-	
+
+	if (!defined("CMS_DB_HOST")) define("CMS_DB_HOST", "");
+	if (!defined("CMS_DB_USER")) define("CMS_DB_USER", "");
+	if (!defined("CMS_DB_PASS")) define("CMS_DB_PASS", "");
+	if (!defined("CMS_DB_NAME")) define("CMS_DB_NAME", "");
+
 	class Database {
 		static private $dbtype;
 		static private $dblink;
