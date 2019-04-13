@@ -32,11 +32,17 @@
 		public function View() {
 			return new \Wizard\Build\View();
 		}
-		//__construct($var, $val, $id=null, $parent_id=null, $namespace="general")
-		public function Model($var, $val, $id=null, $parent_id=null, $namespace="general") {
-			return new \Wizard\Build\Model($var, $val, $id, $parent_id, $namespace);
+		//set($key="var", $val="", $space="general", $id=null, $parent_id=null) {	// Define group of (type)
+		public function Model($var, $val, $namespace="general", $id=null, $parent_id=null) {
+			return new \Wizard\Build\Model($var, $val, $namespace, $id, $parent_id);
 		}
 		public function Group() {
+			return new \Wizard\Build\Group();
+		}
+		public function Table() {
+			return new \Wizard\Build\Group();
+		}
+		public function Matrix() {
 			return new \Wizard\Build\Group();
 		}
 

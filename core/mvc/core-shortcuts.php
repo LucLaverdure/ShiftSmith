@@ -31,7 +31,14 @@
 	function Group() {
 		return new \Wizard\Build\Group();
 	}
+	function Table() {
+		return new \Wizard\Build\Group();
+	}
+	function Matrix() {
+		return new \Wizard\Build\Group();
+	}
 
+	// Database wrapper
 	function DB() {
 		return new Wizard\Build\Database();
 	}

@@ -31,7 +31,7 @@
 			return $this->space;
 		}
 
-		public function set($key="var", $val="", $id=null, $parent_id=null, $space="general") {	// Define group of (type)
+		public function set($key="var", $val="", $space="general", $id=null, $parent_id=null) {	// Define group of (type)
 			// set manually
 
 			if ($id == null) {
@@ -51,9 +51,9 @@
 
 			return $this;
 		}
-
-		public function __construct($key="var", $val="", $id=null, $parent_id=null, $space="general") {	// Define group of (type)
-			$this->set($key, $val, $id, $parent_id, $space); 
+		//set($key="var", $val="", $space="general", $id=null, $parent_id=null) {	// Define group of (type)
+		public function __construct($key="var", $val="", $space="general", $id=null, $parent_id=null) {	// Define group of (type)
+			$this->set($key, $val, $space, $id, $parent_id); 
 		}
 
 		public function setUI($ui_type="textbox") {

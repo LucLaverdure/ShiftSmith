@@ -5,8 +5,8 @@
 	class Group {
 		private $id = null;				// id to map in Queue 
 		private $index = 0;				// unique index id; 0 to vars count -1, by default = 0  
-		private $group_type = null; 			// defaults to Model
-		private $space = 'general';			// namespace
+		private $group_type = null; 	// defaults to Model
+		private $space = 'general';		// namespace
 
 		private $stack_defs = array();			// stored stack
 		private $values = array();			// stored stack
