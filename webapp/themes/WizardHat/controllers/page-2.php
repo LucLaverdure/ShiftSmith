@@ -15,6 +15,12 @@
 			$myModel = new \Wizard\Build\Model("title","My Second Page!", "general");
 			$main_img = new \Wizard\Build\Model("headImgSrc","/theme/files/img/sections/tutorials-bg.jpg", "general");
 
+			$myMatrix = $this->Matrix(); // default Models List
+			$myMatrix->space("guest")->def("id", "email", "name");
+			$myMatrix->add(1, "mr@email.com", "Mr. Admin")
+			  ->add(2, "ms@email.com", "Ms. Adminette")
+			  ->add(3, "bob@email.com", "Bob the Admin");
+
 			// Load HTML(DOM) Skeleton
 			$myView = new Wizard\Build\View(); // or $myView = $this->View();
 			$myView->from("body.html"); // declare fetch to be a template by filename
