@@ -1,0 +1,19 @@
+/* asd a dsa ds asd */
+
+body #stats {
+	padding:20px;
+	box-sizing:border-box;
+	position:absolute;
+	bottom:0;
+	left:0;
+	background: #ccc;
+	width:100%;
+	max-height:150px;
+	overflow-y:scroll;
+	font-size:18px;
+}
+
+
+body #stats h1 {
+	font-size:20px;
+}

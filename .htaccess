@@ -42,6 +42,11 @@ DirectoryIndex index.php
   RewriteEngine on
   RewriteBase /
 
+  # Rewrite /files to public files
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^plugins/(.*)$ /index.php?p=$1 [L,QSA]
+
   # Rewrite /theme to active theme directory
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
@@ -61,4 +66,6 @@ DirectoryIndex index.php
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^(.*)$ /index.php?q=$1 [L,QSA]
+
+
 </IfModule>
