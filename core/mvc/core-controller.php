@@ -53,8 +53,13 @@
 		public function q($arg) {
 			\Wizard\Build\Tools::queryURL($arg);
 		}
+		public function route($arg) {
+			\Wizard\Build\Tools::queryURL($arg);
+		}
 		public function a($arg) {
 			\Wizard\Build\Tools::access($arg);
 		}
-
+		public function access($arg) {
+			\Wizard\Build\Tools::access($arg);
+		}
 	}

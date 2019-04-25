@@ -8,7 +8,8 @@
 		private static $complete_output = "";
 
 		private $obj_controllers; // Controllers Found
-		private static $obj_models = array(); // Controllers Found
+		private static $obj_models = Array(); // Controllers Found
+		private static $loops = Array(); // Loop count for namespace Found
 		
 		public function __construct() {
 			
@@ -47,11 +48,30 @@
 			return false;
 		}
 
-		static public function stack_model($key, $model) {
-			self::$obj_models[$key] = $model;
+		// stack model to queue for processing
+		static public function stack_model($space, $key, $val) {
+
+			if (!isset(self::$loops[$space])) self::$loops[$space] = 0;
+			self::$loops[$space]++;
+
+			if (!isset(self::$obj_models[$space])) {
+				self::$obj_models[$space] = array();
+			}
+			if ((!is_array($val)) && (!is_array($key))) {
+				self::$obj_models[$space][$key] = $val;
+			} else {
+				foreach ($val as $i => $value) {
+					//
+					foreach ($key as $ik => $kvalue) {
+						//var_dump($space.".".$kvalue."=".$val[$ik]);
+						self::$obj_models[$space][] = Array($kvalue => $val[$ik]);
+					}
+
+				}
+			}
 		}
-		static public function get_model($key) {
-			return self::$obj_models[$key];
+		static public function get_model($space, $key) {
+			return self::$obj_models[$space][$key];
 		}
 		public static function parse($from='', $ret_type='render', $filter="", $to="", $display_type="html", $display_mode="replace_inner", $use_models=true,  $recursion_level=0) {
 			// prevent infinit recursions

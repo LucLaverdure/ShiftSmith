@@ -5,9 +5,16 @@
 	function a($access_required) {
 		return Wizard\Build\Tools::access($access_required);
 	}
+	function access($access_required) {
+		return Wizard\Build\Tools::access($access_required);
+	}
+	
 	
 	// query url
 	function q($argNumber_or_inPathString) {
+		return Wizard\Build\Tools::queryURL($argNumber_or_inPathString);
+	}
+	function route($argNumber_or_inPathString) {
 		return Wizard\Build\Tools::queryURL($argNumber_or_inPathString);
 	}
 

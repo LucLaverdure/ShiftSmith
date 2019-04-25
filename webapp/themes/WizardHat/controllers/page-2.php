@@ -19,7 +19,22 @@
 			$myMatrix->space("guest")->def("id", "email", "name");
 			$myMatrix->add(1, "mr@email.com", "Mr. Admin")
 			  ->add(2, "ms@email.com", "Ms. Adminette")
+			  ->add(888, "888@email.com", "Ms. 888")
 			  ->add(3, "bob@email.com", "Bob the Admin");
+
+
+			$myMatrix2 = $this->Matrix(); // default Models List
+			$myMatrix2->space("guest")->def("id", "email", "name");
+			$myMatrix2->add(6, "1@email.com", "One")
+			  ->add(7, "2@email.com", "Two")
+			  ->add(8, "3@email.com", "Three");
+
+			$myMatrix3 = $this->Matrix(); // default Models List
+			$myMatrix3->space("guest")->def("id", "email", "name");
+			$myMatrix3->add(999, "999@email.com", "NIN")
+			  ->add(111, "111@email.com", "TWIN")
+			  ->add(222, "111@email.com", "THRIN");
+
 
 			// Load HTML(DOM) Skeleton
 			$myView = new Wizard\Build\View(); // or $myView = $this->View();
