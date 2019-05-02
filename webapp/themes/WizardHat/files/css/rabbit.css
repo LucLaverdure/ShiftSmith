@@ -59,6 +59,7 @@ table {
 	h1 {
 		font-size:40px;
 		margin-bottom:20px;
+
 	}
 	p {
 		margin-bottom:20px;
@@ -95,4 +96,20 @@ table {
 		float:right;
 		width:auto;
 		max-width:100%;
+	}
+	.input-box {
+		max-width:624px;
+		width:100%;
+		margin: 100px auto;
+		border: 1px solid #000; 
+		padding:40px;
+		box-sizing:border-box;
+	}
+	.input-box label strong {
+		display:inline-block;
+		max-width:100%;
+		width:250px;
+	}
+	.error {
+		color: #ff0000;
 	}

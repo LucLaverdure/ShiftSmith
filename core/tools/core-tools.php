@@ -5,7 +5,7 @@ namespace Wizard\Build; // see "Defining Namespaces" section
 	class Tools {
 
 		public static function version() {
-			return "0.2.0";
+			return "0.3.0";
 		}
 
 		// test if current user has access level
@@ -54,6 +54,13 @@ namespace Wizard\Build; // see "Defining Namespaces" section
 			return ($a > $b) ? 1 : -1;
 		}
 
+
+		public static function Posted($var) {
+			if (isset($_POST[$var])) {
+				return $_POST[$var];
+			}
+			return "";
+		}
 
 		// write to logs
 		public static function note($data) {

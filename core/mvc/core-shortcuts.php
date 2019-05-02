@@ -30,8 +30,8 @@
 
 	// Model obj
 	//_construct($var, $val, $id=null, $parent_id=null, $namespace="general")
-	function Model($var="var", $val="", $id=null, $parent_id=null, $namespace="general") {
-		return new \Wizard\Build\Model($var, $val, $id, $parent_id, $namespace);
+	function Model($key="var", $val="", $space="general", $type="s") {
+		return new \Wizard\Build\Model($key, $val, $space, $type);
 	}
 
 	// Model Group obj
@@ -48,5 +48,9 @@
 	// Database wrapper
 	function DB() {
 		return new Wizard\Build\Database();
+	}
+
+	function Posted($arg) {
+		return \Wizard\Build\Tools::Posted($arg);
 	}
 ?>

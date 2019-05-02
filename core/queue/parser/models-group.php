@@ -1,50 +1,48 @@
 <?php
-foreach (self::$obj_models as $space => $var) {
+$i = 0;
+// parse groups
+foreach (self::$stackGroups as $space => $var) {
+	
 	$forblocks = array();
 	preg_match_all('/(?<block>\[for:'.$space.'\](?<content>[\s\S]+)\[end:'.$space.'\])/ix', $this_output, $forblocks, PREG_SET_ORDER);
-
-	// parse groups
+	
+	$block_content = "";
 	if (count($forblocks)) {
-
-		$out = array();
-		foreach ($forblocks as $block) {	//for:space end:space
-
-			for ($iii = 0; $iii < self::$loops[$space]; $iii++) {	// 1 to 6
-
-				if (is_array($var)) { // email => mail@mail.com
-
-					foreach ($var as $key => $var_list) {
-						if (is_array($var_list)) {
-							foreach ($var_list as $varB => $val) {
-								if (!isset($out[$iii])) {
-									$out[$iii] = $block['content']; //out[1] = content
-								}
-								$out[$iii] = str_replace('['.$space.'.'.$varB.']', $val, $out[$iii]);
-							}
-						}
+		$rows_set = 0;
+		foreach ($forblocks as $rownum => $block) {	//for:space end:space
+			foreach ($var as $line_num => $data) {
+				foreach ($data[0] as $subvar => $vartype) {
+					if ($i >= $data[2]) {
+						$i=0;
+						$rows_set++;
 					}
+					if (!isset($row[$rows_set])) {
+						$row[$rows_set] = $block['content'];
+					}
+					$fullvar = '['.$space.'.'.$subvar .']';
+					$value = $data[1];
+
+					$row[$rows_set] = str_replace($fullvar, $value, $row[$rows_set]);
+					
+					$i++;
 				}
-				for($counted = 1; $counted < self::$loops[$space]; ++$counted) {
-					array_shift($var);
-				}
-
 			}
-
-			$implode = implode("\n", $out);
-			$this_output = str_replace($block['block'], $implode, $this_output); 
-			$out = array();
-		}
-	}
-
-
-	// parse singles
-	if (is_array($var)) {
-		foreach ($var as $key => $val) {
-			if ( (!is_array($val)) && (!is_array($key)) ) {
-				$this_output = str_replace('['.$space.'.'.$key.']', $val, $this_output);
-			}
+			$block_content .= implode("\n", $row);
+			$this_output = str_replace($block['block'], $block_content, $this_output); 
+			
 		}
 	}
 }
 
 
+
+// parse singles
+//SINGLE: self::$stack[$space][$key] = array($type => $val);
+foreach (self::$stack as $val => $var) {
+	foreach ($var as $space => $key) {
+		foreach ($key as $i => $k) {
+			$this_output = str_replace('['.$space.'.'.$k.']', $val, $this_output);
+		}
+		
+	}
+}

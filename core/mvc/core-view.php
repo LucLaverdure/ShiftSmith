@@ -15,7 +15,9 @@
 		private $rendered = false;
 
 		// output template
-		public function render() {
+		public function render($display_mode=null, $display_type=null) {
+			if ($display_mode != null) $this->display_mode = $display_mode;
+			if ($display_type != null) $this->display_type = $display_type;
 			if (!$this->rendered) {
 				$rendered_view = Queue::parse($this->from, 'render', $this->filter, $this->to, $this->display_type, $this->display_mode, $this->use_models, 0);
 				$this->rendered = true;

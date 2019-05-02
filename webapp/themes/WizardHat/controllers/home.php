@@ -5,7 +5,7 @@
 
 		function validate() {
 			//if (q('h') && a('view content')) return 1;
-			if (q("/")) return 1;
+			if (q("/")) return false;
 			else return false;
 		}
 

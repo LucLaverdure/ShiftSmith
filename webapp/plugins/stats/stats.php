@@ -7,24 +7,22 @@
 		}
 
 		function execute() {
-			$time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
-			$time = round($time, 4);
-
-			$tdiff = new \Wizard\Build\Model("tdiff", $time, "stats");		
+			$time = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"],4);
+			//$time = $time, 4);
+			//$key, $val, $space, $type
+			$tdiff = Model("tdiff", $time."", "stats");		
 
 			// Load HTML(DOM) Skeleton
 			$stats = View()
 			->from("stats.html")
 			->to("body")
-			->display_mode("append")
-			->render();
+			->render("append");
 
 			// Load JS and CSS in HTML header
 			$stats2 = View()
 			->from("stats-head.html")
 			->to("head")
-			->display_mode("append")
-			->render();
+			->render("append");
 		}
 
 	}

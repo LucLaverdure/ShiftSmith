@@ -8,7 +8,8 @@
 		private static $complete_output = "";
 
 		private $obj_controllers; // Controllers Found
-		private static $obj_models = Array(); // Controllers Found
+		private static $stack = Array(); // All stacked data
+		private static $stackGroups = Array(); // All stacked data
 		private static $loops = Array(); // Loop count for namespace Found
 		
 		public function __construct() {
@@ -43,12 +44,38 @@
 
 		}
 
-		static public function id_exists($id) {
-			if (isset(self::$obj_models[$id])) return true;
-			return false;
-		}
-
 		// stack model to queue for processing
+		static public function stack_model_single($space, $key, $val, $type) {
+			if (!isset(self::$stack[$space])) {
+				self::$stack[$space] = array();
+			}
+			self::$stack[$space][$key] = array($type => $val);
+		}
+		
+		// defs[col1=s, col2=s], vals[ [v1,v2], [v3,v4] ]
+		static public function stack_model_group($space, $defs, $vals) {
+			
+			if (!isset(self::$stackGroups[$space])) {
+				self::$stackGroups[$space] = array();
+			}
+			foreach ($defs as $k => $d) {
+				self::$stackGroups[$space][] = array($defs[$k], $vals[$k], count($defs));
+			}
+		}
+		
+		//stack($this->nspace, $this->stack_defs, $args);
+		//Queue::stack($this->nspace, $this->stack_defs, $args);
+		static public function stack($space, $defs, $vals, $type=null) {
+			if (is_array($defs) && ($type == null)) {
+				self::stack_model_group($space, $defs, $vals);
+			} else {
+				//$key="var", $val="", $space="general", $type="s"
+				self::stack_model_single($defs, $vals, $space, $type);
+			}
+		}
+		
+		
+		/*
 		static public function stack_model($space, $key, $val) {
 
 			if (!isset(self::$loops[$space])) self::$loops[$space] = 0;
@@ -70,6 +97,8 @@
 				}
 			}
 		}
+		*/
+		
 		static public function get_model($space, $key) {
 			return self::$obj_models[$space][$key];
 		}

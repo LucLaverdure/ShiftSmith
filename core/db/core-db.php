@@ -6,22 +6,28 @@
 		static private $dblink;
 		static private $isConnected;
 		static private $counted = 0;
-		static public function connect($host=Config::CMS_DB_HOST, $user=Config::CMS_DB_USER, $password=Config::CMS_DB_PASS, $database=Config::CMS_DB_NAME, $dbtype='mysql') {
+
+		public function __construct() {
+			$con = self::connect(CMS_DB_HOST, CMS_DB_USER, CMS_DB_PASS, CMS_DB_NAME);
+			return $con;
+		}
+
+		static public function connect($host, $user, $password, $database, $dbtype='mysql') {
 			
 			self::$isConnected = false;
-			
+
 			try {
 				self::$dbtype = $dbtype;
 
 				if (self::$dbtype=='mysql') {
-					self::$dblink = @new \mysqli($host, $user, $password, $database);
+					self::$dblink = new \mysqli($host, $user, $password, $database);
 					if (!isset(self::$dblink->connect_error)) self::$isConnected = true;
 				}
 
 				return self::$dblink;
 			
 			} catch (Exception $e) {
-				
+
 				return false;
 				
 			}
@@ -42,9 +48,9 @@
 				$stmt =  self::$dblink->stmt_init();
 
 				// log sql query when in debug mode
-				if (Wizard\Build\Config::DEBUG) {
+				if (\Wizard\Build\Config::DEBUG) {
 					self::$counted++;
-					$myModel = new \Wizard\Build\Model("sql_".self::$counted, $query, null, null, "stats");
+					$myModel = new \Wizard\Build\Model("sql_".self::$counted, $query, "stats");
 				}
 
 				// ex: INSERT INTO CountryLanguage VALUES (?, ?);
@@ -70,8 +76,25 @@
 			}
 		}
 
-	}
+		static function write($row, $ns, $defs) {
+			$secs = array();
+			foreach ($row as $sec) {
+				$secs[] = "'".mysqli_real_escape_string(self::$dblink, $sec)."'";
+			}
+			$sql = "INSERT INTO ".$ns."(".implode(",", $defs).") VALUES (".implode(",", $secs).");";
 
-	$con = Database::connect();
-	if (!Database::isConnected()) die("Database connection failed");
+			self::query($sql);
+		}
+		static function setTable($namespace, $defs) {
+			$sql = "CREATE TABLE ".$namespace." (";
+			$sqlq = array();
+			foreach($defs as $def) {
+				$sqlq[] = $def." VARCHAR(255) NOT NULL";
+			}
+			$sql .= implode(",", $sqlq); 
+			$sql .=	")";
+
+			self::query($sql);
+		}
+	}
 ?>

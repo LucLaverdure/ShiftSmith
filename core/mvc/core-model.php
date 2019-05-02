@@ -4,14 +4,8 @@
 
 	// chainable class
 	class Model {
-		public function __construct ($key="var", $val="", $space="general") {	// Define group of (type)
-			Queue::stack_model($space, $key, $val);
+		public function __construct ($key="var", $val="", $space="general", $type="s") {	// Define group of (type)
+			Queue::stack($key, $val, $space, $type);
 			return $this;
 		}
-		
-		public function set($key="var", $val="", $space="general") {	// Define group of (type)
-			Queue::stack_model($space, $key, $val);
-			return $this;
-		}
-
 	}

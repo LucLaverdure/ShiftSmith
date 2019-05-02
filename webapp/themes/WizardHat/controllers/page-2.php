@@ -32,8 +32,8 @@
 			$myMatrix3 = $this->Matrix(); // default Models List
 			$myMatrix3->space("guest")->def("id", "email", "name");
 			$myMatrix3->add(999, "999@email.com", "NIN")
-			  ->add(111, "111@email.com", "TWIN")
-			  ->add(222, "111@email.com", "THRIN");
+			  ->add(111, "222@email.com", "TWIN")
+			  ->add(222, "333@email.com", "THRIN");
 
 
 			// Load HTML(DOM) Skeleton
