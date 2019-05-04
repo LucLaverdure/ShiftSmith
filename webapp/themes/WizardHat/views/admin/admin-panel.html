@@ -7,8 +7,8 @@
 	</div>
 
 	<div class="logo"><img src="/theme/files/img/logo.png" /></div>
-	<h1 class="editme">My site title</h1>
-	<h2 class="editme">My slogan</h2>
+	<h1 class="editme">[site.title]</h1>
+	<h2>"[site.subtitle]"</h2>
 	
 	<div class="page-content editme">
 		<h1>Lorem ipsum</h1>
@@ -20,45 +20,124 @@
 		<p>Phasellus non nisl purus. Nam dictum, ante porttitor vestibulum feugiat, diam tellus accumsan felis, nec bibendum justo sapien vitae dolor. Sed volutpat iaculis odio vel feugiat. Vestibulum pretium rutrum ligula ac hendrerit. Donec tortor metus, tincidunt in est in, efficitur varius justo. Pellentesque hendrerit, elit vitae varius venenatis, ipsum leo commodo felis, nec sagittis eros justo eget est. Sed ac metus sodales, cursus quam at, rutrum lacus. Donec vel nisi odio. Fusce feugiat semper cursus. Nulla convallis purus nec nulla dictum, ac malesuada metus auctor. Sed tempor commodo lorem, ac semper ex consectetur ut. </p>
 		
 	</div>
-	<a id="save-all" href=""></a>
+	
+	<div class="cols-def cf">
+		<a class="add-col" href="#" title="Add Column"><img src="/theme/files/img/add-col.png" /></a>
+		<a class="add-row" href="#" title="Add Row"><img src="/theme/files/img/add-row.png" /></a>
+	</div>
+	<a id="config" href="#" title="Configurations"></a>
+	<a id="add-merch" href="#" title="Manage Merchandise"></a>
+	<a id="load-template" href="#" title="Edit Template"></a>
+	<a id="save-all" href="#" title="Save All Changes"></a>
+</div>
+<div id="col-tpl" style="display:none;">
+	<div class="col block-content editme">
+		<h1>Dolor Sit Amet</h1>
+		
+		<p>Quisque tincidunt pharetra orci, id vestibulum neque tempus quis. Aenean ut nisi eget orci ornare maximus. Nulla aliquet elit ac purus malesuada vehicula. Vestibulum facilisis dignissim magna sed feugiat. Sed varius metus sed odio porta interdum.</p>
+	</div>
+</div>
+<div id="templatemanager" style="display:none;">
+	<div>
+		<h1>Template:</h1>
+		<div class="tpl">
+			<table width="100%">
+				<tr><td colspan="2" style="background: #ffff00;">Header</td></tr>
+				<tr><td colspan="2" style="background: #ff0000;">Content</td></tr>
+				<tr><td colspan="2" style="background: #ffff00;">Footer</td></tr>
+			</table>
+			<span></span>
+		</div>
+		<div class="tpl">
+			<table width="100%">
+				<tr><td colspan="2" style="background: #ffff00;">Header</td></tr>
+				<tr><td style="background: #ff0000;">Content Col1</td><td style="background: #4DEC00;">Content Col2</td></tr>
+				<tr><td colspan="2" style="background: #ffff00;">Footer</td></tr>
+			</table>
+			<span></span>
+		</div>
+		<div class="tpl">
+			<table width="100%">
+				<tr><td colspan="3" style="background: #ffff00;">Header</td></tr>
+				<tr><td style="background: #ff0000;">Content Col1</td><td style="background: #4DEC00;">Content Col2</td><td style="background: #ff0000;">Content Col3</td></tr>
+				<tr><td colspan="3" style="background: #ffff00;">Footer</td></tr>
+			</table>
+			<span></span>
+		</div>
+		<div class="tpl">
+			<table width="100%">
+				<tr><td colspan="4" style="background: #ffff00;">Header</td></tr>
+				<tr><td style="background: #ff0000;">Content Col1</td><td style="background: #4DEC00;">Content Col2</td><td style="background: #ff0000;">Content Col3</td><td style="background: #4DEC00;">Content Col4</td></tr>
+				<tr><td colspan="4" style="background: #ffff00;">Footer</td></tr>
+			</table>
+			<span></span>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript">
-	function preloadImage(url) {
-		var img=new Image();
-		img.src=url;
-	}
-	var img1="";
-	preloadImage("/theme/files/img/blog.jpg");
-	preloadImage("/theme/files/img/commerce.jpg");
-	preloadImage("/theme/files/img/business.jpg");
-	preloadImage("/theme/files/img/portfolio.jpg");
-	
-	$(".cats label").click(function() {
-		var cat = $.trim($(this).text());
-		switch (cat) {
-			case "Blog or Personal":
-				img1 = "/theme/files/img/blog.jpg";
-				break;
-			case "Commerce":
-				img1 = "/theme/files/img/commerce.jpg";
-				break;
-			case "Business":
-				img1 = "/theme/files/img/business.jpg";
-				break;
-			case "Portfolio":
-				img1 = "/theme/files/img/portfolio.jpg";
-				break;
-		}
-		
-		$(".bg.step1").css("background-image", "url("+img1+")");
+	var cols = 0;
+	$(".tpl").click(function() {
+		$("#templatemanager span").removeClass("active")
+		$(this).find("span").addClass("active");
 	});
-$(function() {
-	$(".bg.step1").css("background-image", "url(/theme/files/img/blog.jpg)");
-});
+	$(".add-col").click(function() {
+		cols++;
+		$(this).parents(".cols-def").append($("#col-tpl").html());
+		$(this).parents(".cols-def").find(".col").css("width",parseInt( (1/cols)*100, 10) +"%");
+
+		initEditor();
+		
+		return false;
+	});
+	
+	$("#load-template").click(function() {
+		$('#templatemanager').dialog({
+			title: "Template Manager",
+			autoOpen: true,
+			height: 600,
+			width: 800,
+			modal: true,
+			buttons: {
+				"Cancel": function() {
+					$(this).dialog("close");
+				},
+				"Save & Close": function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+		return false;
+	});
+	
+	$(function() {
+		$(".bg.step1").css("background-image", "url(/theme/files/img/magic.jpg)");
+		initEditor();
+	});
+	
 </script>
-<script>tinymce.init({
-	selector:'.editme',
-	menubar: false,
-	inline: true
-});</script>
+<script type="text/javascript">
+function initEditor() {
+	tinymce.remove();
+	tinymce.init({
+		//theme : "advanced",
+		selector:'.editme',
+		menubar: false,
+		inline: true,
+		//theme_advanced_toolbar_location : "bottom",
+		plugins: [
+			'textcolor',
+			'lists',
+			'powerpaste',
+			'autolink',
+			'link'
+		],
+		powerpaste_word_import: 'clean',
+		powerpaste_html_import: 'clean',
+		toolbar: [
+			'undo redo | bold italic underline | link | fontselect fontsizeselect',
+			'forecolor backcolor | alignleft aligncenter alignright alignfull | numlist bullist outdent indent'
+		]
+	});
+}
+</script>

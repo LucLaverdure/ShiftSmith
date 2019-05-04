@@ -24,8 +24,34 @@
 			->add(4, "Portfolio")
 			->add(5, "Other");
 
-			Model("title", "", "site");
-
+			Model("title", "Wizard.Build", "site");
+			
+			$slogans = array();
+			$slogans[] = "I believe in magic!";
+			$slogans[] = "Magic is believing";
+			$slogans[] = "Wanna see a trick?";
+			$slogans[] = "Poof!";
+			$slogans[] = "Pick a card, any card.";
+			$slogans[] = "I can read your mind";
+			$slogans[] = "What's that in your ear?";
+			$slogans[] = "The wand is mightier than the sword";
+			$slogans[] = "Be sure to remember your card!";
+			$slogans[] = "Science in our skills, magic in our hands.";
+			$slogans[] = "Experience the magic onboard.";
+			$slogans[] = "Feel the magic up close.";
+			$slogans[] = "There is no magic pill, just lots of hard work and dedication.";
+			$slogans[] = "What magic feels like.";
+			$slogans[] = "Find your magic.";
+			$slogans[] = "Big hugs and magic kisses included";
+			$slogans[] = "Let's Make Magic.";
+			$slogans[] = "May your days be filled with magic and cheer!";
+			$slogans[] = "Discover the Magic.";
+			$slogans[] = "Where The Magic Never Ends.";
+			
+			shuffle($slogans);
+			
+			Model("subtitle", array_shift($slogans), "site");
+			
 			//stack_resource("https://cloud.tinymce.com/5/tinymce.min.js");
 			
 			$myView = View(); // or $myView = $this->View();

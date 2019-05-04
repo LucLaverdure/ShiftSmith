@@ -46,6 +46,32 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
 
 /********************************************************/
 	a {
@@ -60,8 +86,13 @@ table {
 		font-size:40px;
 		margin-top:50px;
 		margin-bottom:8px;
+		max-width:100%;
+		width:400px;
+		color:#fff;
 	}
 	h2 {
+		color:#fff;
+		font-style:italic;
 		font-size:30px;
 		margin-bottom:20px;
 	}
@@ -115,7 +146,7 @@ table {
 	}
 
 .bg {
-	position:absolute;
+	position:fixed;
 	top:0;
 	left:0;
 	width:100%;
@@ -127,7 +158,7 @@ table {
 	background-size:cover;
 	z-index:-999;
 	transition: all 1s ease-in-out;
-	opacity: 0.5;
+	opacity: 1;
 }
 .nav {
 	float:right;
@@ -142,11 +173,11 @@ table {
 	padding:5px 10px;
 }
 .nav li a {
-	color: #333;
+	color: #ddd;
 	text-decoration:underline;
 }
 .nav li:hover a {
-	color: #888;
+	color: #fff;
 	text-decoration:none;
 }
 .logo {
@@ -162,15 +193,36 @@ table {
 }
 
 .page-content {
-	background: rgba(255,255,255,0.8);
+	background: #fff;
 	max-width:100%;
-	width:1200px;
 	margin: 0 auto;
 	box-sizing:border-box;
 	padding:30px;
+	margin-top:600px;
 }
-
-#save-all {
+body .page-content h1, body .cols-def h1 {
+	margin-top:0;
+	color: #333;
+}
+body .page-content h2, body .cols-def h2 {
+	color:#333;
+}
+.cols-def {
+	background:#fff;
+}
+body #add-merch {
+	background-image: url(/theme/files/img/merch.png);
+	right:190px;
+}
+body #load-template {
+	background-image: url(/theme/files/img/template.png);
+	right:100px;
+}
+body #config {
+	background-image: url(/theme/files/img/config.png);
+	right:280px;
+}
+#save-all, #load-template, #add-merch, #config {
 	min-height:55px;
 	position:fixed;
 	bottom:10px;
@@ -183,8 +235,64 @@ table {
 	background-position: 0 0;
 	transition: all .3s ease-in-out;
 }
-#save-all:hover {
+#save-all:hover, #load-template:hover, #add-merch:hover, #config:hover {
 	min-height:80px;
 	transition: all .3s ease-in-out;
 	cursor: pointer;
+}
+.add-col {
+	position:absolute;
+	top:0;
+	right:0;
+	z-index:999;
+}
+.add-row {
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:999;
+}
+.add-col img, .add-row img {
+	max-width:75px;
+}
+.col {
+	float:left;
+	position:relative;
+}
+.cols-def {
+	position:relative;
+	padding-bottom:150px;
+	background: #fff;
+}
+#templatemanager table {
+	border: 1px solid #000;
+}
+#templatemanager table td {
+	padding: 5px 10px;
+	borxer:3px solid #555;
+}
+
+#templatemanager .tpl {
+	position: relative;
+	margin-bottom:20px;
+}
+#templatemanager .tpl:hover, #templatemanager span.active {
+	cursor: pointer;
+}
+#templatemanager .tpl:hover span, #templatemanager span.active{
+	background-color: #ccc;
+	border-radius:50px;
+	background-image: url(/theme/files/img/check.png);
+	background-size:cover;
+	display: block;
+	position: absolute;
+	top:20px;
+	right:10px;
+	max-width:50px;
+	width:100%;
+	height: 50px;
+	z-index:999;
+}
+#templatemanager span.active {
+	background-color: #fff !important;
 }
