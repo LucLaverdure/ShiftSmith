@@ -38,10 +38,24 @@ foreach (self::$stackGroups as $space => $var) {
 
 // parse singles
 //SINGLE: self::$stack[$space][$key] = array($type => $val);
-foreach (self::$stack as $val => $var) {
-	foreach ($var as $space => $key) {
-		foreach ($key as $i => $k) {
-			$this_output = str_replace('['.$space.'.'.$k.']', $val, $this_output);
+foreach (self::$stack as $space => $var) {
+	foreach ($var as $subvar => $item) {
+		foreach ($item as $i => $k) {
+			$this_output = str_replace('['.$space.'.'.$subvar.']', $k, $this_output);
+		}
+		
+	}
+}
+
+// parse inputs
+foreach (self::$stack as $space => $item) {
+	foreach ($item as $key => $subitem) {
+		foreach ($subitem as $i=>$val) {
+			$this_output = str_replace('[textbox:'.$space.'.'.$key.']', \Wizard\Build\Tools::mvc_input("textbox", $key, $val), $this_output);
+			$this_output = str_replace('[checkbox:'.$space.'.'.$key.']', \Wizard\Build\Tools::mvc_input("checkbox", $key, $val), $this_output);
+			$this_output = str_replace('[radio:'.$space.'.'.$key.']', \Wizard\Build\Tools::mvc_input("radio", $key, $val), $this_output);
+			$this_output = str_replace('[textarea:'.$space.'.'.$key.']', \Wizard\Build\Tools::mvc_input("textarea", $key, $val), $this_output);
+			$this_output = str_replace('[password:'.$space.'.'.$key.']', \Wizard\Build\Tools::mvc_input("password", $key, $val), $this_output);
 		}
 		
 	}

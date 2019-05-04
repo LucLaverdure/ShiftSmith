@@ -22,13 +22,12 @@
 			->add(2, "Commerce")
 			->add(3, "Business")
 			->add(4, "Portfolio")
-			->add(5, "Media")
-			->add(6, "Brochure")
-			->add(7, "Non Profit")
-			->add(8, "Educational")
-			->add(9, "Portal")
-			->add(10, "Wiki");
+			->add(5, "Other");
 
+			Model("title", "", "site");
+
+			//stack_resource("https://cloud.tinymce.com/5/tinymce.min.js");
+			
 			$myView = View(); // or $myView = $this->View();
 			$myView->from("admin-skeleton.html"); // declare fetch to be a template by filename
 			$myView->render(); // declare fetch to be a template by filename
@@ -37,6 +36,7 @@
 			$myView2->from("admin-panel.html"); // declare fetch to be a template by filename
 			$myView2->to("body"); // declare fetch to be a template by filename
 			$myView2->render("prepend"); // declare fetch to be a template by filename
+
 
 		}
 

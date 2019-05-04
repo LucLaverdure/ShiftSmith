@@ -8,6 +8,7 @@
 		private static $complete_output = "";
 
 		private $obj_controllers; // Controllers Found
+		private static $resources = Array(); // All stacked data
 		private static $stack = Array(); // All stacked data
 		private static $stackGroups = Array(); // All stacked data
 		private static $loops = Array(); // Loop count for namespace Found
@@ -44,6 +45,10 @@
 
 		}
 
+		static public function stack_resource($filename) {
+			self::$resources[] = $filename;
+		}
+
 		// stack model to queue for processing
 		static public function stack_model_single($space, $key, $val, $type) {
 			if (!isset(self::$stack[$space])) {
@@ -70,6 +75,7 @@
 				self::stack_model_group($space, $defs, $vals);
 			} else {
 				//$key="var", $val="", $space="general", $type="s"
+				//stack_model_single($space, $key, $val, $type)
 				self::stack_model_single($defs, $vals, $space, $type);
 			}
 		}
@@ -81,44 +87,20 @@
 		static public function search_models($search) {
 			$ret = array();
 			//self::$stack[$space][$key]
-			foreach (self::$stack as $v => $item) {
-				foreach ($item as $space => $subitem) {
-					foreach ($subitem as $i=>$key) {
+			foreach (self::$stack as $space => $item) {
+				foreach ($item as $key => $subitem) {
+					foreach ($subitem as $i=>$val) {
 						//echo $v.":".$i."<br>";
-						//echo $space.":".$key."<br>";
+						//echo $space.":".$key."=".$val."<br>";
 						//var_dump(self::$stack[$space][$key]);
 						if (strpos($key,$search) !== false) {
-							$ret[] = "[".$space.".".$key."] = ". $v;
+							$ret[] = "[".$space.".".$key."] = ". $val;
 						}
 					}
 				}
 			}
 			return implode("\n", $ret);
 		}
-		
-		/*
-		static public function stack_model($space, $key, $val) {
-
-			if (!isset(self::$loops[$space])) self::$loops[$space] = 0;
-			self::$loops[$space]++;
-
-			if (!isset(self::$obj_models[$space])) {
-				self::$obj_models[$space] = array();
-			}
-			if ((!is_array($val)) && (!is_array($key))) {
-				self::$obj_models[$space][$key] = $val;
-			} else {
-				foreach ($val as $i => $value) {
-					//
-					foreach ($key as $ik => $kvalue) {
-						//var_dump($space.".".$kvalue."=".$val[$ik]);
-						self::$obj_models[$space][] = Array($kvalue => $val[$ik]);
-					}
-
-				}
-			}
-		}
-		*/
 		
 		static public function get_model($space, $key) {
 			return self::$obj_models[$space][$key];
@@ -151,7 +133,13 @@
 					
 					// process includes, legacy, to remove or not to remove... dun dun duuuuuuuuun
 					//require "parser/include.php";
-
+					foreach (self::$resources as $filename) {
+						$i=0;
+						if (\Wizard\Build\Config::DEBUG) {
+							$i++;
+							Model("resource_".$i, $filename, "stats");
+						}
+					}
 				}
 
 				// get source HTML
@@ -201,6 +189,12 @@
 		}
 
 		public static function output() {
+			
+			// latest operation: get resources
+			$this_output = self::$complete_output;
+			require PATH."core/queue/parser/resources.php";
+			self::$complete_output = $this_output;
+
 			// get current output
 			return self::$complete_output;
 		}
@@ -213,14 +207,21 @@
 
 			// ensure all unit tests pass when debugging
 			if (Config::DEBUG) {
+				$i = 0;
 				$unit_tests_failed = false;
 				foreach ($this->obj_controllers as $cname => $controller) {
 					if (method_exists($controller, 'test')) {
 						$do_unit_test = $controller->test();
 
+						$i++;
 						if (!$controller->unit_tests_passed()) {
+							Model("unit_test_".$i, $cname." fail", "stats");
 							$unit_tests_failed = true;
+						} else {
+							Model("unit_test_".$i, $cname." pass", "stats");
 						}
+					} else {
+						Model("unit_test_".$i, $cname." has no unit tests", "stats");
 					}
 				}
 
@@ -229,11 +230,19 @@
 
 			// ensure controllers validate when a validation function is found
 			foreach ($this->obj_controllers as $cname => $controller) {
+				$i=0;
 				if (method_exists($controller, 'validate')) {
 					$validator_priority = $controller->validate();
 					if ($validator_priority !== false) {
 						// when controller validates
 						if (!is_numeric($validator_priority)) $validator_priority = 0; // when priority isn't numeric assign zero value
+
+						// log controller
+						if (\Wizard\Build\Config::DEBUG) {
+							$i++;
+							$myModel = new \Wizard\Build\Model("controller_".$i, $cname, "stats");
+						}
+						
 						$priority_controllers[$cname] = $validator_priority;	// assign priority to unique class name
 					}
 				}

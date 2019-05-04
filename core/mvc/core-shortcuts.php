@@ -53,4 +53,12 @@
 	function Posted($arg) {
 		return \Wizard\Build\Tools::Posted($arg);
 	}
+	function Got($arg) {
+		return \Wizard\Build\Tools::Got($arg);
+	}
+	function stack_resource($arg) {
+		return \Wizard\Build\Tools::stack_resource($arg);
+	}
+	
+	
 ?>

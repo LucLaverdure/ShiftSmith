@@ -62,6 +62,14 @@ namespace Wizard\Build; // see "Defining Namespaces" section
 			return "";
 		}
 
+		public static function Got($var) {
+			if (isset($_POST[$var])) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
 		// write to logs
 		public static function note($data) {
 			$log_file = PATH."logs/notes.log";
@@ -200,6 +208,30 @@ namespace Wizard\Build; // see "Defining Namespaces" section
 			return $results;
 		}
 
+		public static function stack_resource($filename) {
+			Queue::stack_resource($filename);
+		}
+		
+		public static function mvc_input($input_type, $var, $val) {
+			switch ($input_type) {
+				case "radio":
+					return '<input type="radio" name="'.$var.'" value="'.$val.'" />';
+					break;
+				case "textarea":
+					return '<textarea name="'.$var.'">'.$val.'</textarea>';
+					break;
+				case "checkbox":
+					return '<input type="checkbox" name="'.$var.'" value="'.$val.'" />';
+					break;
+				case "password":
+					// passwords values aren't returned for security reasons
+					return '<input type="password" name="'.$var.'" />';
+					break;
+				default:
+					return '<input type="textbox" name="'.$var.'" value="'.$val.'" />';
+					// textbox
+			}
+		}
 			
 	}
 ?>

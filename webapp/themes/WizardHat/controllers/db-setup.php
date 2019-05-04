@@ -6,7 +6,7 @@
 
 			if (route("/")) {
 				if (!$db::isConnected()) {
-					if (\Wizard\Build\Config::$CMS_DB_HOST=="") return -9999;
+					if (CMS_DB_HOST=="") return 1;
 				} else {
 					Wizard\Build\Tools::redirect("/user");
 					die();
@@ -16,11 +16,7 @@
 		}
 
 		function execute() {
-			$matrix = Matrix();
-			$matrix->space("db")->def("CMS_DB_HOST")->def("CMS_DB_USER")->def("CMS_DB_PASS")->def("CMS_DB_NAME");
-			//$matrix->input("textbox", "textbox", "password", "textbox");
-			
-			$m = Model("error", "", "general");
+			Model("error", "", "general");
 			if (Posted("CMS_DB_HOST") != "") {
 				$con = DB();
 				$con::connect(Posted("CMS_DB_HOST"),Posted("CMS_DB_USER"), Posted("CMS_DB_PASS"), Posted("CMS_DB_NAME"));
@@ -35,10 +31,18 @@
 				} else {
 					$m = Model("error", "Database connection failure", "general");
 					// display error
+					Model("CMS_DB_NAME", Posted("CMS_DB_NAME"), "db");
+					Model("CMS_DB_HOST", Posted("CMS_DB_HOST"), "db");
+					Model("CMS_DB_USER", Posted("CMS_DB_USER"), "db");
+					Model("CMS_DB_PASS", Posted("CMS_DB_PASS"), "db");
 				}
+			} else {
+				Model("CMS_DB_NAME", Posted("CMS_DB_NAME"), "db");
+				Model("CMS_DB_HOST", Posted("CMS_DB_HOST"), "db");
+				Model("CMS_DB_USER", Posted("CMS_DB_USER"), "db");
+				Model("CMS_DB_PASS", Posted("CMS_DB_PASS"), "db");
 			}
-
-			$m = Model("title", "Database Connection", "general");
+			Model("title", "Database Connection", "general");
 
 			$myView = View(); // or $myView = $this->View();
 			$myView->from("admin-skeleton.html"); // declare fetch to be a template by filename

@@ -20,29 +20,6 @@
 			return $this;
 		}
 
-		// render html input elements
-		public function input() { // set var names
-			$values = array();
-			$args = func_get_args();
-			foreach($args as $key => $arg) {
-				switch ($arg) {
-					case "textbox":
-						$values[] = '<input type="textbox" name="'.$this->stack_defs[$key].'" value="'.Posted($this->stack_defs[$key]).'" />';
-						break;
-					case "password":
-						$values[] = '<input type="password" name="'.$this->stack_defs[$key].'" />';
-						break;
-
-				}
-			}
-
-			$this->values[] = $values;
-
-			Queue::stack($this->nspace, $this->stack_defs, $values);
-
-			return $this;
-		}
-
 		// set or get columns definitions
 		// ex: def("column1", "i")
 		public function def($col=null, $type="s") { // set var names

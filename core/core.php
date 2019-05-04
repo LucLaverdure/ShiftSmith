@@ -14,7 +14,8 @@
 	
 	// Configs
 	require_once PATH."core/setup/core-load-configs.php";
-
+	$setup = new Wizard\Build\Config();
+	
 	// routes
 	require_once PATH."core/route/route.php";
 	

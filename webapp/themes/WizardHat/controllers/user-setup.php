@@ -19,40 +19,54 @@
 		}
 
 		function execute() {
-			$matrix = Matrix();
-			$matrix->space("user")->def("name")->def("email")->def("password1")->def("password2");
-			//$matrix->input("textbox", "textbox", "password", "password");
 			
-			$m = Model("error", "", "general");
-			if (Posted("email") != "") {
+			
+			
+			Model("error", "", "general");
+			Model("name", Posted("name"), "user");
+			Model("email", Posted("email"), "user");
+			Model("password1", Posted("password1"), "user");
+			Model("password2", Posted("password2"), "user");
+			if (Got("name") && (strlen(Posted("name")) < 3 )) {
+				Model("error", "Name must contain at least 3 characters", "general");
+			}
+			if (Got("email") && (!\Wizard\Build\Tools::validate_email(Posted("email"))) ) {
+				Model("error", "Invalid email!", "general");
+			}
+			if (Got("password1")) {
 				if (strlen(Posted("password1")) >= 6) {
 					// validate passwords
 					if (Posted("password1") == Posted("password2")) {
-						// validate email
-						if (\Wizard\Build\Tools::validate_email(Posted("email"))) {
-							// save user as admin
-							$matrix2 = Matrix();
-							$matrix2->space("users")->def("id", "name", "email", "passhash", "email_token", "status");
-							$matrix2->add(1, Posted("name"), Posted("email"), password_hash(Posted("password1"), PASSWORD_BCRYPT, ['cost' => 12]), md5(time()), 0);
-							$matrix2->save(1); // save first user as admin
+						// save user as admin
+						$rec = Matrix();
+						$rec->space("users")->def("id", "i")->def("name")->def("email")->def("passhash")->def("email_token")->def("status", "i");
+						$rec->add(1, Posted("name"), Posted("email"), password_hash(Posted("password1"), PASSWORD_BCRYPT, ['cost' => 12]), md5(time()), 0);
+						$rec->save(1); // save first user as admin
 
-							$matrix3 = Matrix();
-							$matrix3->space("access")->def("id", "userid", "access");
-							$matrix3->add(1, 1, "admin");
-							$matrix3->save(1, 1); // save first user as admin
-						} else {
-							$m = Model("error", "Invalid email provided.", "general");
-						}
+						$a = Matrix();
+						$a->space("access")->def("id", "i")->def("userid", "i")->def("access");
+						$a->add(1, 1, "admin");
+						$a->save(1, 1); // save first user as admin
 					} else {
-						$m = Model("error", "Passwords don't match.", "general");
+						Model("error", "Passwords don't match.", "general");
 					} 
 				} else {
-					$m = Model("error", "Passwords minimum length is of 6 characters.", "general");
+					Model("error", "Passwords minimum length is of 6 characters.", "general");
 				}
 			}
 
-			$m = Model("title", "Administrator Setup", "general");
+			Model("title", "Administrator Setup", "general");
 
+			// redirect user after saving
+			$usersIn = Matrix();
+			$usersIn->space("users")->def("id");
+			$counted_users = count($usersIn->load());
+			if ($counted_users > 0) {
+				\Wizard\Build\Tools::redirect("/admin");
+				die();
+			}
+
+			// display if not redirected
 			$myView = View(); // or $myView = $this->View();
 			$myView->from("admin-skeleton.html"); // declare fetch to be a template by filename
 			$myView->render(); // declare fetch to be a template by filename

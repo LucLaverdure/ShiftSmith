@@ -26,18 +26,25 @@
 			
 			//DB Time
 			//DB Queries
-			$dbsqls = Model("db", print_r(\Wizard\Build\Queue::search_models("sql_"), true), "stats");		
+			Model("db", print_r(\Wizard\Build\Queue::search_models("sql_"), true), "stats");		
 			
 			//$_POST
-			$postvars = Model("post_vars", print_r($_POST, true), "stats");		
+			Model("post_vars", print_r($_POST, true), "stats");		
 			//$_GET
-			$getvars = Model("get_vars", print_r($_GET, true), "stats");		
+			Model("get_vars", print_r($_GET, true), "stats");		
 			//$_SERVER
-			$server = Model("server_vars", print_r($_SERVER, true), "stats");		
+			Model("server_vars", print_r($_SERVER, true), "stats");		
 			//models
-			$mods = Model("mods_vars", print_r(\Wizard\Build\Queue::get_all_models(), true), "stats");		
+			Model("mods_vars", print_r(\Wizard\Build\Queue::get_all_models(), true), "stats");		
 			//templates used
-			$tpls = Model("tpls", print_r(\Wizard\Build\Queue::search_models("template_"), true), "stats");		
+			Model("tpls", print_r(\Wizard\Build\Queue::search_models("template_"), true), "stats");		
+
+			Model("ctrls", print_r(\Wizard\Build\Queue::search_models("controller_"), true), "stats");		
+
+			Model("units", print_r(\Wizard\Build\Queue::search_models("unit_test_"), true), "stats");		
+			
+			stack_resource("/plugins/stats/stats.css");
+			Model("resources", print_r(\Wizard\Build\Queue::search_models("resource_"), true), "stats");		
 
 			// Load HTML(DOM) Skeleton
 			$stats = View()
@@ -45,11 +52,6 @@
 			->to("body")
 			->render("append");
 
-			// Load JS and CSS in HTML header
-			$stats2 = View()
-			->from("stats-head.html")
-			->to("head")
-			->render("append");
 		}
 
 	}

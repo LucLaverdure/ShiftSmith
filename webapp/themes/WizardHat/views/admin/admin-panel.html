@@ -1,7 +1,64 @@
-		<div class="input-box">
-			<h1>[general.title]</h1>
-[for:category]
-	<p><label><input type="checkbox" value="[category.id]"> [category.title]</label></p>
-[end:category]
-		</div>
+<div class="main-editable">
+	<div class="nav">
+		<ul>
+			<li><a href="" class="editme">Homepage</a></li>
+			<li><a href="" class="editme">Page2</a></li>
+		</ul>
+	</div>
 
+	<div class="logo"><img src="/theme/files/img/logo.png" /></div>
+	<h1 class="editme">My site title</h1>
+	<h2 class="editme">My slogan</h2>
+	
+	<div class="page-content editme">
+		<h1>Lorem ipsum</h1>
+		
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus eget dui eu semper. Morbi egestas ultrices dolor, vel tristique enim fermentum at. Ut sit amet volutpat diam. Praesent egestas elit id nisi tincidunt tincidunt. Aliquam commodo tempor arcu sed congue. Vivamus tempus risus sollicitudin dui porttitor, id facilisis ligula consectetur. Duis pharetra ante est, eu porttitor elit ultricies at. Phasellus non lacus eu lacus laoreet vehicula. Quisque tincidunt pharetra orci, id vestibulum neque tempus quis. Aenean ut nisi eget orci ornare maximus. Nulla aliquet elit ac purus malesuada vehicula. Vestibulum facilisis dignissim magna sed feugiat. Sed varius metus sed odio porta interdum.</p>
+
+		<p>Aenean est ipsum, dictum ut felis vitae, molestie aliquam ligula. Vestibulum placerat accumsan lacinia. Nullam egestas nisl lacinia ipsum scelerisque, nec tristique augue fringilla. Cras malesuada dui eget suscipit ultricies. Cras vitae justo pretium, fermentum justo sit amet, sodales sem. Sed accumsan mi vel est vestibulum porta. Nulla efficitur imperdiet sem sit amet ornare. In hac habitasse platea dictumst. Nulla ligula ante, vulputate id leo sit amet, accumsan viverra risus.</p>
+
+		<p>Phasellus non nisl purus. Nam dictum, ante porttitor vestibulum feugiat, diam tellus accumsan felis, nec bibendum justo sapien vitae dolor. Sed volutpat iaculis odio vel feugiat. Vestibulum pretium rutrum ligula ac hendrerit. Donec tortor metus, tincidunt in est in, efficitur varius justo. Pellentesque hendrerit, elit vitae varius venenatis, ipsum leo commodo felis, nec sagittis eros justo eget est. Sed ac metus sodales, cursus quam at, rutrum lacus. Donec vel nisi odio. Fusce feugiat semper cursus. Nulla convallis purus nec nulla dictum, ac malesuada metus auctor. Sed tempor commodo lorem, ac semper ex consectetur ut. </p>
+		
+	</div>
+	<a id="save-all" href=""></a>
+</div>
+
+<script type="text/javascript">
+	function preloadImage(url) {
+		var img=new Image();
+		img.src=url;
+	}
+	var img1="";
+	preloadImage("/theme/files/img/blog.jpg");
+	preloadImage("/theme/files/img/commerce.jpg");
+	preloadImage("/theme/files/img/business.jpg");
+	preloadImage("/theme/files/img/portfolio.jpg");
+	
+	$(".cats label").click(function() {
+		var cat = $.trim($(this).text());
+		switch (cat) {
+			case "Blog or Personal":
+				img1 = "/theme/files/img/blog.jpg";
+				break;
+			case "Commerce":
+				img1 = "/theme/files/img/commerce.jpg";
+				break;
+			case "Business":
+				img1 = "/theme/files/img/business.jpg";
+				break;
+			case "Portfolio":
+				img1 = "/theme/files/img/portfolio.jpg";
+				break;
+		}
+		
+		$(".bg.step1").css("background-image", "url("+img1+")");
+	});
+$(function() {
+	$(".bg.step1").css("background-image", "url(/theme/files/img/blog.jpg)");
+});
+</script>
+<script>tinymce.init({
+	selector:'.editme',
+	menubar: false,
+	inline: true
+});</script>

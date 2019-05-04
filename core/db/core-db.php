@@ -20,7 +20,8 @@
 				self::$dbtype = $dbtype;
 
 				if (self::$dbtype=='mysql') {
-					self::$dblink = new \mysqli($host, $user, $password, $database);
+					if ($host=="") return false;
+					self::$dblink = @new \mysqli($host, $user, $password, $database);
 					if (!isset(self::$dblink->connect_error)) self::$isConnected = true;
 				}
 
@@ -50,7 +51,8 @@
 				// log sql query when in debug mode
 				if (\Wizard\Build\Config::DEBUG) {
 					self::$counted++;
-					$myModel = new \Wizard\Build\Model("sql_".self::$counted, $query, "stats");
+					Model("sql_".self::$counted, $query, "stats");
+					Model("sql_params".self::$counted, implode(", ", $args), "stats");
 				}
 
 				// ex: INSERT INTO CountryLanguage VALUES (?, ?);
@@ -76,20 +78,61 @@
 			}
 		}
 
-		static function write($row, $ns, $defs) {
-			$secs = array();
-			foreach ($row as $sec) {
-				$secs[] = "'".mysqli_real_escape_string(self::$dblink, $sec)."'";
-			}
-			$sql = "INSERT INTO ".$ns."(".implode(",", $defs).") VALUES (".implode(",", $secs).");";
+		static private function clean($string) {
+			$string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+			return preg_replace('/[^A-Za-z0-9]/', '', $string); // Removes special chars.
+		}
 
-			self::query($sql);
+		static function write($rows, $ns, $defs) {
+			$ns = self::clean($ns);
+			$sql = "INSERT INTO ".$ns." (";
+			$cols = array();
+			$types = "";
+			foreach($defs as $def) {
+				foreach($def as $col => $type) {
+					$cols[] = $col;
+					$types .= $type;
+				}
+			}
+			$sql .= implode(",", $cols);
+			$sql .= ") VALUES (";
+			
+			$params = array();
+			foreach ($rows as $r) {
+				$params[] = "?";
+			}
+			$sql .= implode(",", $params);
+			
+			$sql .= ");";
+
+			self::query($sql, $types, ...$rows);
 		}
 		static function setTable($namespace, $defs) {
 			$sql = "CREATE TABLE ".$namespace." (";
 			$sqlq = array();
+			
+			//"idsb" (int, double, string, blob)
+			// special: T : text
 			foreach($defs as $def) {
-				$sqlq[] = $def." VARCHAR(255) NOT NULL";
+				foreach($def as $col => $type) {
+					switch (substr($type,0,1)) {
+						case "i": // integer
+							$sqlq[] = $col." INT(11)";
+							break;
+						case "d": // double
+							$sqlq[] = $col." INT(11)";
+							break;
+						case "b": // string
+							$sqlq[] = $col." BLOB";
+							break;
+						case "t": // string
+							$sqlq[] = $col." TEXT";
+							break;
+						default: // string
+							$sqlq[] = $col." VARCHAR(255)";
+					}
+					
+				}
 			}
 			$sql .= implode(",", $sqlq); 
 			$sql .=	")";

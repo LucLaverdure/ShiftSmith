@@ -1,7 +1,7 @@
 /* asd a dsa ds asd */
 
 body #stats {
-	padding:20px;
+	padding:0 20px 20px 20px;
 	box-sizing:border-box;
 	position:fixed;
 	bottom:0;
@@ -44,12 +44,13 @@ body #stats .state-nav a:hover {
 	margin:20px 0;
 }
 .box-output {
-	max-height:100px;
-	overflow-y:scroll;
 	font-size: 14px;
 	font-family:"Courier New";
 	background:#ddd;
 	margin-bottom:20px;
+	max-width:100%;
+	overflow-x:scroll;
+	overflow-y:hidden;
 }
 
 #stats.mini #toggle-stats {
@@ -58,8 +59,10 @@ body #stats .state-nav a:hover {
 	display:block;
 	text-decoration:none;
 	font-size:30px;
-	color: #fff;
+	color: #000;
 	padding-left:10px;
+	padding-right:10px;
+	padding-top:10px;
 	position:relative;
 	top:auto;
 	right:auto;
@@ -69,14 +72,25 @@ body #stats .state-nav a:hover {
 	margin:0;
 }
 body #stats #toggle-stats {
-	width:50px;
-	height:auto;
+	width:35px;
+	height:31px;
 	display:block;
 	text-decoration:none;
-	font-size:50px;
-	color: #fff;
-	padding-left:10px;
+	font-size:25px;
+	color: #888;
+	padding: 0;
 	position:absolute;
 	top:10px;
 	right:10px;
+	text-align:center;
+}
+#toggle-stats img {
+	max-width:75px;
+	width:100%;
+}
+body #stats .state-nav a.active {
+	background: #fff;
+}
+.close {
+	
 }
