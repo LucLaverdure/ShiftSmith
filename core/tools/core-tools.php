@@ -5,7 +5,7 @@ namespace Wizard\Build; // see "Defining Namespaces" section
 	class Tools {
 
 		public static function version() {
-			return "0.4.0";
+			return "0.4.1";
 		}
 
 		// test if current user has access level

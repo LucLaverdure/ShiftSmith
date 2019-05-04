@@ -2,7 +2,7 @@
 	namespace Wizard\Build;
 	
 	require_once(PATH.'core/lib/phpQuery/phpQuery-onefile.php');
-	
+
 	class Queue {
 
 		private static $complete_output = "";
@@ -74,6 +74,27 @@
 			}
 		}
 		
+		static public function get_all_models() {
+			return array_merge(self::$stack, self::$stackGroups);
+		}
+		
+		static public function search_models($search) {
+			$ret = array();
+			//self::$stack[$space][$key]
+			foreach (self::$stack as $v => $item) {
+				foreach ($item as $space => $subitem) {
+					foreach ($subitem as $i=>$key) {
+						//echo $v.":".$i."<br>";
+						//echo $space.":".$key."<br>";
+						//var_dump(self::$stack[$space][$key]);
+						if (strpos($key,$search) !== false) {
+							$ret[] = "[".$space.".".$key."] = ". $v;
+						}
+					}
+				}
+			}
+			return implode("\n", $ret);
+		}
 		
 		/*
 		static public function stack_model($space, $key, $val) {

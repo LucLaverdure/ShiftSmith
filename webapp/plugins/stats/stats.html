@@ -1,4 +1,53 @@
-<div id="stats">
-	<h1>Stats:</h1>
-	[stats.tdiff] seconds execution time.
+<div id="stats" class="mini">
+	
+	<div class="state-nav">
+		<a href="#" id="toggle-stats"> &gt;</a>
+		<a href="#" data-tab="perf">Performance</a>
+		<a href="#" data-tab="db">Database</a>
+		<a href="#" data-tab="param">Parameters</a>
+		<a href="#" data-tab="mods">Models</a>
+		<a href="#" data-tab="tpl">Templates</a>
+	</div>
+	<div class="tabs">
+		<div class="tab perf">
+		<p>[stats.tdiff] seconds execution time.<p>
+		<p>[stats.mem] (used)/ [stats.maxmem] (peak) memory used.</p>
+		</div>
+		<div class="tab db" style="display:none;">
+			<h3>Database Queries</h3>
+			<div class="box-output"><pre>[stats.db]</pre></div>
+		</div>
+		<div class="tab param" style="display:none;">
+			<h3>Server Parameters</h3>
+			<div class="box-output"><pre>[stats.server_vars]</pre></div>
+			<h3>POST Parameters</h3>
+			<div class="box-output"><pre>[stats.post_vars]</pre></div>
+			<h3>GET Parameters</h3>
+			<div class="box-output"><pre>[stats.get_vars]</pre></div>
+			
+		</div>
+		<div class="tab mods" style="display:none;">
+			<h3>Shared Models</h3>
+			<div class="box-output"><pre>[stats.mods_vars]</pre></div>
+		</div>
+		<div class="tab tpl" style="display:none;">
+			<h3>Triggered Templates</h3>
+			<div class="box-output"><pre>[stats.tpls]</pre></div>
+		</div>
+	</div>
 </div>
+<script type="text/javascript">
+	$(".state-nav a").click(function() {
+		$(".tab").hide();
+		$(".tab."+$(this).attr("data-tab")).show();
+	});
+	$("#toggle-stats").click(function() {
+		$("#stats").toggleClass("mini");
+		if ($("#stats").hasClass("mini")) {
+			$("#toggle-stats").html(" &gt;");
+		} else {
+			$("#toggle-stats").html(" &lt;");
+		}
+	});
+	
+</script>

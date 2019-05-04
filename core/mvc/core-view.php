@@ -13,7 +13,8 @@
 
 		private $use_models = true; // default: true (render models within brackets ex: "[user.email]") 
 		private $rendered = false;
-
+		private static $counted = 0;
+		
 		// output template
 		public function render($display_mode=null, $display_type=null) {
 			if ($display_mode != null) $this->display_mode = $display_mode;
@@ -33,6 +34,11 @@
 
 		// from template filename
 		public function from($from) {
+			if (\Wizard\Build\Config::DEBUG) {
+				self::$counted++;
+				$myModel = new \Wizard\Build\Model("template_".self::$counted, $from, "stats");
+			}
+			
 			$this->from = $from;
 			return $this;
 		}

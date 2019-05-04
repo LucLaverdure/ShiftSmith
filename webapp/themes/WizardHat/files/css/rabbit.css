@@ -64,12 +64,6 @@ table {
 	p {
 		margin-bottom:20px;
 	}
-	div {
-		margin: 0 auto;
-		
-		width:1024px;
-		max-width:100%;
-	}
 	div.featured-img {
 		min-height:200px;
 		background-position:cover;

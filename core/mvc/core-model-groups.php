@@ -73,7 +73,7 @@
 			} else {
 				// load everything
 				$db = DB();
-				$rows = $db::query("SELECT ".implode(",", $this->def())." FROM ".$this->nspace);
+				$rows = $db::query("SELECT ".implode(",", array_keys($this->def()))." FROM ".$this->nspace);
 				return $rows;
 			}
 		}
