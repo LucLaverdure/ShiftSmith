@@ -210,10 +210,9 @@
 				$i = 0;
 				$unit_tests_failed = false;
 				foreach ($this->obj_controllers as $cname => $controller) {
+					$i++;
 					if (method_exists($controller, 'test')) {
 						$do_unit_test = $controller->test();
-
-						$i++;
 						if (!$controller->unit_tests_passed()) {
 							Model("unit_test_".$i, $cname." fail", "stats");
 							$unit_tests_failed = true;
@@ -230,18 +229,11 @@
 
 			// ensure controllers validate when a validation function is found
 			foreach ($this->obj_controllers as $cname => $controller) {
-				$i=0;
 				if (method_exists($controller, 'validate')) {
 					$validator_priority = $controller->validate();
 					if ($validator_priority !== false) {
 						// when controller validates
 						if (!is_numeric($validator_priority)) $validator_priority = 0; // when priority isn't numeric assign zero value
-
-						// log controller
-						if (\Wizard\Build\Config::DEBUG) {
-							$i++;
-							$myModel = new \Wizard\Build\Model("controller_".$i, $cname, "stats");
-						}
 						
 						$priority_controllers[$cname] = $validator_priority;	// assign priority to unique class name
 					}
@@ -256,7 +248,14 @@
 			$controller_index = 0;
 			$output_buffer = '';
 			
+			$i = 0;
 			foreach ($priority_controllers as $cname => $priority) {
+
+				// log controller
+				if (\Wizard\Build\Config::DEBUG) {
+					$i++;
+					Model("controller_".$i, $cname, "stats");
+				}
 
 				// find controller of class name
 				$controller = $this->obj_controllers[$cname];

@@ -7,9 +7,14 @@
 			if (route("/")) {
 				if (!$db::isConnected()) {
 					if (CMS_DB_HOST=="") return 1;
-				} else {
-					Wizard\Build\Tools::redirect("/user");
-					die();
+				} else {			
+					$matrix2 = Matrix();
+					$matrix2->space("users")->def("id");
+					$counted_users = count($matrix2->load());
+					if ($counted_users == 0) {
+						Wizard\Build\Tools::redirect("/user");
+						die();
+					}
 				}
 			}
 			return false;

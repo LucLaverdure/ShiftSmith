@@ -9,18 +9,18 @@
 				$matrix2->space("users")->def("id");
 				$counted_users = count($matrix2->load());
 				if ($counted_users > 0) {
-					\Wizard\Build\Tools::redirect("/admin");
+					// at least one user is in the database
+					\Wizard\Build\Tools::redirect("/");
 					return false;
 				} else {
-					return -99;
+					// no users in the database, must create first user
+					return 2;
 				}
 			}
 			return false;
 		}
 
 		function execute() {
-			
-			
 			
 			Model("error", "", "general");
 			Model("name", Posted("name"), "user");
@@ -43,10 +43,23 @@
 						$rec->add(1, Posted("name"), Posted("email"), password_hash(Posted("password1"), PASSWORD_BCRYPT, ['cost' => 12]), md5(time()), 0);
 						$rec->save(1); // save first user as admin
 
-						$a = Matrix();
-						$a->space("access")->def("id", "i")->def("userid", "i")->def("access");
-						$a->add(1, 1, "admin");
-						$a->save(1, 1); // save first user as admin
+						// save access GROUP matrix
+						$rec2 = Matrix();
+						$rec2->space("access_groups")->def("uid", "i")->def("aid", "i");
+						$rec2->add(1, 1);
+						$rec2->save(); // save first user as admin
+
+						// save access USER matrix
+						$rec3 = Matrix();
+						$rec3->space("access_levels")->def("id", "i")->def("label");
+						$rec3->add(0, "guest");
+						$rec3->add(1, "admin");
+						$rec3->save(); // save first user as admin
+						
+						// login user as it is created
+						$user = new \Wizard\Build\User();
+						$login_ret = $user->login(Posted("email"), Posted("password1"));
+
 					} else {
 						Model("error", "Passwords don't match.", "general");
 					} 
@@ -62,7 +75,7 @@
 			$usersIn->space("users")->def("id");
 			$counted_users = count($usersIn->load());
 			if ($counted_users > 0) {
-				\Wizard\Build\Tools::redirect("/admin");
+				\Wizard\Build\Tools::redirect("/");
 				die();
 			}
 

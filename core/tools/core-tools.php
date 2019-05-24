@@ -5,13 +5,14 @@ namespace Wizard\Build; // see "Defining Namespaces" section
 	class Tools {
 
 		public static function version() {
-			return "0.4.1";
+			return "0.4.2";
 		}
 
 		// test if current user has access level
 		public static function access($access_level) {
 			// TODO
-			return true;
+			$user = new \Wizard\Build\User();
+			return $user->access($access_level);
 		}
 
 		// q(number) = query argument

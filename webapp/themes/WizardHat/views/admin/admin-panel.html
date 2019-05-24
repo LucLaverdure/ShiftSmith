@@ -1,16 +1,16 @@
 <div class="main-editable">
 	<div class="nav">
 		<ul>
-			<li><a href="" class="editme">Homepage</a></li>
-			<li><a href="" class="editme">Page2</a></li>
+			<li><a href="" data-edit="page.menu[]">Homepage</a></li>
+			<li><a href="" data-edit="page.menu[]">Page2</a></li>
 		</ul>
 	</div>
 
 	<div class="logo"><img src="/theme/files/img/logo.png" /></div>
-	<h1 class="editme">[site.title]</h1>
-	<h2>"[site.subtitle]"</h2>
+	<h1 data-edit="site.title">[site.title]</h1>
+	<h2>"<span data-edit="site.subtitle">[site.subtitle]</span>"</h2>
 	
-	<div class="page-content editme">
+	<div class="page-content" data-edit="page.content">
 		<h1>Lorem ipsum</h1>
 		
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus eget dui eu semper. Morbi egestas ultrices dolor, vel tristique enim fermentum at. Ut sit amet volutpat diam. Praesent egestas elit id nisi tincidunt tincidunt. Aliquam commodo tempor arcu sed congue. Vivamus tempus risus sollicitudin dui porttitor, id facilisis ligula consectetur. Duis pharetra ante est, eu porttitor elit ultricies at. Phasellus non lacus eu lacus laoreet vehicula. Quisque tincidunt pharetra orci, id vestibulum neque tempus quis. Aenean ut nisi eget orci ornare maximus. Nulla aliquet elit ac purus malesuada vehicula. Vestibulum facilisis dignissim magna sed feugiat. Sed varius metus sed odio porta interdum.</p>
@@ -21,21 +21,10 @@
 		
 	</div>
 	
-	<div class="cols-def cf">
-		<a class="add-col" href="#" title="Add Column"><img src="/theme/files/img/add-col.png" /></a>
-		<a class="add-row" href="#" title="Add Row"><img src="/theme/files/img/add-row.png" /></a>
-	</div>
 	<a id="config" href="#" title="Configurations"></a>
 	<a id="add-merch" href="#" title="Manage Merchandise"></a>
 	<a id="load-template" href="#" title="Edit Template"></a>
 	<a id="save-all" href="#" title="Save All Changes"></a>
-</div>
-<div id="col-tpl" style="display:none;">
-	<div class="col block-content editme">
-		<h1>Dolor Sit Amet</h1>
-		
-		<p>Quisque tincidunt pharetra orci, id vestibulum neque tempus quis. Aenean ut nisi eget orci ornare maximus. Nulla aliquet elit ac purus malesuada vehicula. Vestibulum facilisis dignissim magna sed feugiat. Sed varius metus sed odio porta interdum.</p>
-	</div>
 </div>
 <div id="templatemanager" style="display:none;">
 	<div>
@@ -84,7 +73,7 @@
 	$(".add-col").click(function() {
 		cols++;
 		$(this).parents(".cols-def").append($("#col-tpl").html());
-		$(this).parents(".cols-def").find(".col").css("width",parseInt( (1/cols)*100, 10) +"%");
+		$(this).parents(".cols-def").find(".col").css("width",parseInt( (1 / cols) * 100, 10) + "%");
 
 		initEditor();
 		
@@ -121,10 +110,21 @@ function initEditor() {
 	tinymce.remove();
 	tinymce.init({
 		//theme : "advanced",
-		selector:'.editme',
+		//theme_advanced_toolbar_location : "bottom",
+
+		/*
+		// add class to edited element
+		setup:function(ed) {
+			ed.on('change', function(e) {
+				if (tinymce.activeEditor.isDirty()) console.log("test");
+				$(tinymce.activeEditor.selection.getNode()).attr("tested","test");
+			});
+		},
+		*/
+
+		selector:'*[data-edit]',
 		menubar: false,
 		inline: true,
-		//theme_advanced_toolbar_location : "bottom",
 		plugins: [
 			'textcolor',
 			'lists',
@@ -140,4 +140,12 @@ function initEditor() {
 		]
 	});
 }
+setInterval(function(){ 
+	$(".tox").each(function() {
+		if (parseInt($(this).css("top"), 10) < 0) {
+			$(this).css("top", "auto");
+			$(this).css("bottom", "0");
+		}
+	});
+}, 1000);
 </script>

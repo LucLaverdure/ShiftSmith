@@ -7,6 +7,34 @@
 	 */
 	class User {
 		
+		public function access($access_level) {
+
+			// if user isn't logged in, fail access
+			if (!$this->isLoggedIn()) return false;
+
+			// get all accesses of current logged in user
+			$ret = DB()->query("SELECT al.label
+								FROM users u
+								LEFT JOIN access_groups ag
+									ON ag.uid = u.id
+								LEFT JOIN access_levels al
+									ON ag.aid = al.id
+									WHERE u.id = ? ;
+			", 'i', $_SESSION["login"]);
+
+			// if query fails, fail access
+			if ($ret == false) return false;
+
+			// loop through each access level
+			foreach ($ret as $access_label) {
+				// on access level match, give access
+				if ($access_level == $access_label[0]) return true;
+			}
+
+			// no match found, fail access
+			return false;
+		}
+
 		// returns count of all users in db
 		public function counted() {
 			$ret = DB()->query("SELECT COUNT(id) counted FROM users;");
@@ -28,7 +56,7 @@
 		// get email of current user
 		public function getEmail() {
 			if ($this->isLoggedIn()) {
-				$ret = DB()->query("SELECT email FROM users WHERE active='Y' AND id='?' LIMIT 1;", 's', $_SESSION['login']);
+				$ret = DB()->query("SELECT email FROM users WHERE active='Y' AND id=? LIMIT 1;", 's', $_SESSION['login']);
 				if ($ret != false) {
 					return $ret[0]['email'];
 				}
@@ -44,7 +72,7 @@
 					   FROM users
 					   WHERE active = 'Y'
 					   AND admin = 'Y'
-					   AND id = '?'
+					   AND id = ?
 					   LIMIT 1;";
 					   
 				$data = DB()->query($sql, 's', $_SESSION['login']);
@@ -65,21 +93,21 @@
 		
 		// login with email and password, returns true on logon, false otherwise
 		public function login($email, $password) {
-			$data = DB()->query("SELECT id, email, `password` pwd
+			$data = DB()->query("SELECT id, email, passhash
 						   FROM users
-						   WHERE active='Y'
-						   AND email='?'
-						   ORDER BY id DESC
-						   LIMIT 1", 's', $email);
+						   WHERE status = 0
+						   AND email = ?
+						   ORDER BY id ASC
+						   LIMIT 1;", 's', $email);
 
 			if ($data != false) {
-				if (($password != '') && (password_verify($password, $data[0]['pwd']) != false)) {
+				if (($password != '') && (password_verify($password, $data[0]['passhash']) != false)) {
 					$_SESSION['login'] = $data[0]['id'];
 					return true;
 				}
 			}
 			
-			$this->logout();
+			//$this->logout();
 			
 			return false;
 			
@@ -101,7 +129,7 @@
 					$sql = "CREATE TABLE `users` (
 					  `id` int(6) UNSIGNED NOT NULL,
 					  `email` varchar(50) COLLATE latin1_general_ci NOT NULL,
-					  `password` text COLLATE latin1_general_ci NOT NULL,
+					  `passhash` text COLLATE latin1_general_ci NOT NULL,
 					  `keygen` varchar(32) COLLATE latin1_general_ci NOT NULL,
 					  `active` varchar(1) COLLATE latin1_general_ci NOT NULL,
 					  `admin` varchar(1) COLLATE latin1_general_ci NOT NULL
@@ -118,9 +146,9 @@
 			// verify if email exists
 			$email_exists = DB()->query("SELECT id, email
 							   FROM users
-							   WHERE email='?'
+							   WHERE email=?
 							   ORDER BY id DESC
-							   LIMIT 1", 's', $email);
+							   LIMIT 1;", 's', $email);
 			
 			if ($email_exists != false) {
 				// email already exists
@@ -135,8 +163,8 @@
 				$isAdmin = 'Y'; // first user is admin
 			}
 			
-			$sql = "INSERT INTO users (email, password, keygen, active, admin)
-				VALUES ('?', '?', '?', 'N', '?');";
+			$sql = "INSERT INTO users (email, passhash, keygen, active, admin)
+				VALUES (?, ?, ?, 'N', ?);";
 
 			$data = DB()->query($sql, 'sssss', $email, password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]), $rnd, $isAdmin);
 
@@ -150,8 +178,8 @@
 			$data = DB()->query("SELECT id, email
 					   FROM users
 					   WHERE active='N'
-					   AND keygen='?'
-					   AND email='?'
+					   AND keygen=?
+					   AND email=?
 					   ORDER BY id DESC
 					   LIMIT 1;", 'ss', $key, $email);
 			if ($data != false) {
@@ -159,8 +187,8 @@
 				DB()->query("UPDATE users
 						SET active='Y'
 						WHERE
-						keygen='?'
-						AND email='?'
+						keygen=?
+						AND email=?
 						ORDER BY id DESC
 						LIMIT 1;", 'ss', $key, $email);
 				return true;

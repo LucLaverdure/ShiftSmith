@@ -2,27 +2,13 @@
 	class Admin_Panel extends Wizard\Build\Controller {
 
 		function validate() {
-			$db = DB();
-
-			if (route("/admin")) {
-				return -10;
+			if (route("/") && access("admin")) {
+				return -999;
 			}
 			return false;
 		}
 
 		function execute() {
-			$m = Model("title", "Select Site Categories");
-			
-			$matrix = Matrix();
-
-			$matrix->space("category")
-				->def("id", "i")
-				->def("title");
-			$matrix->add(1, "Blog or Personal")
-			->add(2, "Commerce")
-			->add(3, "Business")
-			->add(4, "Portfolio")
-			->add(5, "Other");
 
 			Model("title", "Wizard.Build", "site");
 			
