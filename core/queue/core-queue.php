@@ -133,8 +133,8 @@
 					
 					// process includes, legacy, to remove or not to remove... dun dun duuuuuuuuun
 					//require "parser/include.php";
+					$i = 0;
 					foreach (self::$resources as $filename) {
-						$i=0;
 						if (\Wizard\Build\Config::DEBUG) {
 							$i++;
 							Model("resource_".$i, $filename, "stats");

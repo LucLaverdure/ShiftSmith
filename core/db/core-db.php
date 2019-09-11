@@ -51,7 +51,7 @@
 				// log sql query when in debug mode
 				if (\Wizard\Build\Config::DEBUG) {
 					self::$counted++;
-					Model("sql_".self::$counted, $query, "stats");
+					Model("sql_".self::$counted, str_replace("\t","",$query), "stats");
 					Model("sql_params".self::$counted, implode(", ", $args), "stats");
 				}
 

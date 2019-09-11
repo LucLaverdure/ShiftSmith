@@ -1,20 +1,18 @@
 /* asd a dsa ds asd */
 
 body #stats {
-	padding:0 20px 20px 20px;
 	box-sizing:border-box;
 	position:fixed;
 	bottom:0;
 	left:0;
-	background: #ccc;
 	width:100%;
-	height:300px;
+	height:265px;
 	overflow-y:scroll;
 	font-size:18px;
 }
 body #stats.mini {
 	padding:0;
-	width:50px;
+	width:75px;
 	height:50px;
 	overflow:hidden;
 }
@@ -26,8 +24,12 @@ body #stats h3 {
 	margin-bottom:10px;
 }
 body #stats .state-nav {
-	position:relative;
+	position: fixed;
+	width:100%;
+	bottom: 224px;
+	box-sizing:border-box;
 }
+/*
 body #stats .state-nav a {
 	margin:0;
 	padding:15px;
@@ -41,8 +43,11 @@ body #stats .state-nav a:hover {
 }
 
 .tabs {
-	margin:20px 0;
+	margin: 0;
+	padding: 70px 20px;
+	background: #fff;
 }
+*/
 .box-output {
 	font-size: 14px;
 	font-family:"Courier New";
@@ -54,7 +59,7 @@ body #stats .state-nav a:hover {
 }
 
 #stats.mini #toggle-stats {
-	width:50px;
+	width:75px;
 	height:50px;
 	display:block;
 	text-decoration:none;
@@ -64,14 +69,24 @@ body #stats .state-nav a:hover {
 	padding-right:10px;
 	padding-top:10px;
 	position:relative;
-	top:auto;
+	bottom:auto;
 	right:auto;
+	z-index: 9;
+	transition: all .3s ease-in-out;
+}
+#stats.mini #toggle-stats:hover {
+	transition: all .3s ease-in-out;
+}
+#stats.mini #toggle-stats:hover img {
+	bottom: 20px;
+	transition: all .3s ease-in-out;
 }
 #stats.mini .state-nav {
 	padding:0;
 	margin:0;
 }
 body #stats #toggle-stats {
+	z-index: 9;
 	width:35px;
 	height:31px;
 	display:block;
@@ -79,9 +94,9 @@ body #stats #toggle-stats {
 	font-size:25px;
 	color: #888;
 	padding: 0;
-	position:absolute;
-	top:10px;
-	right:10px;
+	position:fixed;
+	bottom:233px;
+	right:0;
 	text-align:center;
 }
 #toggle-stats img {
@@ -92,5 +107,14 @@ body #stats .state-nav a.active {
 	background: #fff;
 }
 .close {
-	
+	float:none;
+}
+.tab {
+	min-height:300px;
+	padding-top: 65px !important;
+	box-sizing: border-box;
+}
+#tabs {
+	width:100%;
+	display:none;
 }

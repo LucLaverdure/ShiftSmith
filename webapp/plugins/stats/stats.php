@@ -34,8 +34,20 @@
 			Model("get_vars", print_r($_GET, true), "stats");		
 			//$_SERVER
 			Model("server_vars", print_r($_SERVER, true), "stats");		
+			
 			//models
-			Model("mods_vars", print_r(\Wizard\Build\Queue::get_all_models(), true), "stats");		
+			$mods = \Wizard\Build\Queue::get_all_models();
+			$mods_output = "";
+			foreach($mods as $key => $mod) {
+				foreach($mod as $mname => $mod_d) {
+					foreach($mod_d as $mtype => $value) {
+						$mods_output .= "[$key.$mname]"."[?$mtype] = "."$value\n";
+					}
+				}
+			}
+			
+			Model("mods_vars", $mods_output, "stats");		
+			
 			//templates used
 			Model("tpls", print_r(\Wizard\Build\Queue::search_models("template_"), true), "stats");		
 
