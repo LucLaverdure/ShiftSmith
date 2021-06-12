@@ -7,7 +7,7 @@
 	</div>
 
 	<div class="logo"><img src="/theme/files/img/logo.png" /></div>
-	<h1 data-edit="site.title">[site.title]</h1>
+	<h1 data-edit="general.title">[general.title]</h1>
 	<h2>"<span data-edit="site.subtitle">[site.subtitle]</span>"</h2>
 	
 	<div class="page-content" data-edit="page.content">
@@ -25,6 +25,8 @@
 	<a id="add-merch" href="#" title="Manage Merchandise"></a>
 	<a id="load-template" href="#" title="Edit Template"></a>
 	<a id="save-all" href="#" title="Save All Changes"></a>
+</div>
+<div id="config-manager" style="display:none;">
 </div>
 <div id="templatemanager" style="display:none;">
 	<div>
@@ -63,29 +65,222 @@
 		</div>
 	</div>
 </div>
-
+<div id="palette_dialog">
+		<ul class="palette-nav">
+			<li><a href="#main-p">Context</a></li>
+			<li><a href="#create-p">Create</a></li>
+			<li><a href="#media-p">Media</a></li>
+			<li><a href="#more-p">Advanced</a></li>
+		</ul>
+		<div id="create-p">
+			<ul class="palette-nav">
+				<li><a href="#">Text/HTML</a></li>
+				<li><a href="#">Image</a></li>
+				<li><a href="#">Audio</a></li>
+				<li><a href="#">Video</a></li>
+				<li><a href="#">Slider</a></li>
+				<li><a href="#">Embed</a></li>
+				<li><a href="#">Products List</a></li>
+				<li><a href="#">Blog List</a></li>
+				<li><a href="#">File Download</a></li>
+				<li><a href="#">Search Box</a></li>
+				<li><a href="#">Contact Form</a></li>
+				<li><a href="#">YouTube</a></li>
+			</ul>
+		</div>
+		<div id="main-p">
+			<p>Select a zone</p>
+		</div>
+		<div id="media-p">
+			<input type="file">
+		</div>
+		<div id="more-p">
+			<p>Visibility: <select>	
+				<option value="" selected="selected">Always</option>
+				<option value="desktop">Large Devices Only</option>
+				<option value="desktop-medium">Large &amp; Medium Devices Only</option>
+				<option value="medium">Medium Devices Only</option>
+				<option value="medium-mobile">Medium &amp; Small Devices Only</option>
+				<option value="mobile">Small Devices Only</option>
+			</select></p>
+			<p>Animation: <select id="animation">	
+				 <optgroup label="Fade">
+					<option>fade</option>
+					<option>fade-up</option>
+					<option>fade-down</option>
+					<option>fade-left</option>
+					<option>fade-right</option>
+					<option>fade-up-right</option>
+					<option>fade-up-left</option>
+					<option>fade-down-right</option>
+					<option>fade-down-left</option>
+				 </optgroup>
+				 <optgroup label="Flip">
+					<option>flip-up</option>
+					<option>flip-down</option>
+					<option>flip-left</option>
+					<option>flip-right</option>
+				 </optgroup>
+				 <optgroup label="Slide">
+					<option>slide-up</option>
+					<option>slide-down</option>
+					<option>slide-left</option>
+					<option>slide-right</option>
+				 </optgroup>
+				 <optgroup label="Zoom">
+					<option>zoom-in</option>
+					<option>zoom-in-up</option>
+					<option>zoom-in-down</option>
+					<option>zoom-in-left</option>
+					<option>zoom-in-right</option>
+					<option>zoom-out</option>
+					<option>zoom-out-up</option>
+					<option>zoom-out-down</option>
+					<option>zoom-out-left</option>
+					<option>zoom-out-right</option>
+				 </optgroup>
+			</select></p>
+			<h3>Screen Margins</h3>
+			<p>Large:</p>
+			<p>
+				<input type="text" placeholder="0" class="mopt spinner">
+				<input type="text" placeholder="0"  class="mopt spinner">
+				<input type="text" placeholder="0" class="mopt spinner">
+				<input type="text" placeholder="0"  class="mopt spinner">
+				<select class="mopt"><option>px</option><option>%</option></select>
+			</p>
+			<p>Medium:</p>
+			<p>
+				<input type="text" placeholder="0" class="mopt spinner">
+				<input type="text" placeholder="0"  class="mopt spinner">
+				<input type="text" placeholder="0" class="mopt spinner">
+				<input type="text" placeholder="0"  class="mopt spinner">
+				<select class="mopt"><option>px</option><option>%</option></select>
+			</p>
+			<p>Small:</p>
+			<p>
+				<input type="text" placeholder="0" class="mopt spinner">
+				<input type="text" placeholder="0"  class="mopt spinner">
+				<input type="text" placeholder="0" class="mopt spinner">
+				<input type="text" placeholder="0"  class="mopt spinner">
+				<select class="mopt"><option>px</option><option>%</option></select>
+			</p>
+			
+		</div>
+</div>
 <script type="text/javascript">
+	$(function() {
+		$("#palette_dialog").tabs();
+		$(".spinner").spinner();
+	});
+
+	function getWidth() {
+		var ww = $(window).width();
+		if (ww > 1200) return 1200;
+		else if (ww > 1024) return 1024;
+		else if (ww > 800) return 800;
+		else if (ww > 600) return 600;
+		else if (ww > 300) return 300;
+	}
+
 	var cols = 0;
 	$(".tpl").click(function() {
 		$("#templatemanager span").removeClass("active")
 		$(this).find("span").addClass("active");
 	});
-	$(".add-col").click(function() {
-		cols++;
-		$(this).parents(".cols-def").append($("#col-tpl").html());
-		$(this).parents(".cols-def").find(".col").css("width",parseInt( (1 / cols) * 100, 10) + "%");
-
-		initEditor();
-		
-		return false;
+	
+	//$("#animation").selectmenu();
+	
+	
+	wizPalY = (typeof ($.cookie('wizPalY')) != "undefined") ? $.cookie('wizPalY') : 100;
+	wizPalX = (typeof ($.cookie('wizPalX')) != "undefined") ? $.cookie('wizPalX') : 100;
+	$('#palette_dialog').dialog({
+		closeOnEscape: false,
+		title: "Config Palette",
+		autoOpen: true,
+		height: 450,
+		width: 460,
+		modal: false,
+		position: { my: "left top", at: "left+"+wizPalX+" top+"+wizPalY, of: window },
+		dragStop: function( event, ui ) {
+			$.cookie('wizPalY', ui.position.top);
+			$.cookie('wizPalX', ui.position.left);
+		}
 	});
 	
+	$("#config").click(function() {
+
+		$("#config-manager").html("");
+
+		var ii = 0;
+		$('*[data-edit]').each(function() {
+			$("#config-manager").append("<div id='editor"+ii+"'><label>"+$(this).attr("data-edit")+"</label><div class='editme' data-selector='"+$(this).attr("data-edit")+"'>"+$(this).html()+"</div></div>");
+			ii++;
+		});
+
+		$('#config-manager').dialog({
+			title: "Config Manager",
+			autoOpen: true,
+			height: 600,
+			width: getWidth(),
+			modal: true,
+			position: { my: "center", at: "center", of: window },
+			buttons: {
+				"Cancel": function() {
+					$(this).dialog("close");
+				},
+				"Save": function() {
+					$(this).dialog("close");
+				},
+				"Apply": function() {
+					var inst, contents = new Object();
+					for (inst in tinyMCE.editors) {
+						var c = tinyMCE.editors[inst].getContent();
+						var sel = $(tinyMCE.editors[inst].targetElm).attr('data-selector');
+						if (typeof sel != "undefined") {
+							for (i in tinyMCE.editors) {
+								if ($(tinyMCE.editors[i].targetElm).attr("data-edit") == sel) {
+									tinyMCE.editors[i].setContent(c);
+								}
+							}
+						}
+					}					
+
+					$(this).dialog("close");
+				}
+			}
+		});
+
+		tinymce.init({
+			branding: false,
+			width: "100%",
+			max_width: "100%",
+			selector:'.editme',
+			menubar: false,
+			inline: false,
+			plugins: [
+				'lists',
+				'autolink',
+				'link'
+			],
+			powerpaste_word_import: 'clean',
+			powerpaste_html_import: 'clean',
+			toolbar: [
+				'undo redo | bold italic underline | link | fontselect fontsizeselect',
+				'forecolor backcolor | alignleft aligncenter alignright alignfull | numlist bullist outdent indent'
+			]
+		});
+
+
+		return false;
+	});
+
 	$("#load-template").click(function() {
 		$('#templatemanager').dialog({
 			title: "Template Manager",
 			autoOpen: true,
 			height: 600,
-			width: 800,
+			width: getWidth(),
 			modal: true,
 			buttons: {
 				"Cancel": function() {
@@ -104,48 +299,4 @@
 		initEditor();
 	});
 	
-</script>
-<script type="text/javascript">
-function initEditor() {
-	tinymce.remove();
-	tinymce.init({
-		//theme : "advanced",
-		//theme_advanced_toolbar_location : "bottom",
-
-		/*
-		// add class to edited element
-		setup:function(ed) {
-			ed.on('change', function(e) {
-				if (tinymce.activeEditor.isDirty()) console.log("test");
-				$(tinymce.activeEditor.selection.getNode()).attr("tested","test");
-			});
-		},
-		*/
-
-		selector:'*[data-edit]',
-		menubar: false,
-		inline: true,
-		plugins: [
-			'textcolor',
-			'lists',
-			'powerpaste',
-			'autolink',
-			'link'
-		],
-		powerpaste_word_import: 'clean',
-		powerpaste_html_import: 'clean',
-		toolbar: [
-			'undo redo | bold italic underline | link | fontselect fontsizeselect',
-			'forecolor backcolor | alignleft aligncenter alignright alignfull | numlist bullist outdent indent'
-		]
-	});
-}
-setInterval(function(){ 
-	$(".tox").each(function() {
-		if (parseInt($(this).css("top"), 10) < 0) {
-			$(this).css("top", "auto");
-			$(this).css("bottom", "0");
-		}
-	});
-}, 1000);
 </script>

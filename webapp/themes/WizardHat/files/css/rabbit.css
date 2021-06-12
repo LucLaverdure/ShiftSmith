@@ -296,3 +296,17 @@ body #config {
 #templatemanager span.active {
 	background-color: #fff !important;
 }
+
+label {
+	width:100%;
+	max-width: 100%;
+}
+
+.ui-dialog-titlebar-close {
+	display:none !important;
+}
+.mopt {
+	color: #000;
+	width:35px;
+	height: 35px;
+}

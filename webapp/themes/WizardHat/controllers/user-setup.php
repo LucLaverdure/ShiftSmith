@@ -10,8 +10,11 @@
 				$counted_users = count($matrix2->load());
 				if ($counted_users > 0) {
 					// at least one user is in the database
-					\Wizard\Build\Tools::redirect("/");
-					return false;
+					$user = new \Wizard\Build\User();
+					if ($user->isLoggedIn()) {
+						\Wizard\Build\Tools::redirect("/");
+						return false;
+					}
 				} else {
 					// no users in the database, must create first user
 					return 2;

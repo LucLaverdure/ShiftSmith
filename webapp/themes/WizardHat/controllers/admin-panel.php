@@ -10,7 +10,7 @@
 
 		function execute() {
 
-			Model("title", "Wizard.Build", "site");
+			Model("title", "Wizard.Build", "general");
 			
 			$slogans = array();
 			$slogans[] = "I believe in magic!";
